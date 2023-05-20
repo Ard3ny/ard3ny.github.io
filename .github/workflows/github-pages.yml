@@ -1,38 +1,71 @@
-name: Build and deploy Jekyll site to GitHub Pages
-
+name: "Build and Deploy"
 on:
   push:
     branches:
+      - main
       - master
+    paths-ignore:
+      - .gitignore
+      - README.md
+      - LICENSE
+
+  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-jobs:
-  jekyll:
-    runs-on: ubuntu-latest
-    steps:
-      - name: 📂 setup
-        uses: actions/checkout@v2
-        with:
-          fetch-depth: "0"
+permissions:
+  contents: read
+  pages: write
+  id-token: write
 
-      - name: 💎 setup ruby
-        id: ruby
+# Allow one concurrent deployment
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          # submodules: true
+          # If using the 'assets' git submodule from Chirpy Starter, uncomment above
+          # (See: https://github.com/cotes2020/chirpy-starter/tree/main/assets)
+
+      - name: Setup Pages
+        id: pages
+        uses: actions/configure-pages@v3
+
+      - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 3.1.2
+          ruby-version: 3   # reads from a '.ruby-version' or '.tools-version' file if 'ruby-version' is omitted
+          bundler-cache: true
 
-      - name: 🔨 install dependencies & build site
-        if: steps.ruby.outcome == 'success'
-        id: deps
-        uses: limjh16/jekyll-action-ts@v2
+      - name: Build site
+        run: bundle exec jekyll b -d "_site${{ steps.pages.outputs.base_path }}"
         env:
-          JEKYLL_GITHUB_TOKEN: ${{ secrets.JEKYLL_GITHUB_TOKEN }}
-        with:
-          enable_cache: true
+          JEKYLL_ENV: "production"
 
-      - name: 🚀 deploy
-        if: steps.deps.outcome == 'success'
-        uses: peaceiris/actions-gh-pages@v3
+      - name: Test site
+        run: |
+          bundle exec htmlproofer _site --disable-external --check-html --allow_hash_href
+
+      - name: Upload site artifact
+        uses: actions/upload-pages-artifact@v1
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./_site
+          path: "_site${{ steps.pages.outputs.base_path }}"
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v1
