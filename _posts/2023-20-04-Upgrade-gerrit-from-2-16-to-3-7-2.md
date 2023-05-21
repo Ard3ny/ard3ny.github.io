@@ -30,7 +30,7 @@ wget https://gerrit-releases.storage.googleapis.com/gerrit-3.7.2.war
 > I'm running and compiling everything under the gerrit user
 {: .prompt-tip }
 
-```
+```commands
 su gerrit
 ```
 
@@ -40,7 +40,7 @@ Run ‘migrate-to-note-db’ command to migrate all changes on a separated datab
 > Note that my installation is stored  in /var/www/gerrit, but yours may vary
 {: .prompt-tip }
 
-```
+```commands
 java -jar /opt/gerrit-2.16.19.war migrate-to-note-db --threads 4 -d /var/www/gerrit
 ```
 
