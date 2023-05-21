@@ -1,6 +1,6 @@
 ---
 title: Upgrade Gerrit from 2.16 to 3.7.2
-date: 2023-04-020 11:03:29 +0100
+date: 2023-04-20 11:03:29 +0100
 categories: [Sysadmin]
 tags: [sysadmin, linux, gerrit]
 math: false
