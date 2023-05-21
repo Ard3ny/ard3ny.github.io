@@ -11,7 +11,7 @@ Just though, I would share some of my recent experience of upgrading Gerrit from
 
 1. Stop the Gerrit service and make the backup if you're able to
 
-```service
+```bash
 systemctl stop gerrit
 ```
 
@@ -20,7 +20,7 @@ the one we are using right now (for me 2.16.19.)
 -3.1.2
 -3.7.2
 
-```commands
+```bash
 cd /opt
 wget https://gerrit-releases.storage.googleapis.com/gerrit-2.16.19.war
 wget https://gerrit-releases.storage.googleapis.com/gerrit-3.1.2.war
@@ -30,7 +30,7 @@ wget https://gerrit-releases.storage.googleapis.com/gerrit-3.7.2.war
 > I'm running and compiling everything under the gerrit user
 {: .prompt-tip }
 
-```commands
+```bash
 su gerrit
 ```
 
@@ -40,7 +40,7 @@ Run ‘migrate-to-note-db’ command to migrate all changes on a separated datab
 > Note that my installation is stored  in /var/www/gerrit, but yours may vary
 {: .prompt-tip }
 
-```commands
+```bash
 java -jar /opt/gerrit-2.16.19.war migrate-to-note-db --threads 4 -d /var/www/gerrit
 ```
 
