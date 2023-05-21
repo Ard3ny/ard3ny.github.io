@@ -20,7 +20,7 @@ timezone: Europe/Bratislava
 
 title: TheTechCorner # the main title
 
-tagline: A text-focused Jekyll theme # it will display as the sub-title
+tagline: Tech, just behind the corner # it will display as the sub-title
 
 description: >- # used by seo meta and the atom feed
 A corner on the internet where I share my ideas, guides and projects
@@ -81,7 +81,7 @@ theme_mode: dark
 img_cdn:
 
 # the avatar on sidebar, support local or CORS resources
-avatar:
+avatar: /assets/img/avatar.pmg
 
 # boolean type, the global switch for TOC in posts.
 toc: true
