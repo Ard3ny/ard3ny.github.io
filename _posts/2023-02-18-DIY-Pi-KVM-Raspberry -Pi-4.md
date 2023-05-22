@@ -33,7 +33,7 @@ On top of that, it’s cheap, and you can even build your own PI-KVM from (you g
 >https://github.com/pikvm/pikvm#diy-getting-started
 {: .prompt-tip }
 
-* ##Requirements
+* ## Requirements
 * Raspberry Pi 4 / Zero 
 * 16 + GB microSD Card.
 * HDMI-to-CSI bridge (example) (for my Slovak friends)
