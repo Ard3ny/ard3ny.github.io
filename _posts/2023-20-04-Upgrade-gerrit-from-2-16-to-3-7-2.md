@@ -33,15 +33,12 @@ wget https://gerrit-releases.storage.googleapis.com/gerrit-3.7.2.war
 ```bash
 su gerrit
 ```
-</br>
 
 ## Migrate the database
 Run ‘migrate-to-note-db’ command to migrate all changes on a separated database to NoteDB
-</br>
 
 > Note that my installation is stored  in /var/www/gerrit, but yours may vary
 {: .prompt-tip }
-</br>
 
 
 ```bash
