@@ -100,3 +100,4 @@ When it’s done, you should see something like this on your screen
 
 Now open up browser in your local network and enter the URL.
 ![](/assets/img/posts/2022-12-04-Turn-your-old-laptop-into-proxmox-server.md/image-10-768x362.png)
+
