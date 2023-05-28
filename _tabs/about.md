@@ -19,6 +19,23 @@ I’m also a tech enthusiast and I like to play with a tech a lot. I’m running
 
 
 <div class="row">
-{% include about/timeline.html source=site.data.timeline %}
+- title: Linux Administrator
+  company: Diebold Nixdorf
+  company_url: https://www.test.com
+  from: 2020
+  to: present
+  description:
+
+    • 2 years of Linux server administration and monitoring (RedHat/CentOS, SUSE)
+    • Writing basic bash and python Shell scripts for automation of applications, backup and scheduled tasks
+    • Managed disks and file systems (ext4, LVM)
+    <br /><br />
+    • User and group provisioning
+    • Installation of Patches, Hardware, software’s and Firmware upgrades
+    • Experience in using Ansible for system configuration, user management, patching
+    • Installation, configuration and maintenance of VMs using VMware
+    • Worked flexible hours for production tasks, patching and on-call support for 24/7 environments
+
+
 </div>
 
