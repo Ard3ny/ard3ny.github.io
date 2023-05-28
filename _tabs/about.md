@@ -19,6 +19,6 @@ I’m also a tech enthusiast and I like to play with a tech a lot. I’m running
 
 
 <div class="row">
-{% include site.data.timeline %}
+{% include about/timeline.html title="Timeline" source=site.data.timeline %}
 </div>
 
