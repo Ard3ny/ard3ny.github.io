@@ -44,7 +44,6 @@ But the most used one and best suited for us is **Round Robin**, which will send
 Req:
 
 -4VMs
-
 ![](/assets/img/wordpress_mig/04/image-1.png)
 
 Nginx Reverse Proxies
