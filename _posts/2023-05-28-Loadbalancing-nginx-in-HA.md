@@ -1,5 +1,5 @@
 ---
-title: Loadbalancing Webserver in HA
+title: Loadbalancing Nginx in HA
 date: 2023-05-29 11:03:29 +0100
 categories: [Homelab, Networking]
 tags: [nginx, loadbalancer, ha,]
