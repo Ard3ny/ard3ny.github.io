@@ -24,11 +24,11 @@ tagline: Tech, just behind the corner # it will display as the sub-title
 
 description: >- # used by seo meta and the atom feed
   A corner on the internet where I share my ideas, guides and projects.
-  
+
 
 
 # fill in the protocol & hostname for your site, e.g., 'https://username.github.io'
-url: "https://ard3ny.github.io"
+url: "https://thetechcorner.sk"
 repository: ard3ny/ard3ny.github.io
 github:
   username: ard3ny # change to your github username
