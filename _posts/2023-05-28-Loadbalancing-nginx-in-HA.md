@@ -45,7 +45,6 @@ Req:
 
 -4VMs
 
-![](/assets/img/wordpress_mig/04/image.png)
 ![](/assets/img/wordpress_mig/04/image-1.png)
 
 Nginx Reverse Proxies
