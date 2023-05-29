@@ -8,7 +8,6 @@ mermaid: false
 ---
 
 
-
 If you ever run an application or web server, you probably come across terms like load balancing, or high availability, failover etc.
 
 These techniques are all concepts related to improving the reliability and performance of computer systems.
@@ -24,6 +23,7 @@ There are many ways to fix this (the best probably being Kubernetes cluster), bu
 The way this is setup is that we are running 2 High availability nodes (which are sharing 1 virtual IP address) and they load balance all of the traffic between 2 Reverse proxy VM’s.
 
 ![](/assets/img/wordpress_mig/04/Untitled-Diagram.drawio-1.png)
+
 
 You may be asking well how the HighAvaiability nodes loadbalance traffic? There are many load balancing techniques like
 
@@ -47,6 +47,7 @@ Req:
 
 ![](/assets/img/wordpress_mig/04/image.png)
 ![](/assets/img/wordpress_mig/04/image-1.png)
+
 Nginx Reverse Proxies
 
 192.168.100.80/24 vIP
