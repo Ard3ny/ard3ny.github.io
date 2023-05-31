@@ -20,7 +20,7 @@ timezone: Europe/Bratislava
 
 title: TheTechCorner # the main title
 
-tagline: Tech, just behind the corner # it will display as the sub-title
+tagline: Blog # it will display as the sub-title
 
 description: >- # used by seo meta and the atom feed
   A corner on the internet where I share my ideas, guides and projects.
@@ -72,7 +72,7 @@ google_analytics:
 #     light  - Use the light color scheme
 #     dark   - Use the dark color scheme
 #
-theme_mode: # dark
+theme_mode: dark
 
 # The CDN endpoint for images.
 # Notice that once it is assigned, the CDN url
@@ -88,11 +88,11 @@ avatar: /assets/img/avatar.png
 toc: true
 
 comments:
-  active: # The global switch for posts comments, e.g., 'disqus'.  Keep it empty means disable
-  # The active options are as follows:
+  active: #giscus # The global switch for posts comments, e.g., 'disqus'.  Keep it empty means disable
+    #The active options are as follows:
   disqus:
     shortname: # fill with the Disqus shortname. › https://help.disqus.com/en/articles/1717111-what-s-a-shortname
-  # utterances settings › https://utteranc.es/
+      # utterances settings › https://utteranc.es/
   utterances:
     repo: # <gh-username>/<repo>
     issue_term: # < url | pathname | title | ...>
