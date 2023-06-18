@@ -7,7 +7,7 @@ math: false
 mermaid: false
 ---
 
-## Experiencing long Gerrit logging times, listing members etc.? 
+## Experiencing long Gerrit login times, listing members etc.? 
 
 One of the causes can be using or switching to cloud LDAP provider, which of course takes a long time to travel and authenticate each time a request is made. And of course because "cloud is the future" let's try speeding up the process without using local LDAP provider.
 
