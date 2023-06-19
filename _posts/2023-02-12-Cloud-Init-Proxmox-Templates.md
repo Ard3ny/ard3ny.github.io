@@ -95,8 +95,11 @@ qm set 7000 --boot c --bootdisk scsi0
 {: .prompt-tip }
 
 
->For many Cloud-Init images, it is required to configure a serial console and use it as a display. If the configuration doesn’t work for a given image however, switch back to the default display instead.
-{: .prompt-warning }
+> For many Cloud-Init images, it is required to configure a serial console and use it as a display. 
+{: .prompt-danger }
+
+It cost me many hours of troubleshooting kernel panics on boot after I've finally learned to ALWAYS add serial interface.
+
 
 ```
 qm set 7000 --serial0 socket --vga serial0
