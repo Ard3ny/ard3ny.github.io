@@ -94,15 +94,20 @@ qm set 7000 --boot c --bootdisk scsi0
 ), we need to add serial port as well
 {: .prompt-tip }
 
-```
+
+>
 For many Cloud-Init images, it is required to configure a serial console and use it as a display. If the configuration doesn’t work for a given image however, switch back to the default display instead.
+{: .prompt-wawrning }
+
+```
+qm set 7000 --serial0 socket --vga serial0
 ```
 
 Now when all of this is done, the VM should look something like this
 ![img-description](/assets/img/posts/2023-02-12-Cloud-Init-Proxmox-Templates.md/image-3.png)
-![img-description](/assets/img/posts/
 
-2023-02-12-Cloud-Init-Proxmox-Templates.md/image-4.png)
+
+![img-description](/assets/img/posts/2023-02-12-Cloud-Init-Proxmox-Templates.md/image-4.png)
 
 We don’t want to start it yet. As you can see we have a whole new section “Cloud-Init” in which we can configure, everything we need.
 
