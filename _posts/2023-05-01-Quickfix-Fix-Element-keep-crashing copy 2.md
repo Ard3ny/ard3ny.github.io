@@ -1,8 +1,8 @@
 ---
-title: Fix Element (Flatpack) keep crashing under Linux
+title: Quickfix Fix Element (Flatpack) keep crashing under Linux
 date: 2023-05-01 10:00:00 +0100
 categories: [Sysadmin]
-tags: [sysadmin, element, fix]
+tags: [quickfix, sysadmin, element, fix]
 math: false
 mermaid: false
 ---
