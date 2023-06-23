@@ -2,7 +2,7 @@
 title: QuickFix SSSD apparmor spam in audit logs
 date: 2023-06-20 11:00:00 +0100
 categories: [Sysadmin]
-tags: [quickfixsysadmin, sssd, ldap, google-workspace]
+tags: [quickfix, sysadmin, sssd, ldap, google-workspace]
 math: false
 mermaid: false
 ---
