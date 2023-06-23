@@ -16,9 +16,9 @@ mermaid: false
 
 ### Cause
 
-The problem may be that El9 require x86-64-v2 support and certain CPUs (modes in hypervisors) may not be able to compile with it.
+The problem may be that El9 require x86-64-v2 support and certain CPUs (modes in hypervisors) may not be able to compile with it. 
 
-[El9 requirment](https://forums.rockylinux.org/t/el9-will-require-x86-64-v2-support/5311)
+[Source](https://forums.rockylinux.org/t/el9-will-require-x86-64-v2-support/5311)
 
 
 
@@ -29,8 +29,11 @@ The problem may be that El9 require x86-64-v2 support and certain CPUs (modes in
 
 ![img-description](/assets/img/posts/2023-06-23-Quick-fix-AlmaLinux9-cloud-init-kernel-panic.md/S83image.png)
 
-If you want to know more about CPU modes and performance changes between them
-https://www.techaddressed.com/tutorials/proxmox-improve-vm-cpu-perf/
+If you want to know more about CPU modes and performance changes between them.
+
+[Source](https://www.techaddressed.com/tutorials/proxmox-improve-vm-cpu-perf/)
+
+
 
 
 
