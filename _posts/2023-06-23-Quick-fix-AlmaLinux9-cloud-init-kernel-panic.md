@@ -18,8 +18,7 @@ mermaid: false
 
 The problem may be that El9 require x86-64-v2 support and certain CPUs (modes in hypervisors) may not be able to compile with it.
 
-[El9 requirment]({% post_url https://forums.rockylinux.org/t/el9-will-require-x86-64-v2-support/5311 %}).
-
+[El9 requirment](https://forums.rockylinux.org/t/el9-will-require-x86-64-v2-support/5311)
 
 
 
