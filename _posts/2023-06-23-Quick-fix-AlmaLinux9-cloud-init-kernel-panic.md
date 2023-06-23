@@ -20,6 +20,7 @@ The problem is that El9 require x86-64-v2 support and certain CPUs (modes in hyp
 
 https://forums.rockylinux.org/t/el9-will-require-x86-64-v2-support/5311
 
+
 ### Fix
 
 > On hypervisor like Proxmox change CPU mode from kvm64 to host or any other that supports x86-64-v2 feature-set.
@@ -27,7 +28,8 @@ https://forums.rockylinux.org/t/el9-will-require-x86-64-v2-support/5311
 
 ![img-description](/assets/img/posts/2023-06-23-Quick-fix-AlmaLinux9-cloud-init-kernel-panic.md/S83image.png)
 
-
+If you want to know more about CPU modes and performance changes between them
+https://www.techaddressed.com/tutorials/proxmox-improve-vm-cpu-perf/
 
 
 
