@@ -8,7 +8,10 @@ mermaid: false
 ---
 
 
-### If you tried booting new cloudinit RHEL 9 or you tried upgrading rhel8->rhel9(almalinux 9, rocky 9...) and you recieved kernel panic error 
+### Describe bug
+Kernel panic:
+*If you tried booting fresh cloudinit RHEL 9 install
+*you tried upgrading rhel8->rhel9(almalinux 9, rocky 9...) 
 
 ![img-description](/assets/img/posts/2023-06-23-Quick-fix-AlmaLinux9-cloud-init-kernel-panic.md/kKWimage.png)
 
