@@ -56,7 +56,7 @@ source ~/.bashrc
 ### 4. Initialize GAMADV-XTD3
 ```bash
 cd ~/bin/gamadv-xtd3
-./gam config drive_dir /root/admin/GAMConfig verify
+gam config drive_dir /root/admin/GAMConfig verify
 ```
 
 ### 5. Copy old GAM auth files into the new GAM3 directory
