@@ -8,7 +8,7 @@ mermaid: false
 ---
 
 ## Disclaimer
-> I've felt that GAM to GAMADV-XTD3 upgrade is unnecessary too complex, so I've created my own.
+> I've felt that GAM to GAMADV-XTD3 [upgrade tutorial](https://github.com/taers232c/GAMADV-XTD3/wiki/How-to-Upgrade-from-Standard-GAM) is unnecessary too complex, so I've created my own.
 {: .prompt-info }
 
 ## What's GAM and GAMADV-XTD3?
