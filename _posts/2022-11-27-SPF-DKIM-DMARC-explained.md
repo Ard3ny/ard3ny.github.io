@@ -27,9 +27,9 @@ v=spf1 include:5123454.thetechcorner.org ~all
 
 DKIM or (DomainKeys Identified Mail) is an authentication similar to SPF. DKIM is a key-pair signing mechanism for the header of mail messages. . When you send mail you attach a signature to the message using a private key which is compared to a public key published in DNS for your domain. DKIM adds authenticity to a message and guards against tampering with the header by down-stream mail servers. One of the benefits to working on the header is it survives SMTP relaying and auto-forwarding.
 
-DKIM is added as a TXT record by adding it into your domain panel.
+DKIM is added as a TXT record by adding it to your domain panel.
 
-DKIM does not directly prevent abusive / malicious behavior. DKIM is just a signature… If I hand you a letter with my signature on it there’s added authenticity; However, if I hand you a letter without my signature if there’s no requirement for the letter to be signed there’s no reason to be suspicious. It’s like SSL, just because a website doesn’t have SSL doesn’t mean it’s fake, but it’s preferred when SSL is used.
+DKIM does not directly prevent abusive/malicious behavior. DKIM is just a signature… If I hand you a letter with my signature on it there’s added authenticity; However, if I hand you a letter without my signature if there’s no requirement for the letter to be signed there’s no reason to be suspicious. It’s like SSL, just because a website doesn’t have SSL doesn’t mean it’s fake, but it’s preferred when SSL is used.
 
 ```bash
 #How does it look like
@@ -50,13 +50,13 @@ If the message fails authentication, it’s processed according to the selected 
 
 The R in DMARC is for the Reporting component of the protocol. These reports allow the domain owner to see where all email using their domain in the From address is being sent from.
 
-The DMARC record of the domain in the header from address is used if it exists. Like the above records, it exists as a TXT record in DNS.
+The DMARC record of the domain in the header from the address is used if it exists. Like the above records, it exists as a TXT record in DNS.
 
 DMARC’s conformance check is called “alignment” and it checks that the header from is “aligned” with other authenticated domains on the message, either via DKIM or SPF. If either DKIM or SPF alignment passes, DMARC evaluates as a “PASS.”
 
 SPF Alignment: The domain in the header from and envelope from must be the same (or sub-domains of the same parent domain if “relaxed”) and must pass SPF.
 
-DKIM Alignment: DMARC requires a valid signature where the domain specified in the d= tag aligns with the sender’s domain from the header from field.
+DKIM Alignment: DMARC requires a valid signature where the domain specified in the d= tag aligns with the sender’s domain from the header from the field.
 
 ```bash
 #How does it look like

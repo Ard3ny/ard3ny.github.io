@@ -7,7 +7,7 @@ math: false
 mermaid: false
 ---
 
-Just though, I would share some of my recent experience of upgrading Gerrit from 2.16.19 to at this time most recent 3.7.2.
+I decided I would share some of my recent experience with upgrading Gerrit from 2.16.19 to at this time most recent 3.7.2.
 
 ## 1. Stop the Gerrit service and make the backup if you're able to
 
@@ -35,7 +35,7 @@ su gerrit
 ```
 
 ## Migrate the database
-Run ‘migrate-to-note-db’ command to migrate all changes on a separated database to NoteDB
+Run ‘migrate-to-note-db’ command to migrate all changes from old database to NoteDB
 
 > Note that my installation is stored  in /var/www/gerrit, but yours may vary
 {: .prompt-tip }
@@ -49,7 +49,7 @@ When you run ‘migrate-to-note-db‘ command, you must have to set ‘–thread
 </br>
 </br>
 
-## Disable the review of database
+## Disable the review of the database
 ```bash
 vim /var/www/gerrit/etc/notedb.config
 disableReviewDb = true
@@ -91,7 +91,7 @@ if everything is ok, and you get no errors, stop the Gerrit again and continue.
 systemctl stop gerrit
 ```
 
-I got an error complaining about the “rename-project” plugin, I decided to delete it for this time and install it at the end with new version
+I got an error complaining about the “rename-project” plugin, I decided to delete it  this time and install it at the end with the new version
 
 ```bash
 rm -rf /var/www/gerrit/plugins/rename-project.jar

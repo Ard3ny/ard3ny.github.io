@@ -7,7 +7,7 @@ math: false
 mermaid: false
 ---
 
-I’ve already done tutorial on how “Change your old laptop into proxmox node“, but what do you if In the case you run out of RAM or CPU cores? Or maybe you want to create some HA(high availability) in your Homelab environment.
+I’ve already done a tutorial on how “Change your old laptop into proxmox node“, but what do you do in case you run out of RAM or CPU cores? Or maybe you want to create some HA(high availability) in your Homelab environment.
 
 Well, in that case, you can just add another proxmox node and cluster them together! Sure, you can have them running separately, but grouping nodes has many advantages like
 
@@ -25,7 +25,7 @@ Well, in that case, you can just add another proxmox node and cluster them toget
 * 2 or more proxmox nodes
 * same network for all of them
 
-In a case you want to know how to create single proxmox node, follow my previous tutorial.
+In a case you want to know how to create a single proxmox node, follow my previous tutorial.
 
 ## Creating a cluster
 In this example, I have two running proxmox nodes (proxmox, proxmox2).

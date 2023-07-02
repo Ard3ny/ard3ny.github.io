@@ -9,7 +9,7 @@ mermaid: false
 
 Just a little random bug fix (workaround) for Element client running under Linux. (Fedora 37/38 in my case).
 
-I’m currently running latest version 1.11.30 (flatpack version)
+I’m currently running latest version 1.11.30 (flatpack version).
 
 ![img-description](/assets/img/posts/2023-01-05-Fix-Element-keep-crashing.md/image-22.png)
 

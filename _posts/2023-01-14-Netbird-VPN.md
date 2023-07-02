@@ -34,7 +34,7 @@ Cons
 
 With the netbird you have to install the client on every node you want to connect with. The client will then generate the private key for that particular node (which never leaves the node) and sends the public key to the server (which can be self-hosted if you want to). After sending the public key to the server, the node receives the configuration file, which is then used for WireGuard configuration.
 
-Agent always checks if there is possibility of straight communication without going over server. So in the case of a server failing, the only thing that is not working is adding the nodes to the topology, but communication between nodes is working regardless.
+Agent always checks if there is the possibility of straight communication without going over the server. So in the case of a server failure, the only thing that is not working is adding the nodes to the topology, but communication between nodes is working regardless.
 
 ![img-description](/assets/img/posts/2023-01-14-Netbird-VPN.md/image-28.png)
 
@@ -42,11 +42,11 @@ The default policy is that every node can communicate with every other node in t
 
 ![img-description](/assets/img/posts/2023-01-14-Netbird-VPN.md/image-27-768x641.png)
 
-Another great benefit is that some nodes can be promoted to routers and can serve as DHCP server with some range of IPs address for devices behind this node. Meaning it can NAT those devices over this one node which is connected on the Netbird network and all of those devices doesn’t have to be on the Netbird VPN.
+Another great benefit is that some nodes can be promoted to routers and can serve as DHCP server with some range of IPs address for devices behind this node. Meaning it can NAT those devices over this one node that is connected on the Netbird network and all of those devices don’t have to be on the Netbird VPN.
 
 ## How to connect your devices
 
-First of all netbird has an amazing documentation so, you can check their [quick start guide first](https://netbird.io/docs/getting-started/quickstart). But I’m gonna do some short version as well.
+First of all netbird has amazing documentation so, you can check their [quick start guide first](https://netbird.io/docs/getting-started/quickstart). But I’m gonna do some short version as well.
 
 You can either go with self-hosted version or cloud hosted. I’ll do a tutorial on how to self-hosted Netbird in the future but for now let’s do cloud version you can try it out and see if it is something for you.
 
@@ -63,7 +63,7 @@ As a first step you need to sign in. You can even use google, Microsoft or Windo
 
 ### Windows
 
-The installation file will be downloaded and simply just run the program. And installation screen file pop out. Just simply install it like any other software on the windows and click “finish”.
+The installation file will be downloaded and simply just run the program. And the installation screen file pop out. Just simply install it like any other software on windows and click “finish”.
 
 ### Linux (Fedora 37 in my case)
 

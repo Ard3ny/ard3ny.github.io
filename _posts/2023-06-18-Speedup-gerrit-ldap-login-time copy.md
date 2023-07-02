@@ -15,7 +15,7 @@ One of the causes can be using or switching to cloud LDAP provider, which of cou
 
 ## Cutting down the amount of information that is being sent
 
-The first thing you should do is to cut on the amount of internet traffic which needs to be sent and search through
+The first thing you should do is to cut on the amount of internet traffic that needs to be sent and search through
 
 What do you get from your ldapsearch request?
 
@@ -28,11 +28,11 @@ wc -l test1
 8417 test1
 ```
 
-Try to get this number as low as possible by creating smallest list of information possible (number of users, groups etc.)
+Try to get this number as low as possible by creating the smallest list of information possible (number of users, groups etc.)
 
 In some cloud provider cases like, Google workspace, you can select which Users, groups, OUs you want to include.  
 
-Maybe you dont need the whole company and all of the OUs, maybe you can have a group which contains all the necessary users. Start by cutting the these output informations first , which will help with the traffic and CLoud Provider (google workspace) site of things 
+Maybe you dont need the whole company and all of the OUs, maybe you can have a group that contains all the necessary users. Start by cutting the these output informations first , which will help with the traffic and CLoud Provider (google workspace) site of things 
 
 
 
@@ -68,9 +68,9 @@ You can cut the information to the minimum, but you will probably still experien
 
 To fix that we can cache some of the ldap information, so it's grabbed locally most of the time.
 
-Change times according to your needs. Try to create balance between how much time are you willing to have without users synchronization with the active directory (cloud identity...) provider and how many times a day you want someone to experience the "LDAP lag".
+Change times according to your needs. Try to create a balance between how much time are you willing to have without users synchronization with the active directory (cloud identity...) provider and how many times a day you want someone to experience the "LDAP lag".
 
-Meaning when the new user come, old one is deactivated or blocked, password is changed etc..   
+Meaning when the new user come, old one is deactivated or blocked, the password is changed etc..   
 
 ```
 vim /etc/gerrit.config
@@ -87,7 +87,7 @@ maxAge = 12 hour
 maxAge = 4 hour
 ```
 
-If you wanna check out what precisely these settings does, go to Gerrit documentation.
+If you wanna check out what precisely these settings do, go to Gerrit documentation.
 
 https://gerrit-review.googlesource.com/Documentation/config-gerrit.html
 

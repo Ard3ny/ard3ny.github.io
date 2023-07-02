@@ -15,7 +15,7 @@ Well, the answer for most vendors is cloud images with cloud-init package.
 Cloud images are operating system templates and every instance starts out as an identical clone of every other instance. It is the user data that gives every cloud instance its personality and cloud-init is the tool that applies user data to your instances automatically.
 ```
 
-The job of cloud-init is to initialize the VM or LXC and talk to the hosting provider’s datasource and get the configuration information which it then uses to configure the VM.
+The job of cloud-init is to initialize the VM or LXC and talk to the hosting provider’s data source and get the configuration information which it then uses to configure the VM.
 
 The configuration information can include user-data like
 * SSH keys
@@ -31,7 +31,7 @@ What’s even the difference between your homelab and Cloudflare for example, ri
 ## What OS to choose?
 The major ones are usually cloudInit supported (ubuntu,debian, CentStream, almaLinux). You can find some of them on these sites, but you can just google around as well.
 
-Or you can also create them yourself, but that’s for future tutorial!
+Or you can also create them yourself, but that’s for future tutorials!
 ```
 https://cloud-init.io/
 https://cloud.debian.org/images/cloud/
@@ -58,9 +58,9 @@ Create empty VM shell in proxmox with VirtIO bridge
 qm create 7000 --memory 1024 --core 1 --name debian-cloud --net0 virtio,bridge=vmbr0
 ```
 
-We can modify this image and we can for example install desired packages, like “qemu tools”, but you can add any package you want.
+We can modify this image and we can, for example, install desired packages, like “qemu tools”, but you can add any package you want.
 
-For that we need to do one time installation of [libguestfs-tools](https://www.libguestfs.org/) on our proxmox node and then run command below
+For that we need to do one time installation of [libguestfs-tools](https://www.libguestfs.org/) on our proxmox node and then run the command below
 
 ```
 apt install libguestfs-tools
@@ -98,7 +98,7 @@ qm set 7000 --boot c --bootdisk scsi0
 > For many Cloud-Init images, it is required to configure a serial console and use it as a display. 
 {: .prompt-danger }
 
-It cost me many hours of troubleshooting kernel panics on boot after I've finally learned to ALWAYS add serial interface.
+It cost me many hours of troubleshooting kernel panics on boot after I've finally learned to ALWAYS add a serial interface.
 
 
 ```
@@ -118,7 +118,7 @@ We have several options how to move forward
 configure cloud-init config now then create template (If you know all of your VM’s will share the same settings)
 2. create template and then configure cloud-init config
 
-These 2 options also comes with 2 different sub-options and that is using Full clone or Linked clone
+These 2 options also come with 2 different sub-options and that is using Full clone or Linked clone
 
 Full Clone
 A full clone VM is a complete copy and is fully independent of the original VM or VM Template, but it requires the same disk space as the original.
@@ -194,7 +194,7 @@ Wait until the VM starts and ssh with the public key
 $ ssh -l root 192.168.100.100
 ```
 
-Success! When cloud-init first goes up, it will install some packages, so 1st boot takes a little longer to release apt. But besides that, everything is set a ready for future quick and easy deploy.
+Success! When cloud-init first goes up, it will install some packages, so 1st boot takes a little longer to release apt. But besides that, everything is set a ready for future quick and easy deployment.
 
 
 

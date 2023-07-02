@@ -11,10 +11,10 @@ mermaid: false
 > I've felt that GAM to GAMADV-XTD3 [upgrade tutorial](https://github.com/taers232c/GAMADV-XTD3/wiki/How-to-Upgrade-from-Standard-GAM) is unnecessary too complex, so I've created my own.
 {: .prompt-info }
 
-## What's GAM and GAMADV-XTD3?
-GAM (Google Apps Manager) and GAMADV-XTD3 are free, open source command line tools for Google Workspace administrators that make managing a domain/s easier and setting up users quicker and pain-free.
+## What are GAM and GAMADV-XTD3?
+GAM (Google Apps Manager) and GAMADV-XTD3 are free, open source, command line tools for Google Workspace administrators that make managing a domain/s easier and setting up users quicker and pain-free.
 
-GAMADV-XTD3 is rewrite/extension of GAM, but with some upgrades, and more aviable features you can use.
+GAMADV-XTD3 is a rewrite/extension of GAM, but with some upgrades, and more available features you can use.
 
 
 It allows you to do bulk actions, that would usually take a lot of time and even automate them.
@@ -34,7 +34,7 @@ Check out GAMADV-XTD3 [github documentation](https://github.com/taers232c/GAMADV
 ```bash
 bash <(curl -s -S -L https://raw.githubusercontent.com/taers232c/GAMADV-XTD3/master/src/gam-install.sh)
 ```
-Follow the installation process until you see Google API inicilaization:
+Follow the installation process until you see Google API initialization:
 ```bash
 Type NO
 ```
@@ -79,7 +79,7 @@ drwxr-xr-x 2 root root 4096 Jun 15 06:38 gamcache
 -rw-r--r-- 1 root root 2394 May 30 08:02 oauth2service.json
 ```
 
-### 6. Update your project with/without local browser
+### 6. Update your project with/without a local browser
 > This is neccesarry becouse GAMADV-XTD3 uses some new APIs that GAM didnt and we need to allow them as wel.
 {: .prompt-info }
 
@@ -94,9 +94,9 @@ Your browser has been opened to visit:
 ```
 
 
-You will receieve the browser link (either open it locally or paste it to another machine with browser)
+You will receive the browser link (either open it locally or paste it to another machine with a browser)
 
-If the link isnt opened localy and you will get message "unable to connect" error"
+If the link isn't opened locally and you will get the message "unable to connect" error"
 
 Just copy the URL of the browser with the error and paste it to terminal
 
@@ -106,13 +106,13 @@ Enter verification code or paste "Unable to connect" URL from other computer (on
 ```
 
 ### 7. Enable GAMADV-XTD3 client access
-Remoe old oath2.txt file (we need to create a new one because syntax is not the same with previous GAM)
+Remove the old oath2.txt file (we need to create a new one because the syntax is not the same as with the previous GAM)
 
 ```bash
 rm -f /root/admin/GAMConfig/oauth2.txt
 ```
 
-Test if it's everthing ready with
+Test if it's everything ready with
 ```bash
 gam version
 ```
@@ -201,7 +201,7 @@ c
 
 Enter your Google Workspace admin email address? admin@domain.test
 ```
-Paste the recieved link to the browser again.
+Paste the received link to the browser again.
 
 You should see 
 ```bash
@@ -214,22 +214,22 @@ admin@server:/root/admin/bin/gamadv-xtd3$
 
 ### 9. Enable GAMADV-XTD3 service account access
 ```bash
-./gam user admin@domain.test check serviceaccount
+gam user someuser@domain.test check serviceaccount
 ```
 
 > If some of them fail, follow to link and try again until you see all passed and you are authorized
 {: .prompt-warning }
 
-When you see following procceed to next step.
+When you see the following proceed to the next step.
 ```bash
 All scopes PASSED!
 
 Service Account Client name: 109999999999999 is fully authorized.
 ```
 
-### 10. Change the default config value (
+### 10. Change the default config value 
 
-This is important in a case, if you want to run GAM in a crontab or systemcd service (without loaded environment)
+This is important in case you want to run GAM in a crontab or systemd service (without loaded environment).
 
 ```bash
 vim /root/.gam/gam.cfg
@@ -239,7 +239,7 @@ cache_dir = /root/admin/GAMConfig/gamcache
 config_dir = /root/admin/GAMConfig/
 ```
 
-### Finally test if everthing is working
+### Finally, test if everything is working
 ```bash
 gam info domain
 ```

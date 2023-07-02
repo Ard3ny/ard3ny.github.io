@@ -22,14 +22,14 @@ sudo apparmor_parser -R /etc/apparmor.d/usr.sbin.sssd
 systemctl restart sssd
 ```
 
-### Refrence
+### Reference
 https://bgstack15.wordpress.com/2020/12/03/disable-apparmor-for-sssd/
 
 
 
 ## Cutting down the amount of information that is being sent
 
-The first thing you should do is to cut on the amount of internet traffic which needs to be sent and search through
+The first thing you should do is to cut on the amount of internet traffic that needs to be sent and search through
 
 What do you get from your ldapsearch request?
 
@@ -42,11 +42,11 @@ wc -l test1
 8417 test1
 ```
 
-Try to get this number as low as possible by creating smallest list of information possible (number of users, groups etc.)
+Try to get this number as low as possible by creating the smallest list of information possible (number of users, groups etc.)
 
-In some cloud provider cases like, Google workspace, you can select which Users, groups, OUs you want to include.  
+In some cloud provider cases like, Google Workspace, you can select which Users, groups, OUs you want to include.  
 
-Maybe you dont need the whole company and all of the OUs, maybe you can have a group which contains all the necessary users. Start by cutting the these output informations first , which will help with the traffic and CLoud Provider (google workspace) site of things 
+Maybe you don't need the whole company and all of the OUs, maybe you can have a group that contains all the necessary users. Start by cutting these output informations first, which will help with the traffic and CLoud Provider (google workspace) site of things 
 
 
 

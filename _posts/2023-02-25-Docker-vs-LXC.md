@@ -2,11 +2,12 @@
 title: Docker vs LXC
 date: 2023-02-25 11:03:29 +0100
 categories: [Homelab]
-tags: [docker, proxmox, ]
+tags: [docker, proxmox]
 math: false
 mermaid: false
 ---
-## What is Virtual machine and what’s container (VM vs VE)
+
+## What is a Virtual machine and what’s a container (VM vs VE)
 
 A Virtual Machine (VM) is a complete software emulation of a physical machine. It allows multiple operating systems to run simultaneously on a single physical machine, each with full isolation between these OS’s.
 
@@ -47,7 +48,7 @@ Docker also provides a vast ecosystem of images and tools that developers can us
 ### LXC – Linux containers
 Pronounced lex-cee
 
-It’s a solution for virtualizing software at the operating system level within the Linux kernel. Unlike traditional hypervisors (VMware, KVM and Hyper-V), LXC lets you run single applications in virtual environments, although you can also virtualize an entire operating system inside an LXC container, if you’d like.
+It’s a solution for virtualizing software at the operating system level within the Linux kernel. Unlike traditional hypervisors (VMware, KVM and Hyper-V), LXC lets you run single applications in virtual environments, although you can also virtualize an entire operating system inside an LXC container if you’d like.
 
 LXC’s main advantages include making it easy to control a virtual environment using userspace tools from the host OS, requiring less overhead than a traditional hypervisor and increasing the portability of individual apps by making it possible to distribute them inside containers.
 
@@ -97,7 +98,7 @@ The second factor to consider is your host environment. LXD only supports Linux 
 
 ## Proxmox LXC vs Docker
 
-I’m a big proxmox fan because it’s a great open source project, easy to use, ZFS supported hypervisor and use it on pretty much daily basis in my work or my homelab I’m going to mention it’s LXC hypervisor as well.
+I’m a big proxmox fan because it’s a great open source project, easy to use, ZFS supported hypervisor and use it on pretty much a daily basis in my work or my homelab I’m going to mention it’s LXC hypervisor as well.
 
 Proxmox Containers are how we refer to containers that are created and managed using the Proxmox Container Toolkit (pct). They also target system virtualization and use LXC as the basis of the container offering.
 

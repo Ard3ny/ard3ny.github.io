@@ -7,9 +7,9 @@ math: false
 mermaid: false
 ---
 ## What is rsync
-[Rsync](https://linux.die.net/man/1/rsync) (short for remote sync) is a unix based tool, that is used as remote and local file synchronization. Rsync is great for complex file syncs and for transferring large number of files.
+[Rsync](https://linux.die.net/man/1/rsync) (short for remote sync) is a unix-based tool, that is used as remote and local file synchronization. Rsync is great for complex file syncs and for transferring large numbers of files.
 
-The main advantage of rsync is what is called a delta-transfer algorithm which compares files from source and destination and sends only the differences between them.
+The main advantage of rsync is what is called a delta-transfer algorithm which compares files from the source and destination and sends only the differences between them.
 
 This means that if you have a large database on server 1, and you copy it to server 2, the first transfer will be normal, but subsequent transfers will be much faster. Which makes it great for backup
 
@@ -36,9 +36,9 @@ ssh-keygen
 ```
 and just use defaults with enter key. If you feel like you know what are doing feel free to change it.
 
-Once you are done, the SSH key ssh should be generated and stored in ~/.ssh/ (where ~ is your home directory and has different name)
+Once you are done, the SSH key ssh should be generated and stored in ~/.ssh/ (where ~ is your home directory and has a different name)
 
-By default, the generated key’s algorithm type is RSA, and its bit size is 3072 bit. But you can change it if you want. I’ll make tutorials on this in the future and go over differences and pros and cos, but for know just mind that it’s RSA .
+By default, the generated key’s algorithm type is RSA, and its bit size is 3072 bit. But you can change it if you want. I’ll make tutorials on this in the future and go over differences and pros and cons, but for now, just mind that it’s RSA .
 
 Now you have to copy the public key to the server 2. There are multiple ways to do it, I’ll show you two:
 
@@ -63,7 +63,7 @@ systemctl reload sshd
 ## Add devices to the VPN network (Optional)
 Because of attacks like [man-in-the-middle](https://en.wikipedia.org/wiki/Man-in-the-middle_attack) and many many more… it’s a good practice to use VPN network to back up data. There are many VPNs out there, but I prefer and use Nebird, and I’ve already made a tutorial on it here!
 
-Also, it’s very useful if you don’t have public IP address, which would make you set up port forwarding on your router and complicate all the things.
+Also, it’s very useful if you don’t have public IP address, which would make you set up port forwarding on your router and complicate all things.
 
 When you are done with the Netbird steps, and you can see all your peers in the browser console, try pinging the IP of server 1 (backup server) from server 2 (server we want to backup from) and vice-versa.
 
@@ -76,7 +76,7 @@ When you are done with the Netbird steps, and you can see all your peers in the 
 rsync [option] [origin] [destination]
 ```
 
-We will use few additions flags as well
+We will use few additional flags as well
 ```bash
 rsync -avz --exclude source_destination ssh_host:destination_path
 ```
@@ -90,14 +90,14 @@ rsync -avz --exclude source_destination ssh_host:destination_path
 * preserve group
 * preserve modification time
 * preserve ownership
-* -v for verbose bcs default is silent transfer, but this gives you info about where the data is going and summary at the end
+* -v for verbose bcs default is silent transfer, but this gives you info about where the data is going and a summary at the end
 
-* -z for compress (before data transfer the data is compressed which lowers the size and therefore time that is being sent over the internet) There are levels of compression from 1-9 (1 is least compressed and fastest, 9 is the most compressed therefore slowest to compress). The default is 6, so let’s stick with that.
+* -z for compress (before data transfer the data is compressed which lowers the size and therefore time that is being sent over the internet) There are levels of compression from 1-9 (1 is the least compressed and fastest, 9 is the most compressed therefore slowest to compress). The default is 6, so let’s stick with that.
 
 
 ## Daily backup of a WordPress site
 
-Let’s try this on the real life example. You can see below the script which will do daily backup of WordPress site to my proxmox storage server.
+Let’s try this on a real life example. You can see below the script which will do daily backup of WordPress site to my proxmox storage server.
 
 The script will be run on the wordpress server VM and it will PUSH the data, to the backup server.
 
@@ -158,5 +158,5 @@ This will make it so, it runs every night at midnight.
 
 
 ### Conclusion
-Congratulation, you are now protected from all ever losing your precious data. Well, at least somehow… According to the good practices rule book, you should follow [3-2-1](https://www.uschamber.com/co/run/technology/3-2-1-backup-rule) backup rule and that’s something you can certainly do, but not here in this tutorial, so have a nice day!
+Congratulation, you are now protected from ever losing your precious data. Well, at least somehow… According to the good practices rule book, you should follow [3-2-1](https://www.uschamber.com/co/run/technology/3-2-1-backup-rule) backup rule and that’s something you can certainly do, but not here in this tutorial, so have a nice day!
 
