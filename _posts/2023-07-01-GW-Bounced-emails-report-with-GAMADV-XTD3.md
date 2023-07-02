@@ -1,6 +1,6 @@
 ---
 title: GW Bounced emails report with GAMADV-XTD3
-date: 2023-07-06 11:00:00 +0100
+date: 2023-07-01 11:00:00 +0100
 categories: [Sysadmin]
 tags: [sysadmin, gamadv-xtd3, google-workspace, bash]
 math: false
