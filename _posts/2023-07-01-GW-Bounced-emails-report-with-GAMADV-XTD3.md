@@ -67,7 +67,7 @@ attachment="/tmp/output.csv"
 chmod +x /root/scripts/bounced_mails_report.sh
 ```
 
-> Run the script manually and check if everything is working a intended.
+> Run the script manually and check if everything is working as intended.
 {: .prompt-info }
 
 ## Add the script to the crontab
