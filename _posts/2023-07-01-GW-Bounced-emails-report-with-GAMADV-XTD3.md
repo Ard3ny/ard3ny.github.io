@@ -42,8 +42,8 @@ vim /root/scripts/bounced_mails_report.sh
 #For the email filter
 #-------------------------------------------------------------------------------------
 today=$(date -d "today" +"%d/%m/%Y")
-yesterday=$(date -d "1 days ago" +"%d/%m/%Y")
-weekago=$(date -d "7 days ago" +"%d/%m/%Y")
+yesterday=$(date -d "1 days ago" +"%Y/%m/%d")
+weekago=$(date -d "7 days ago" +"%Y/%m/%d")
 mail_filter_from="mailer-daemon@googlemail.com"
 
 #For email report message
@@ -56,7 +56,7 @@ message="CSV report in the attachment"
 attachment="/tmp/output.csv"
 
 
-/root/bin/gamadv-xtd3/gam all users print messages query "from:$mail_filter_from after:$weekago before:$today" headers User,threadId,id,Date,Subject,From,To,Delivered-To,Content-Type,Message-ID,List-ID > $attachment
+/root/bin/gamadv-xtd3/gam all users print messages query "from:mailer-daemon@googlemail.com after:$weekago before:$today" headers User,Date,Subject showbody > $attachment
 
 /root/bin/gamadv-xtd3/gam user "$sender" sendemail recipient "$recipient" cc "$cc" subject "$subject" message "$message" attach $attachment
 ```
