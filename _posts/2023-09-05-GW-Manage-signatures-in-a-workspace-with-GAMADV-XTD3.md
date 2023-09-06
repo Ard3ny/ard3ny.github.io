@@ -1,5 +1,5 @@
 ---
-title: GW Manage signatures for all users in a workspace with GAMADV-XTD3
+title: GW Manage signatures off all users in a workspace with GAMADV-XTD3
 date: 2023-09-05 12:00:00 +0100
 categories: [Sysadmin]
 tags: [sysadmin, gamadv-xtd3, google-workspace]
@@ -88,7 +88,7 @@ gam user <User Email Address> print allfields
 ```bash
 gam ou <OU_name> print signature > signatures.csv
 ```
-Don't forget to change <OU_name> (without <> symbols)
+Don't forget to change "<OU_name>" (without <> symbols)
 
 ## Edit the file so only people without signature stays and pull necessary variable values from GW
 ```bash
@@ -105,7 +105,7 @@ gam csvkmd users signatures.csv keyfield User matchfield isPrimary True print fi
 ```bash
 gam csv Signatures_to_be_updated.csv matchfield orgUnitPath "^/<OU_name>.*" gam user ~primaryEmail signature file signature_template html replace first ~name.givenName replace last ~name.familyName replace title ~organizations.0.title replace phone ~phones.0.value
 ```
-Don't forget to change <OU_name> (without <> symbols)
+Don't forget to change "<OU_name>" (without <> symbols)
 If you have added more user variables, add those as well.
 
 
