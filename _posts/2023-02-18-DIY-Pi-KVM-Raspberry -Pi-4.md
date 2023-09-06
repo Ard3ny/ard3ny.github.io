@@ -164,7 +164,7 @@ You also want to keep up with latest features and bug fixes. To do that, you nee
 Type out following commands
 
 ```bash
-#become a root
+#become a root (default password: "root")
 su -
 #set filestem to read&write
 rw
@@ -234,3 +234,30 @@ Now all you have to do is type the link from the terminal into your browser.
 
 You should see new the device in your Netbird peer’s menu and you should be able to SSH into it and even your browser and all the pi-KVM feature! (From the device that is also added in netbird peers of course)
 
+
+## Tailscale alternative
+From Tailscale documentation
+https://docs.pikvm.org/tailscale/
+
+1. Install the client, run tailscaled service and register it in the network:
+```bash
+[root@pikvm ~]# rw
+[root@pikvm ~]# pacman -Syu
+[root@pikvm ~]# pacman -S tailscale-pikvm
+[root@pikvm ~]# systemctl enable --now tailscaled
+[root@pikvm ~]# tailscale up
+```
+2. Follow the link to authorize this installation. You likely want to disable [key expiry](https://tailscale.com/kb/1028/key-expiry/)
+
+
+3. After authorization success, reboot to make sure that everything works correctly:
+
+```bash
+[root@pikvm ~]# reboot
+```
+
+Now, you can view the IP address of the Tailscale network interface:
+```bash
+[root@pikvm ~]# ip addr show tailscale0
+```
+If everything is successful, PiKVM will become a member of your VPN network.
