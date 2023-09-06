@@ -53,7 +53,7 @@ vim signature_template
                                         <td colspan="2" style="padding-bottom: 5px; color: rgb(149, 183, 4); font-size: 18px;">{first} {last}</td>
                                       </tr>
                                       <tr>
-                                        <td colspan="2" style="color: rgb(0, 0, 0); font-size: 14px;"><i>{title}</i></td>
+                                        <td colspan="2" style="color: rgb(0, 0, 0); font-size: 14px;"><i>{RT}{title}{/RT}</i></td>
                                       </tr>
                                       <tr>
                                         <td colspan="2" style="color: rgb(0, 0, 0); font-size: 14px;"><strong>bigCompany s.r.o.</strong></td>
@@ -71,10 +71,12 @@ vim signature_template
                                         <td valign="top" style="vertical-align: top; font-size: 14px;">
                                           https://www.example.test/
 ```
-You've maybe noticed multiple variables in the template. 
+You've maybe noticed multiple variables/tags in the template. 
 {first}, {last}, {last}, {title}, {phone}
 
-These are going to be replaced by the value of your User. So if you are using your own signature template, you need to add these variables.
+These are going to be dynamically replaced by the value of your User. So if you are using your own signature template, you need to add these variables.
+
+Adding {RT}{/RT} around the tag makes the variable skipable if user/users don't have it, therefore not leaving an empty ugly space.
 
 ### More/less values
 You can add some other variables which will be pulled from the user. To list all possible values
@@ -94,7 +96,7 @@ gam csvkmd users signatures.csv keyfield User matchfield isPrimary True skipfiel
 ```
 This is going to take the list of all users and their signatures, leaving only the ones without the signature variable filled out and print them in the wanted format with all the necessary variable values (name,organizations,ou,phones)
 
-If you want to update signature of all the people (not only the ones without signature)
+If you want to update the signatures of all the people (not only the ones without signatures)
 ```bash
 gam csvkmd users signatures.csv keyfield User matchfield isPrimary True print fields name,organizations,ou,phones > Signatures_to_be_updated.csv
 ```
@@ -121,6 +123,9 @@ vim /root/update_signatures.sh
 #/root/bin/gamadv-xtd3/gam csvkmd users signatures.csv keyfield User matchfield isPrimary True print fields name,organizations,ou,phones > Signatures_to_be_updated.csv
 
 /root/bin/gamadv-xtd3/gam csv Signatures_to_be_updated.csv matchfield orgUnitPath "^/<OU_name>.*" gam user ~primaryEmail signature file signature_template html replace first ~name.givenName replace last ~name.familyName replace title ~organizations.0.title replace phone ~phones.0.value
+```
+```bash
+chmod +x /root/update_signatures.sh
 ```
 
 ## Create a cronjob
