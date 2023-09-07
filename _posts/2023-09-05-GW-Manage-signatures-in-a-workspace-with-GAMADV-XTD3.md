@@ -26,9 +26,17 @@ Check out my [previous post](https://blog.thetechcorner.sk/posts/Upgrade-GAMADV-
 You can either create your own or download it. There are plenty of sites just for this.
 
 I'll be using mine
+
+### Create working directory 
 ```bash
-vim signature_template
+mkdir -p /root/scripts/update_signatures/
+cd /root/scripts/update_signatures/
 ```
+
+```bash
+vim /root/scripts/update_signatures/signature_template
+```
+
 ```bash
 <div dir="ltr">
   <div style="margin: 8px 0px 0px; padding: 0px; color: rgb(34, 34, 34); font-family: &quot;Google Sans&quot;, Roboto, RobotoDraft, Helvetica, Arial, sans-serif;">
@@ -119,26 +127,26 @@ If you have added more user variables, add those as well.
 # Run the script in the crontab
 ## Create script
 ```bash
-vim /root/update_signatures.sh
+vim /root/scripts/update_signatures/update_signatures.sh
 ```
 
 ```bash
 #!/bin/bash
-/root/bin/gamadv-xtd3/gam ou <OU_name> print signature > signatures.csv
+/root/bin/gamadv-xtd3/gam ou <OU_name> print signature > /root/scripts/update_signatures/signatures.csv
 
-/root/bin/gamadv-xtd3/gam csvkmd users signatures.csv keyfield User matchfield isPrimary True skipfield signature '.+' print fields name,organizations,ou,phones > Signatures_to_be_updated.csv
-#/root/bin/gamadv-xtd3/gam csvkmd users signatures.csv keyfield User matchfield isPrimary True print fields name,organizations,ou,phones > Signatures_to_be_updated.csv
+/root/bin/gamadv-xtd3/gam csvkmd users signatures.csv keyfield User matchfield isPrimary True skipfield signature '.+' print fields name,organizations,ou,phones > /root/scripts/update_signatures/Signatures_to_be_updated.csv
+#/root/bin/gamadv-xtd3/gam csvkmd users signatures.csv keyfield User matchfield isPrimary True print fields name,organizations,ou,phones > /root/scripts/update_signatures/Signatures_to_be_updated.csv
 
-/root/bin/gamadv-xtd3/gam csv Signatures_to_be_updated.csv matchfield orgUnitPath "^/<OU_name>.*" gam user ~primaryEmail signature file signature_template html replace first ~name.givenName replace last ~name.familyName replace title ~organizations.0.title replace phone ~phones.0.value
+/root/bin/gamadv-xtd3/gam csv /root/scripts/update_signatures/Signatures_to_be_updated.csv matchfield orgUnitPath "^/<OU_name>.*" gam user ~primaryEmail signature file /root/scripts/update_signatures/signature_template html replace first ~name.givenName replace last ~name.familyName replace title ~organizations.0.title replace phone ~phones.0.value
 ```
 ```bash
-chmod +x /root/update_signatures.sh
+chmod +x /root/scripts/update_signatures/update_signatures.sh
 ```
 
 ## Create a cronjob
 Run daily or change value according to your needs
 
 ```bash
-0 8 * * * /root/update_signatures.sh 2>&1 >> /tmp/signatures_cron.log
+0 8 * * * /root/scripts/update_signatures/update_signatures.sh 2>&1 >> /tmp/signatures_cron.log
 ```
 
