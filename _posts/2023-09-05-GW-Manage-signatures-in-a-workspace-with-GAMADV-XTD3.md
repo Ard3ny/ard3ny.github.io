@@ -78,6 +78,13 @@ These are going to be dynamically replaced by the value of your User. So if you 
 
 Adding {RT}{/RT} around the tag makes the variable skipable if user/users don't have it, therefore not leaving an empty ugly space.
 
+
+> Note that for this to work USER HAVE TO HAVE THESE FILLED OUT. Otherwise, you'll get the error phones.0.value" not found, organizations.0.title etc..
+{: .prompt-warning}
+
+> I suggest only using First and Last Name, if your company doesn't by default fill Title and phone number.
+{: .prompt-info}
+
 ### More/less values
 You can add some other variables which will be pulled from the user. To list all possible values
 ```bash
