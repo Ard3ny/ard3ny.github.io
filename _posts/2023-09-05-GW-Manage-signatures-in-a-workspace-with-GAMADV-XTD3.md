@@ -150,3 +150,9 @@ Run daily or change value according to your needs
 0 8 * * * /root/scripts/update_signatures/update_signatures.sh 2>&1 >> /tmp/signatures_cron.log
 ```
 
+## Test cronjob 
+To see if your cronjob is working, you can force-run all your cronjobs with the following command
+
+```bash
+crontab -l | grep -v '^#' | cut -f 6- -d ' ' | while read CMD; do eval $CMD; done
+```
