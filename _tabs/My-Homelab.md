@@ -103,5 +103,3 @@ I'm only port forwarding some of my game servers for better latency.
 
 ## Conclusion
 Here I end my humble homelab tour. I'm going to be posting about everything I've mentioned and linking it here. I also plan on adding more hardware and services in to the future and I'll definitely document it as well, so if you are interested, check out my blog from time to time!
-
-If you have any questions, you can [email me](javascript:location.href = 'mailto:' + ['filipzverec','gmail.com'].join('@')) any time.
