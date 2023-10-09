@@ -40,15 +40,15 @@ I also like to watch movies a lot, so I want to run my own plex/jellyfin and don
 
 * 1 mini pc (AMD Soft Router Ryzen 7 5600U) in Node 304 chassis
 Running truenas as hypervisor
-### VM's:
--proxmox
+#### VM's:
+-proxmox\
 -OPNsense
-### Containers:
--*arrs*
--nextcloud
--jellyfin
--Pi Hole
--traefik
+#### Containers:
+-*arrs*\
+-nextcloud\
+-jellyfin\
+-Pi Hole\
+-traefik\
 ...
 
 * Raspberry Pi 4B
