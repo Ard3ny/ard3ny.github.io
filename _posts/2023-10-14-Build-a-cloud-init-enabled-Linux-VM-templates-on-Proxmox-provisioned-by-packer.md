@@ -19,12 +19,7 @@ To fix this, I combined shell, proxmox CLI and packer to regularly run updates o
 
 You can the find it on my [GitHub.](https://github.com/Ard3ny/proxmox-build-template) 
 
-# Disclaimer
-
-I've forked this project originally created by https://github.com/mfin/proxmox-build-template. I've fix few bugs, added more cloud-init templates and extended documentation, so big shoutout goes to him.
-
-
-# What's this project about?  
+# What's this project about?  
 
 This project builds, configures and maintain cloud-init enabled Linux VMs and transform them into templates on Proxmox hypervisor.
 
@@ -36,9 +31,9 @@ To automate this chain, cloud-init images are used in combination with proxmox C
 
 1. Service executes the nightly job, which first fetches the latest cloud-init images, then it creates and configures Proxmox VMs.
 
-2. `packer` creates templates from newly prepared VMs and configures the templates with cloud-init defaults (SSH user and public key). 
+2. `packer` creates templates from newly prepared VMs and configures the templates with cloud-init defaults (SSH user and public key). 
 
-You can easily customize this and add more cloud-init defaults. 
+You can easily customize this and add more cloud-init defaults. 
 List of all possible defaults:
 https://pve.proxmox.com/wiki/Cloud-Init_Support
 
@@ -47,6 +42,7 @@ If the systemd service fails for any reason, it's configured to trigger the `not
 
 
 # Currently used OSs
+
 * Debian 12 (bookworm)
 * AlmaLinux 9 (selinux set to permissive)
 * Ubuntu 22.04.3 (Jammy)
@@ -57,23 +53,28 @@ Installation is intended to be done on the Proxmox host itself, otherwise it won
 
 ### Install dependencies
 ```
-apt-get update && apt-get install packer libguestfs-tools wget vim git software-properties-common
-```
-```
-curl -fsSL https://apt.releases.hashicorp.com/gpg | apt-key add -
-apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
+apt-get update && apt-get install libguestfs-tools wget vim git unzip
 ```
 
-```
-apt-get update && apt-get install packer
-```
+### Manually install packer 
 
-Make sure these VM IDs are not used:
+Because I'm using token ID/secret as proxmox authentication method, packer must be install manually to attain newer version than proxmox currently supports as default package. New versions support this auth method and also fixes a lot of bugs you may encounter.
+
+https://developer.hashicorp.com/packer/tutorials/docker-get-started/get-started-install-cli
+
+TLDR 
+Download the newest version (currently 201.9.4)
+wget https://developer.hashicorp.com/packer/downloads#:~:text=Version%3A%201.9.4-,Download,-AMD64
+
+Unzip && move the precompile file
+unzip packer*
+mv packer /usr/bin/
+
+
+### Make sure these VM IDs are not used:
 8999, 9000, 8000, 7999, 7000, 6999
 
 
-Note: You may want to install packer manually for newer version, which fixed a lot of bugs I've encountered.
-https://developer.hashicorp.com/packer/tutorials/docker-get-started/get-started-install-cli
 
 ### Clone the repository
 
@@ -84,6 +85,32 @@ git clone https://github.com/Ard3ny/proxmox-build-template.git /opt/build-templa
 cd /opt/build-template
 ```
 
+### Create token/secret in proxmox
+
+1. In Proxmox - > Datacenter -> Permissions -> Users -> Add
+![Add-User](/assets/img/posts/2023-10-14-Build-a-cloud-init-enabled-Linux-VM-templates-on-Proxmox-provisioned-by-packer.md/add_user.png)
+
+2. In Proxmox - > Datacenter -> Permissions -> API Tokens -> Add
+![Add-Token](/assets/img/posts/2023-10-14-Build-a-cloud-init-enabled-Linux-VM-templates-on-Proxmox-provisioned-by-packer.md/add_token.png)
+
+> Make sure privilige separation is unchecked.
+{: .prompt-warning}
+
+When you click add you will get secret and ID info. Save those.
+
+![Save-info](/assets/img/posts/2023-10-14-Build-a-cloud-init-enabled-Linux-VM-templates-on-Proxmox-provisioned-by-packer.md/save_token_info.png)
+
+3. Add permissions for the user
+
+> To work properly user needs "PVEadmin" and "administrator" for whole / 
+{: .prompt-info}
+
+![Add-perm1](/assets/img/posts/2023-10-14-Build-a-cloud-init-enabled-Linux-VM-templates-on-Proxmox-provisioned-by-packer.md/user_permissions.png)
+
+![Add-perm2](/assets/img/posts/2023-10-14-Build-a-cloud-init-enabled-Linux-VM-templates-on-Proxmox-provisioned-by-packer.md/user_permissions3.png)
+
+Complete.
+ 
 ### Configuration
 
 Copy the environment variable files and edit them with your own parameters.
@@ -105,12 +132,19 @@ systemctl enable --now build-template.timer
 ```
 
 ## Run it now (for testing)
+
 ```
 /usr/bin/make -C /opt/build-template
 ```
 
+# Disclaimer
+
+I've forked this project originally created by https://github.com/mfin/proxmox-build-template
+I've fix few bugs, added more cloud-init templates, changed install and auth methods and extended documentation, so big shoutout goes to him.
+
 
 # Useful links
+
 https://developer.hashicorp.com/packer/integrations/hashicorp/proxmox/latest/components/builder/clone
 https://www.libguestfs.org/virt-customize.1.html
 
