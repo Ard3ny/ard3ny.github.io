@@ -87,10 +87,10 @@ cd /opt/build-template
 
 ### Create token/secret in proxmox
 
-1. In Proxmox - > Datacenter -> Permissions -> Users -> Add
+#### In Proxmox - > Datacenter -> Permissions -> Users -> Add
 ![Add-User](/assets/img/posts/2023-10-14-Build-a-cloud-init-enabled-Linux-VM-templates-on-Proxmox-provisioned-by-packer.md/add_user.png)
 
-2. In Proxmox - > Datacenter -> Permissions -> API Tokens -> Add
+#### In Proxmox - > Datacenter -> Permissions -> API Tokens -> Add
 ![Add-Token](/assets/img/posts/2023-10-14-Build-a-cloud-init-enabled-Linux-VM-templates-on-Proxmox-provisioned-by-packer.md/add_token.png)
 
 > Make sure privilige separation is unchecked.
@@ -100,7 +100,7 @@ When you click add you will get secret and ID info. Save those.
 
 ![Save-info](/assets/img/posts/2023-10-14-Build-a-cloud-init-enabled-Linux-VM-templates-on-Proxmox-provisioned-by-packer.md/save_token_info.png)
 
-3. Add permissions for the user
+#### Add permissions for the user
 
 > To work properly user needs "PVEadmin" and "administrator" for whole / 
 {: .prompt-info}
