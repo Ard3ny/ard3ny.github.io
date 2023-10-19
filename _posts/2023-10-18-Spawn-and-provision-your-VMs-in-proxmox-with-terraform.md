@@ -49,39 +49,16 @@ sudo apt install terraform
 ```
 
 
-### Create token/secret in proxmox (already showed you in part 1)
+### Create token/secret in proxmox (GUI version in part 1)
 
+### TLDR Over CLI 
 
-#### In Proxmox - > Datacenter -> Permissions -> Users -> Add
-![Add-User](/assets/img/posts/2023-10-14-Build-a-cloud-init-enabled-Linux-VM-templates-on-Proxmox-provisioned-by-packer.md/add_user.png)
-
-
-#### In Proxmox - > Datacenter -> Permissions -> API Tokens -> Add
-![Add-Token](/assets/img/posts/2023-10-14-Build-a-cloud-init-enabled-Linux-VM-templates-on-Proxmox-provisioned-by-packer.md/add_token.png)
-
-
-> Make sure privilige separation is unchecked.
-{: .prompt-warning}
-
-
-When you click add, you will get secret and ID info. Save those.
-
-
-![Save-info](/assets/img/posts/2023-10-14-Build-a-cloud-init-enabled-Linux-VM-templates-on-Proxmox-provisioned-by-packer.md/save_token_info.png)
-
-
-#### Add permissions for the user
-
-
-> To work properly user needs "PVEadmin" and "administrator" for whole /
-{: .prompt-info}
-
-
-![Add-perm1](/assets/img/posts/2023-10-14-Build-a-cloud-init-enabled-Linux-VM-templates-on-Proxmox-provisioned-by-packer.md/user_permissions.png)
-
-
-![Add-perm2](/assets/img/posts/2023-10-14-Build-a-cloud-init-enabled-Linux-VM-templates-on-Proxmox-provisioned-by-packer.md/user_permissions3.png)
-
+```
+pveum user add kubernetes@pve
+pveum acl modify / -user kubernetes@pve -role Administrator
+pveum acl modify / -user kubernetes@pve -role PVEAdmin
+pveum user token add kubernetes@pve test_id -privsep 0
+```
 
 Complete.
 

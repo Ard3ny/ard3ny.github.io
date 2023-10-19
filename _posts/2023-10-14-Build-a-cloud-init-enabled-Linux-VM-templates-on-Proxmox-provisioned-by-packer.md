@@ -87,6 +87,8 @@ cd /opt/build-template
 
 ### Create token/secret in proxmox
 
+### Over GUI
+
 #### In Proxmox - > Datacenter -> Permissions -> Users -> Add
 ![Add-User](/assets/img/posts/2023-10-14-Build-a-cloud-init-enabled-Linux-VM-templates-on-Proxmox-provisioned-by-packer.md/add_user.png)
 
@@ -108,6 +110,13 @@ When you click add you will get secret and ID info. Save those.
 ![Add-perm1](/assets/img/posts/2023-10-14-Build-a-cloud-init-enabled-Linux-VM-templates-on-Proxmox-provisioned-by-packer.md/user_permissions.png)
 
 ![Add-perm2](/assets/img/posts/2023-10-14-Build-a-cloud-init-enabled-Linux-VM-templates-on-Proxmox-provisioned-by-packer.md/user_permissions3.png)
+
+### Or Over CLI (you dont have to do both)
+pveum user add kubernetes@pve
+pveum acl modify / -user kubernetes@pve -role Administrator
+pveum acl modify / -user kubernetes@pve -role PVEAdmin
+pveum user token add kubernetes@pve test_id -privsep 0
+
 
 Complete.
  
