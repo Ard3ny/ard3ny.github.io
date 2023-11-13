@@ -1,5 +1,5 @@
 ---
-title: Spawn and provision your VMs in proxmox with terraform.md [Part 2]
+title: Spawn and provision your VMs in proxmox with terraform [Part 2]
 date: 2023-10-18 20:00:00 +0100
 categories: [Sysadmin]
 tags: [sysadmin, terraform, cloud-init, proxmox, templates]
