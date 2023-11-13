@@ -130,22 +130,18 @@ On the screen, you will see the access key and the secret.
 
 Keys should look like this. (ps: I've already destroyed this pair so they wont work so don't bother)
 
-
+```
 Access key
-```
 AKIA4SKI3U6JYTBZGSE5
-```  
+ 
 Secret  
-```
 S+4Q0cOMz71ACVzTcjvTAHTUeAN19q1HDz8Jzc7b
-```  
-
+```
+  
 
 Save them somewhere, or download them as .csv file.
 
-
-
-### Create ssh key pair  
+### Create ssh key pair
 To be able to access your EC2 instance over SSH, you have to create SSH key pair.
 
 
@@ -167,9 +163,7 @@ I'm going to call my key pair "filipkey".
 
 Choose RSA type and .pem format and then click on "Create key pair".
 
-
-![SSH2](/assets/img/posts/2023-11-12-Use-terraform-to-deploy-nginx-on-AWS-EC2-instance.md/ssh2.png)  
-
+![SSH2](/assets/img/posts/2023-11-12-Use-terraform-to-deploy-nginx-on-AWS-EC2-instance.md/ssh2.png)
 
 Download the key, we are going to use it later.  
 
@@ -468,7 +462,6 @@ It should look like this.
 ```
 Outputs:
 
-```
 ec2_instance_public_ips = [
   "18.234.230.195",
 ]
@@ -532,6 +525,4 @@ When you are done, you can delete the EC2 instance with following command.
 
 ```
 terraform destroy -auto-approve
-
-
 ```
