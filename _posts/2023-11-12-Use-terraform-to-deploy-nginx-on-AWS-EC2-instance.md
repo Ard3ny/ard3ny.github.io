@@ -321,8 +321,7 @@ In our case, we allow SSH with opening port 22 and http traffic by opening port 
    
 
 
-[Documentation](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group
-)  
+[Documentation](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group)  
 
 
 
