@@ -71,7 +71,7 @@ Click on create free account.  
 Fill out the email address and AWS account name.  
 
 
-![Registration1](\assets\img\posts\2023-11-12-Use-terraform-to-deploy-nginx-on-AWS-EC2-instance.md\registration1.png)
+![Registration1](/assets/img/posts/2023-11-12-Use-terraform-to-deploy-nginx-on-AWS-EC2-instance.md/registration1.png)
 
 
 
@@ -80,7 +80,7 @@ As a next step, we need to create a user, which we will use for authentication.
 
 
 In the center search console, type: Users  
-![Registration2](\assets\img\posts\2023-11-12-Use-terraform-to-deploy-nginx-on-AWS-EC2-instance.md\registration2.png)
+![Registration2](/assets/img/posts/2023-11-12-Use-terraform-to-deploy-nginx-on-AWS-EC2-instance.md/registration2.png)
 
 
 Click on it.
@@ -92,10 +92,10 @@ Next, click on the "Create user" button in the right top corner and type in the 
 Mine is going to be: terraform (test on pictures)
 
 
-![Registration3](\assets\img\posts\2023-11-12-Use-terraform-to-deploy-nginx-on-AWS-EC2-instance.md\registration3.png)
+![Registration3](/assets/img/posts/2023-11-12-Use-terraform-to-deploy-nginx-on-AWS-EC2-instance.md/registration3.png)
 
 
-![Registration4](\assets\img\posts\2023-11-12-Use-terraform-to-deploy-nginx-on-AWS-EC2-instance.md\registration4.png)
+![Registration4](/assets/img/posts/2023-11-12-Use-terraform-to-deploy-nginx-on-AWS-EC2-instance.md/registration4.png)
 
 
 #### Set permissions for the user
@@ -103,7 +103,7 @@ Now we need to set the right permissions for this user.  
 Click on "Attach policies directly" and select "AdministratorAccess".
 
 
-![Registration5](\assets\img\posts\2023-11-12-Use-terraform-to-deploy-nginx-on-AWS-EC2-instance.md\registration5.png)  
+![Registration5](/assets/img/posts/2023-11-12-Use-terraform-to-deploy-nginx-on-AWS-EC2-instance.md/registration5.png)  
 
 
 Click on Next. Review the changes and click on Create user.
@@ -114,15 +114,15 @@ Click on Next. Review the changes and click on Create user.
 After you've successfully created a user click on the user in Users menu.
 
 
-![Key1](\assets\img\posts\2023-11-12-Use-terraform-to-deploy-nginx-on-AWS-EC2-instance.md\key1.png)
+![Key1](/assets/img/posts/2023-11-12-Use-terraform-to-deploy-nginx-on-AWS-EC2-instance.md/key1.png)
 
 
 Now click on "Create access key".  
-![Key2](\assets\img\posts\2023-11-12-Use-terraform-to-deploy-nginx-on-AWS-EC2-instance.md\key2.png)  
+![Key2](/assets/img/posts/2023-11-12-Use-terraform-to-deploy-nginx-on-AWS-EC2-instance.md/key2.png)  
 
 
 Select "Command Line Interface (CLI)" and go Next.  
-![Key3](\assets\img\posts\2023-11-12-Use-terraform-to-deploy-nginx-on-AWS-EC2-instance.md\key3.png)
+![Key3](/assets/img/posts/2023-11-12-Use-terraform-to-deploy-nginx-on-AWS-EC2-instance.md/key3.png)
 
 
 On the screen, you will see the access key and the secret.
@@ -155,7 +155,7 @@ AWS is again making this very easy for us.
 In the center console, type: Key pairs
 
 
-![SSH1](\assets\img\posts\2023-11-12-Use-terraform-to-deploy-nginx-on-AWS-EC2-instance.md\ssh1.png)  
+![SSH1](/assets/img/posts/2023-11-12-Use-terraform-to-deploy-nginx-on-AWS-EC2-instance.md/ssh1.png)  
 
 
 In the right top corner click on "Create key pair".
@@ -168,7 +168,7 @@ I'm going to call my key pair "filipkey".
 Choose RSA type and .pem format and then click on "Create key pair".
 
 
-![SSH2](\assets\img\posts\2023-11-12-Use-terraform-to-deploy-nginx-on-AWS-EC2-instance.md\ssh2.png)  
+![SSH2](/assets/img/posts/2023-11-12-Use-terraform-to-deploy-nginx-on-AWS-EC2-instance.md/ssh2.png)  
 
 
 Download the key, we are going to use it later.  
@@ -484,7 +484,7 @@ Another way to check, if our instance is running is to open AWS website and in t
 You should see your new instance state.  
 
 
-![EC2](\assets\img\posts\2023-11-12-Use-terraform-to-deploy-nginx-on-AWS-EC2-instance.md\instance1.png)
+![EC2](/assets/img/posts/2023-11-12-Use-terraform-to-deploy-nginx-on-AWS-EC2-instance.md/instance1.png)
 
 
 
@@ -506,7 +506,7 @@ When you've successfully SSH into the VM, you can check the Nginx service status
 systemctl status nginx
 ```
    
-![Nginx](\assets\img\posts\2023-11-12-Use-terraform-to-deploy-nginx-on-AWS-EC2-instance.md\nginx1.png)
+![Nginx](/assets/img/posts/2023-11-12-Use-terraform-to-deploy-nginx-on-AWS-EC2-instance.md/nginx1.png)
 
 
 ### Browser check
@@ -519,7 +519,7 @@ Type in the IP address you got from the output, and paste it into your web brows
 You should see our message.
 
 
-![Nginx2](\assets\img\posts\2023-11-12-Use-terraform-to-deploy-nginx-on-AWS-EC2-instance.md\nginx2.png)
+![Nginx2](/assets/img/posts/2023-11-12-Use-terraform-to-deploy-nginx-on-AWS-EC2-instance.md/nginx2.png)
 
 
 
