@@ -468,7 +468,7 @@ It should look like this.
 ```
 Outputs:
 
-
+```
 ec2_instance_public_ips = [
   "18.234.230.195",
 ]
@@ -497,8 +497,6 @@ Change the IP and key name according to your values. In our case the SSH user is
 
 ```
  ssh -i "filipkey.pem" debian@18.234.230.19
-
-
 ```
 
 
