@@ -1,5 +1,5 @@
 ---
-title: Matrix Synapse chat server with Element 
+title: Matrix Synapse chat server with Element UI 
 date: 2023-11-17 20:00:00 +0100
 categories: [Homelab]
 tags: [matrix, synapse, element, turn, registration-bot]
@@ -21,6 +21,12 @@ Matrix is built on a decentralized network of servers and clients, which allows 
 * End-to-end encryption
 * Interoperability (meaning you can use bridges to connect to other apps like whatsupp...)   
 
+## Why this guide ?
+#### In this guide 
+* I've combined tutorials on how to deploy matrix and element the easiest, but still reliable way
+* Researched the right settings and the best practices for the performance 
+* Added own separate TURN server for proper voice and video calls
+* Used token based User registration, provisioned by the chat-bot for easy management
 
 # Prerequisites
 * debian 12 instance (VPS or selfhosted)
@@ -46,7 +52,7 @@ sudo apt install matrix-synapse-py3
 
 
 ### Setup PostgresSQL
-By default Matrix synapse is using SQlite, but it recommended to use PotgreSQL for better performance.   
+By default, Matrix synapse uses SQlite, but it's recommended to use PotgreSQL for better performance.   
 #### Install 
 ```
 sudo apt install postgresql
