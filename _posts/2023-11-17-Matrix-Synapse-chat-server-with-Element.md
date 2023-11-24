@@ -529,8 +529,18 @@ sudo systemctl reload nginx.service
 ```
 
 Congratulation, you can now access your element web interface!
+    
+## Automatic certification renewal 
+Because we don't want to one day find out that our app is not working because we forgot to update FreeTls certificate, we are going to set up automatic renewal with crontab.
 
-
+Type in the terminal   
+```
+crontab -
+```
+```
+0 12 * * * /usr/bin/certbot renew --quiet
+```
+    
 ## Token user registration
 As I've mentioned before, in this post we are going to setup matrix & element in token user registration.
 
