@@ -424,12 +424,16 @@ sudo mkdir -p /var/www/element
 ```
 
 #### Crete a script for regular Element updates
+```bash
+vim /var/www/element/update.sh
+```
+
 ```
 #!/bin/sh
 set -e
 
 install_location="/var/www/element"
-latest="$(curl -s https://api.github.com/repos/vector-im/element-web/releases/latest | jq -r .tag_name)"
+latest="$(curl -s https://api.github.com/repositories/39487546/releases/latest | jq -r .tag_name)"
 
 cd "$install_location"
 
@@ -445,6 +449,8 @@ ln -sf "${install_location}/archive/element-${latest}" "${install_location}/curr
 ln -sf "${install_location}/config.json" "${install_location}/current/config.json"
 ```
 
+
+
 #### Make file executable
 ```
 sudo chmod +x /var/www/element/update.sh
@@ -456,8 +462,18 @@ To download element for the first time just run the script.
 sudo /var/www/element/update.sh
 ```
 
-> To update Element in the future, re-run the command, or setup cron.
+> To update Element in the future, re-run the command, or setup cron like so
 {: .prompt-info }
+
+
+#### Add the script to crontab
+```bash
+crontab -e
+```
+
+```bash
+0 0 * * 0 /bin/bash /var/www/element/update.sh
+```
 
 ### Configure element
 #### Copy the config template 
@@ -535,7 +551,7 @@ Because we don't want to one day find out that our app is not working because we
 
 Type in the terminal   
 ```
-crontab -
+crontab -e
 ```
 ```
 0 12 * * * /usr/bin/certbot renew --quiet
@@ -651,7 +667,7 @@ WantedBy=multi-user.target
 ```
 sudo systemctl daemon-reload
 sudo systemctl start matrix-registration-bot
-sudo systemclt enable matrix-registration-bot
+sudo systemctl enable matrix-registration-bot
 ```
 
 #### Test the bot
