@@ -64,7 +64,22 @@ If you already own a domain, just use that. In the end we only need one A record
 ## How to
 ### Buy/setup VPS and open necessary ports
 
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+I'm not going to go through everthing with you, but when you choose the best deal for you, the process is very simular.
+Register -> Choose VPS package deal -> Run
+
+After that we need to open some ports
+* INBOUND TCP 22 for SSH
+* INBOUND TCP 80/443 for http/https
+* INBOUND UDP 41641 for wireguard (tailscale)
+
+
+> Outbound is usually all allowed by default.
+{: .prompt-note }
+
+### Point domain to IP of your VPS
+After you've succesfully deployed your VPS, you should now know it's public IPv4. Copy that address and point your domain to IT
+ 
+![DuckDns example](/assets/img/posts/2024-01-04-Access-your-jellyfin-from-anywhere-with-tailscale-and-external-vps.md/duck_dns_example.png)
 
 ### Setup tailscale connection between jellyfin and VPS
 > I'll be using truenas as it's the platform hosting my jellyfin.  
