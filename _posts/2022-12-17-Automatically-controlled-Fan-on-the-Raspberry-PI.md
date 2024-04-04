@@ -22,7 +22,7 @@ In this guide, I’ll show you how to set up this fan, so it’s only starting w
 * Few cables and soldering iron
 * NPN transistor (2N2222) – 680Ω
 
-## 2. Seting up your your PI.
+## 2. Set up your your PI.
 
 You can find guide for the Raspberry PI setup on this blog as well.
 
@@ -84,7 +84,7 @@ If everything goes correctly, a fan should turn on when temperature hits the 65�
 
 ![](/assets/img/posts/2022-12-17-Automatically-controlled-Fan-on-the-Raspberry-PI.md/image-13-1024x298.png)
 
-You can change the threshold of the fan settings by opening fancontrol.py config file and rewriting the temperatures:
+You can change the threshold of the fan settings by opening "fancontrol.py" config file and rewriting the temperatures:
 ```
 sudo vi /usr/local/bin/fancontrol.py
 ```

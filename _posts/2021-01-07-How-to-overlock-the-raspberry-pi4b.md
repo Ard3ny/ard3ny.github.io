@@ -11,7 +11,7 @@ Raspberry PI 4 B comes with the 1.5GHz 4 cores ARM Cortex-A72 processor. But thi
 
 This can help a lot with your future projects which might require a lot computing power.
 
-I HIGHLY recommend using some sort of cooling case or fan because Raspberry PI 4 B has gotten so powerfull that now you pretty much need to have a fan to be able to use it to full potential.
+I HIGHLY recommend using some sort of cooling case or fan because Raspberry PI 4 B has gotten so powerful that now you pretty much need to have a fan to be able to use it to full potential.
 
 
 >You might see some crashes if you don’t have a fan or you want to push your PI even harder. This might corrupt your SD card, so if you have any data that you don’t want to lose you should backup your PI or use clean Raspbian installation.
@@ -50,7 +50,7 @@ As you can see our clock speed is idling around 600MHz. And if I open something 
 ```
 sudo nano /boot/config.txt
 ```
-You should be in the config.txt file. Scroll down a little bit and you should see something like this
+You should be in the "config.txt" file. Scroll down a little bit and you should see something like this
 
 ![](/assets/img/posts/2021-01-07-How-to-overlock-the-raspberry-pi4b.md/image-24.png)
 
@@ -58,7 +58,7 @@ Now change it to over_voltage=2 and arm_freq=1750. Over voltage is a setting tha
 
 You need to be careful because with higher voltage intake there is a higher temperature and with the higher temperature your PI will automatically slow down to prevent melting.
 
-On the other side if you would see a yellow lightings bolt looking like this
+On the other side if you would see a yellow lightning bolt looking like this
 
 ![](/assets/img/posts/2021-01-07-How-to-overlock-the-raspberry-pi4b.md/ezgif-4-beb0a7cb95d5-150x150.png
 )
@@ -71,7 +71,7 @@ If you do have a fan, you can probably push it even more. You can see my setting
 
 ![](/assets/img/posts/2021-01-07-How-to-overlock-the-raspberry-pi4b.md/image-26.png)
 
-Press ctrl + o to save changed edited file and confirm with ENTER. Then press ctrl + x to exit from the file.
+Press "ctrl + o" to save changed edited file and confirm with ENTER. Then press "ctrl + x" to exit from the file.
 
 Now we need to reboot PI to apply the new settings. Type:
 ```

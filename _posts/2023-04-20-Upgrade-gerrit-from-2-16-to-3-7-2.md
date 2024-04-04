@@ -15,7 +15,7 @@ I decided I would share some of my recent experience with upgrading Gerrit from 
 systemctl stop gerrit
 ```
 
-Pre-download installation .war files. We will need
+"Pre-download" installation .war files. We will need
 the one we are using right now (for me 2.16.19.)
 * 3.1.2
 * 3.7.2
@@ -35,7 +35,7 @@ su gerrit
 ```
 
 ## Migrate the database
-Run ‘migrate-to-note-db’ command to migrate all changes from old database to NoteDB
+Run ‘migrate-to-note-db’ command to migrate all changes from old database to "NoteDB"
 
 > Note that my installation is stored  in /var/www/gerrit, but yours may vary
 {: .prompt-tip }
