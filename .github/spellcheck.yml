@@ -3,15 +3,20 @@ matrix:
 - name: Markdown
   aspell:
     lang: en
+    ignore-case: true
   dictionary:
+    wordlist:
+    - .github/wordlist.txt
     encoding: utf-8
   pipeline:
   - pyspelling.filters.markdown:
   - pyspelling.filters.html:
       comments: false
       ignores:
-      - code
-      - pre
+      - ':matches(code, pre)'
+      - 'code'
+      - 'pre'
+      - 'blockquote'
   sources:
   - '**/*.md'
   default_encoding: utf-8
