@@ -1,5 +1,7 @@
 name: Spellcheck
-workflow_dispatch:
+
+on:
+    workflow_dispatch:  # This event triggers the workflow manually
 
 jobs:
   spelling:
