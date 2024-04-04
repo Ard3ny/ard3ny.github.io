@@ -74,7 +74,7 @@ After that we need to open some ports
 
 
 > Outbound is usually all allowed by default.
-{: .prompt-note }
+{: .prompt-info }
 
 ### Point domain to IP of your VPS
 After you've succesfully deployed your VPS, you should now know it's public IPv4. Copy that address and point your domain to IT
@@ -206,7 +206,7 @@ PING 100.x.x.x (100.x.x.x) 56(84) bytes of data.
 64 bytes from 100.x.x.x: icmp_seq=3 ttl=64 time=44.9 ms
 ```
 
-We can see connection is "direct". If it would be otherwise it would say "relayed over"
+We can see connection is "direct". If it would be otherwise it would say "relayed over"   
 example
 ```
 pong from testmy (100.113.160.82) via DERP(nyc) in 130ms
