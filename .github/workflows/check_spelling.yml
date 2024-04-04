@@ -1,0 +1,10 @@
+name: Spellcheck
+workflow_dispatch:
+
+jobs:
+  spelling:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Check Spelling
+      uses: rojopolis/spellcheck-github-actions@v0
