@@ -23,7 +23,6 @@ Pros
 
 Cons
 * WireGuard is faster and more lightweight
-* WireGuard's impler codebase may have fewer bugs and security vulnerabilities
 * no centralized server
 
 

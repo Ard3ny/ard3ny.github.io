@@ -23,7 +23,7 @@ systemctl restart sssd
 ```
 
 ### Reference
-https://bgstack15.wordpress.com/2020/12/03/disable-apparmor-for-sssd/
+[link](https://bgstack15.wordpress.com/2020/12/03/disable-apparmor-for-sssd/)
 
 
 

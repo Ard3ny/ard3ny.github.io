@@ -34,7 +34,7 @@ With Docker, developers can easily create, distribute, and run applications acro
 
 Docker also provides a vast ecosystem of images and tools that developers can use to build and deploy their applications, including Docker Hub, a public repository of Docker images, and Docker Compose, a tool for defining and running multi-container applications.
 
-### Keypoints
+### Key points
 * is a virtual installation of an application 
 * not persistent (only mounted folders)
 * containers are never upgraded, only replaced (so they always have to be destroyed)
@@ -46,11 +46,9 @@ Docker also provides a vast ecosystem of images and tools that developers can us
 
 ## What is LXC/LXD
 ### LXC – Linux containers
-Pronounced lex-cee
+It’s a solution for virtualization software at the operating system level within the Linux kernel. Unlike traditional hypervisors (VMware, KVM and Hyper-V), LXC lets you run single applications in virtual environments, although you can also virtualize an entire operating system inside an LXC container if you’d like.
 
-It’s a solution for virtualizing software at the operating system level within the Linux kernel. Unlike traditional hypervisors (VMware, KVM and Hyper-V), LXC lets you run single applications in virtual environments, although you can also virtualize an entire operating system inside an LXC container if you’d like.
-
-LXC’s main advantages include making it easy to control a virtual environment using userspace tools from the host OS, requiring less overhead than a traditional hypervisor and increasing the portability of individual apps by making it possible to distribute them inside containers.
+"LXC’s" main advantages include making it easy to control a virtual environment using tools from the host OS, requiring less overhead than a traditional hypervisor and increasing the portability of individual apps by making it possible to distribute them inside containers.
 
 You may notice LXC is a lot like Docker container, it’s because LXC used to be the underlying technology that made Docker. More recently, however, Docker has gone in its own direction and no longer depends on LXC
 
@@ -68,8 +66,6 @@ you have to install the entire application and all dependencies
 
 
 ### LXD – Linux Container Daemon
-Pronounced lex-dee
-
 LXD is a lightweight container hypervisor. It’s an extension/interface of LXC
 
 LXD is basically a management CLI system on top of LXC

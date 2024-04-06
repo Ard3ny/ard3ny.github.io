@@ -42,9 +42,7 @@ In my case, I’m going to use an old laptop (Asus X550vb) which has been sittin
 ## Installation guide
 
 1. Download Proxmox
-You can download ISO from their official site
-
-https://www.proxmox.com/en/downloads/category/iso-images-pve
+You can download ISO from [the official site](https://www.proxmox.com/en/downloads/category/iso-images-pve)
 
 ![](/assets/img/posts/2022-12-04-Turn-your-old-laptop-into-proxmox-server.md/image.png)
 
@@ -60,7 +58,7 @@ As all the other OS installations, you need to change boot process priority from
 
 Again, there are countless guides for this, so I’m just gonna put one here and it’s up to you to find one which suits the needs for your specific hardware.
 
-https://softwarekeep.com/help-center/how-to-change-your-computers-boot-order
+[link](https://softwarekeep.com/help-center/how-to-change-your-computers-boot-order)
 
 4. Complete installation setup
 Start your laptop/desktop with the USB stick inside and boot priority set for an USB.
@@ -84,7 +82,7 @@ Select country and timezone of your choice
 Choose your root password and mail for notifications
 
 
-Now type out hostname in FQDN (fully qualified domain name) which basically means with the domain you want to use. Mine is thetechcorner.sk so the hostname will look like this. If you don’t own any, you can just use “.home.arpa” which is used for homelab stuff.
+Now type out hostname in FQDN (fully qualified domain name) which basically means with the domain you want to use. Mine is thetechcorner.sk so the hostname will look like this. If you don’t own any, you can just use ".home.arpa" which is used for homelab stuff.
 
 Also, choose some static IP address in your range of network.
 ![](/assets/img/posts/2022-12-04-Turn-your-old-laptop-into-proxmox-server.md/image-7-768x477.png)

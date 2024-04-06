@@ -98,7 +98,7 @@ What is heap size you may ask?
 
 Default value should be max heapsize = 1/4 of available RAM. So to do this automatically, just increase your RAM and the heapsize will follow.
 
-To do it manually (not recommended) change 'Xmx' value of gerrit 'ExectStart'
+To do it manually (not recommended) change "Xmx" value of gerrit "ExectStart"
 
 ```
 ExecStart=/usr/bin/java -Xmx2048m -jar ${GERRIT_HOME}/bin/gerrit.war daemon -d ${GERRIT_HOME}

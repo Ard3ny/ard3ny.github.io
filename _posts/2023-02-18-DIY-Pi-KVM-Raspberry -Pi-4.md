@@ -21,7 +21,7 @@ On top of that, it’s cheap, and you can even build your own PI-KVM from (you g
 * USB Keyboard and mouse (with leds and the wheel), PS/2 keyboard, * Bluetooth HID;
 * Control the server power using ATX functions;
 * Access via Web UI or VNC;
-* Ability to use IPMI BMC, IPMI SoL, Redfish and Wake-on-LAN to control the server;
+* Ability to use "IPMI BMC, IPMI SoL, Redfish" and Wake-on-LAN to control the server;
 * The ready-made OS with read-only filesystem;
 * Extensible authorization and HTTPS out of the box;
 * Health monitoring of the Pi;
@@ -56,7 +56,7 @@ I’m going with the Raspberry Pi 4, v2 (For HDMI-to-CSI bridge) version
 
 ![img-description](/assets/img/posts/2023-02-18-DIY-Pi-KVM-Raspberry -Pi-4.md/image-9-1-1024x488.png)
 
-2. Launch Raspberry Pi Imager. You can download it from the [Raspberry Pi Foundation’s website](https://www.raspberrypi.com/software/)
+2. "Launch Raspberry Pi Imager". You can download it from the [Raspberry Pi Foundation’s website](https://www.raspberrypi.com/software/)
 
 4. Select “Choose OS” -> “Use Custom” and locate the Pi-KVM image. After that pick your microSD card by clicking Choose SD Card.
 
@@ -101,7 +101,7 @@ arp -a
 ```
 ![img-description](/assets/img/posts/2023-02-18-DIY-Pi-KVM-Raspberry -Pi-4.md/image-13-1.png)
 
-Look for anything that starts with B827, DCA6, E45F. Those MAC address are for Raspberry Pi’s. Or in my case, the arp-scan command even type it out for you which one it is.
+Look for anything that starts with "B827, DCA6, E45F". Those MAC address are for Raspberry Pi’s. Or in my case, the arp-scan command even type it out for you which one it is.
 
 As you can see mine is
 ```
@@ -138,7 +138,7 @@ ro
 ```
 
 ### Bulk copy / paste
-One of my favorite features is copy paste bulk text. This the most USEFULL STUFF EVER and all the VNC user’s can relate.
+One of my favorite features is copy paste bulk text. This the most USEFUL FEATURE EVER and all the VNC user’s can relate.
 
 ![img-description](/assets/img/posts/2023-02-18-DIY-Pi-KVM-Raspberry -Pi-4.md/image-18-1024x566.png)
 
@@ -187,8 +187,7 @@ In this case it’s even better because this is the whole purpose of pi-KVM to r
 
 Because it’s an Arch system and Raspberry Pi with 32 bit system, it’s a little bit different to set it up this time.
 
-List out all of the Netbird version and pick the latest one
-https://github.com/netbirdio/netbird/releases
+[List out all of the Netbird version and pick the latest one](https://github.com/netbirdio/netbird/releases)
 
 Right click copy https link and use wget ( my PI has ARM so I’m going with that version and also 32bit so look for v6)
 

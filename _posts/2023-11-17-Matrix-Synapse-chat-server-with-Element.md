@@ -51,8 +51,8 @@ sudo apt install matrix-synapse-py3
 {: .prompt-info }
 
 
-### Setup PostgresSQL
-By default, Matrix synapse uses SQlite, but it's recommended to use PotgreSQL for better performance.   
+### Setup PostgreSQL
+By default, Matrix synapse uses SQlite, but it's recommended to use PostgreSQL for better performance.   
 #### Install 
 ```
 sudo apt install postgresql
@@ -99,7 +99,7 @@ By default matrix doesn't come with any reverse proxy so we need to install one 
 apt install nginx certbot python3-certbot-nginx
 ```
 
-#### Certbos TLS for matrix domain
+#### Certbot TLS for matrix domain
 ```
  sudo certbot certonly --nginx -d matrix.example.com -d example.com
 ```
@@ -265,10 +265,10 @@ sudo systemctl restart matrix-synapse.service
 
 ### Setup VOIP  
 
-By default VOIP on matrix is not a great experience. Often it's very laggy and dropping connection.      
+By default VOIP on matrix is not a great experience. Often it's very slow and it's dropping connection.      
 The main and simplified reason is that NAT, firewall, and compliance network policies, the process of reaching the other peer becomes complex.   
 
-Default config on your synapse would use the matrix.org turn server. Turn is only used for opening the call if a user is behind a NAT or Firewall. The call itself is done via web-RTC which is always encrpyted
+Default config on your synapse would use the matrix.org turn server. Turn is only used for opening the call if a user is behind a NAT or Firewall. The call itself is done via "web-RTC" which is always encrypted.
 
 #### Why use coturn as a TURN server?
 [InternetSource](https://medium.com/@nerdchacha/what-are-stun-and-turn-servers-and-why-do-we-need-them-in-webrtc-9d5b8f96b338)
@@ -368,7 +368,7 @@ sudo systemctl restart matrix-synapse.service
 You can use [this](https://test.voip.librepush.net/) test voip open-source online tool. 
 Just type in your 
 * Homeserver URL: https://turn.example.com 
-* user ID & pasword: admin acc we have created with register_new_matrix_user   
+* user ID & password: admin account we have created with register_new_matrix_user   
 
 
 ![Turn](/assets/img/posts/2023-11-17-Matrix-Synapse-chat-server-with-Element.md/turn1.png)
@@ -407,13 +407,13 @@ And finally feed these into WEB UI.
 {: .prompt-info }
 
 
-## Elemenet (web interface)
+## Element (web interface)
 ### Setup 
 We have successfully created a backend for our chat application and we can already connect to it with some public clients like [Elemenet](https://app.element.io/#/welcome)
 
 But because we want everything private and selfhosted, we are going to install element on our server as well.
 
-#### Install jq
+#### Install "jq"
 ```
 sudo apt install jq
 ```
@@ -530,7 +530,7 @@ server {
 > Change all 4 occurences of turn.example.com to your domain. 
 {: .prompt-warning }
    
-#### Create TLS certificate for elemenet site
+#### Create TLS certificate for element site
 ```
 sudo certbot certonly --nginx -d element.example.com
 ```
@@ -547,7 +547,7 @@ sudo systemctl reload nginx.service
 Congratulation, you can now access your element web interface!
     
 ## Automatic certification renewal 
-Because we don't want to one day find out that our app is not working because we forgot to update FreeTls certificate, we are going to set up automatic renewal with crontab.
+Because we don't want to one day find out that our app is not working because we forgot to update "FreeTlS" certificate, we are going to set up automatic renewal with crontab.
 
 Type in the terminal   
 ```
@@ -724,7 +724,7 @@ You've successfully deployed matrix synapse server with an element interface wit
 ## Useful
 ### ADMIN API commands
 All can be done both
-* localy http://127.0.0.1:8008/_synapse/admin... 
+* locally http://127.0.0.1:8008/_synapse/admin... 
 * remotely https://matrix.example.com/_synapse/admin... 
 
 #### Create token
