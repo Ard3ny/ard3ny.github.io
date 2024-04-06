@@ -6,7 +6,7 @@ matrix:
     ignore-case: true
   dictionary:
     wordlist:
-    - .github/wordlist.txt
+    - .github/wordlist2.txt
     encoding: utf-8
   pipeline:
   - pyspelling.filters.markdown:
@@ -19,4 +19,4 @@ matrix:
       - 'blockquote'
   sources:
   - '_posts/*.md'
-  default_encoding: utf-8
+  default_encoding: utf-8  
