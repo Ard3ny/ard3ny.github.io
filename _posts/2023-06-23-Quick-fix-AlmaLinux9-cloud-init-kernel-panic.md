@@ -18,7 +18,7 @@ Kernel panic:
 
 
 ### Cause
-The problem may be that "El9" requires x86-64-v2 support and certain "CPUs" (modes in hypervisors) may not be able to compile with it. 
+The problem may be that 'El9' requires x86-64-v2 support and certain 'CPUs' (modes in hypervisors) may not be able to compile with it. 
 
 [Source](https://forums.rockylinux.org/t/el9-will-require-x86-64-v2-support/5311)
 
