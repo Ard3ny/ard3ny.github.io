@@ -272,3 +272,11 @@ And on the other side (Jellyfin/truenas)
 
 > You should at least 50+ Mbps for 4k movies
 {: .prompt-info }
+
+
+
+### Alternatives
+* using reverse ssh tunnel with systemd service to keep it open
+* using mentioned netbird, twingate
+* [ansible-easy-vpn](https://github.com/notthebee/ansible-easy-vpn)
+
