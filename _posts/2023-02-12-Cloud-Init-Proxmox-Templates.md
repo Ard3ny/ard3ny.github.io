@@ -115,7 +115,7 @@ We don’t want to start it yet. As you can see we have a whole new section “C
 
 ## Full clone / link clone ?
 We have several options how to move forward
-configure cloud-init config now then create template (If you know all of your VM’s will share the same settings)
+configure cloud-init config now then create template (If you know all of your VMs will share the same settings)
 2. create template and then configure cloud-init config
 
 These 2 options also come with 2 different sub-options and that is using Full clone or Linked clone

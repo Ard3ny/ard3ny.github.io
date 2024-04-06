@@ -258,15 +258,15 @@ reverse_proxy 10.1.1.20:8096
 ### Verify 
 * Check if the site is working
 ![Jellyfin](/assets/img/posts/2024-01-04-Access-your-jellyfin-from-anywhere-with-tailscale-and-external-vps.md/jellyfin.png)
-* Try watching some content to see if you see any stuttering. If you do tshoot the bandwidth of the tunnel with "iperf3"
+* Try watching some content to see if you see any stuttering. If you do troubleshoot the bandwidth of the tunnel with "iperf3"
 
 One one side (VPS). Stop the caddy and run
-```
+```bash
 iperf3 -s -p 443
-```'
+```
 
 And on the other side (Jellyfin/truenas)
-```
+```bash
  iperf3 -c <yourDomain> -p 443
 ``` 
 
