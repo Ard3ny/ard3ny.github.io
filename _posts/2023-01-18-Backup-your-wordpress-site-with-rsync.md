@@ -42,7 +42,7 @@ By default, the generated key’s algorithm type is RSA, and its bit size is 307
 
 Now you have to copy the public key to the server 2. There are multiple ways to do it, I’ll show you two:
 
-### a) Type this command into server 1 terminal (ofc change username and IP address)
+### a) Type this command into server 1 terminal (of course change username and IP address)
 ```
 ssh-copy-id username@host-ip-address
 ```
@@ -61,7 +61,7 @@ systemctl reload sshd
 {: .prompt-tip }
 
 ## Add devices to the VPN network (Optional)
-Because of attacks like [man-in-the-middle](https://en.wikipedia.org/wiki/Man-in-the-middle_attack) and many many more… it’s a good practice to use VPN network to back up data. There are many VPNs out there, but I prefer and use Nebird, and I’ve already made a tutorial on it here!
+Because of attacks like [man-in-the-middle](https://en.wikipedia.org/wiki/Man-in-the-middle_attack) and many many more… it’s a good practice to use VPN network to back up data. There are many VPNs out there, but I prefer and use Netbird, and I’ve already made a tutorial on it here!
 
 Also, it’s very useful if you don’t have public IP address, which would make you set up port forwarding on your router and complicate all things.
 
@@ -90,7 +90,7 @@ rsync -avz --exclude source_destination ssh_host:destination_path
 * preserve group
 * preserve modification time
 * preserve ownership
-* -v for verbose bcs default is silent transfer, but this gives you info about where the data is going and a summary at the end
+* -v for verbose because default is silent transfer, but this gives you info about where the data is going and a summary at the end
 
 * -z for compress (before data transfer the data is compressed which lowers the size and therefore time that is being sent over the internet) There are levels of compression from 1-9 (1 is the least compressed and fastest, 9 is the most compressed therefore slowest to compress). The default is 6, so let’s stick with that.
 
@@ -108,7 +108,7 @@ The script will be run on the wordpress server VM and it will PUSH the data, to 
 #Run the script on the wordpress VM
 #using WP CLI && rsync incremental backups
 
-#requiarments: ssh keys, rsync and WP CLI installed
+#requirements: ssh keys, rsync and WP CLI installed
 
 #variables
 destination_ssh_host="user@IPaddress"
@@ -122,9 +122,10 @@ EXCLUDE2="/var/www/html/wordpess/wp-content/error_log"
 #export database using wp cli (you can also use mysql it doesnt really matter)
 $WPCLI db export  | $source_path --allow-root
 
-#rsync all of the filess to the remote server
+#rsync all of the files to the remote server
 #with the exception of cache and error_log
 #rsync flags: a-archive, v-verbose, z-compress
+
 rsync -avz --exclude $EXCLUDE --exclude $EXCLUDE2 $source_path $destination_ssh_host:$destination_path 
 
 #add script to the crontab (run once a day at 00:00)

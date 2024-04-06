@@ -1,5 +1,5 @@
 ---
-title: How to overlock the raspberry PI 4b
+title: How to overclock the raspberry PI 4b
 date: 2021-01-07 10:00:00 +0100
 categories: [Homelab]
 tags: [raspberry]
@@ -82,11 +82,11 @@ I would not try to overclock more if your PI seems stable and you are not gettin
 
 You should play with the value on your own and try all possible combinations to fit your best preferences.
 
-You want a faster but louder PI, push it to the maximum! Or maybe you don’t want to hear that annoying fan and you only want to use PI to learn some Linux basics. In that case maybe don’t overclock at all. It’s enterily up to you.
+You want a faster but louder PI, push it to the maximum! Or maybe you don’t want to hear that annoying fan and you only want to use PI to learn some Linux basics. In that case maybe don’t overclock at all. It’s entirely up to you.
 
 For last but not least I will show you how to overclock the GPU. This can be very useful if you are planning on playing games, or watching 4K content or maybe using your GPU for AI rendering.
 
-Again open /boot/config.txt file and add a new line gpu_freq=750.
+Again open "/boot/config.txt" file and add a new line gpu_freq=750.
 
 ![](/assets/img/posts/2021-01-07-How-to-overlock-the-raspberry-pi4b.md/image-27.png)
 
