@@ -10,6 +10,12 @@ matrix:
     encoding: utf-8
   pipeline:
   - pyspelling.filters.markdown:
+      comments: false
+      ignores:
+      - ':matches(code, pre)'
+      - 'code'
+      - 'pre'
+      - 'blockquote'
       markdown_extensions:
       - pymdownx.superfences
   - pyspelling.filters.html:
