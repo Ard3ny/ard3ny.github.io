@@ -10,7 +10,7 @@ mermaid: false
 
 
 
-If you are like me, and you are dipping your toes into the cloud world and using infrastructure as a code, I have a great short tutorial for you on how you can deploy nginx webserver on Amazon AWS using Terraform.  
+If you are like me, and you are dipping your toes into the cloud world and using infrastructure as a code, I have a great short tutorial for you on how you can deploy nginx web server on Amazon AWS using Terraform.  
 
 
 
@@ -75,7 +75,7 @@ Fill out the email address and AWS account name.  
 
 
 
-### Create IAM USER  
+### Create "IAM" USER  
 As a next step, we need to create a user, which we will use for authentication.
 
 
@@ -139,7 +139,7 @@ S+4Q0cOMz71ACVzTcjvTAHTUeAN19q1HDz8Jzc7b
 ```
   
 
-Save them somewhere, or download them as .csv file.
+Save them somewhere, or download them as ".csv file".
 
 ### Create ssh key pair
 To be able to access your EC2 instance over SSH, you have to create SSH key pair.
@@ -161,7 +161,7 @@ In the right top corner click on "Create key pair".
 I'm going to call my key pair "filipkey".
 
 
-Choose RSA type and .pem format and then click on "Create key pair".
+Choose RSA type and ".pem format" and then click on "Create key pair".
 
 ![SSH2](/assets/img/posts/2023-11-12-Use-terraform-to-deploy-nginx-on-AWS-EC2-instance.md/ssh2.png)
 
@@ -248,12 +248,15 @@ cp ~/Downloads/filipkey.pem /opt/terraform
 
 
 ### Create terraform config files
-```
+```bash
 touch terraform.tf main.tf outputs.tf userdata.tpl
 ```
 
 
-#### vim terraform.tf
+#### Provider
+```bash
+vim provider.tf
+```
 In this file we will define something called "provider". In our case, AWS provider.  
 
 
@@ -275,9 +278,10 @@ terraform {
 
 
 
-#### vim main.tf  
-
-
+#### Main
+```bash
+vim pmain.tf
+```
 
 > Dont forget to change access key & secret to your values.
 {: .prompt-warning }
@@ -306,8 +310,7 @@ We use this module to define, our instance. For example type, number of instance
 If we don't define anything, all necessary values stay default. That's why we call it default.  
 
 
-You can check all default VPC values [here](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/default_vpc
-)  
+You can check all default VPC values [here](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/default_vpc)  
    
 * resource "aws_security_group"  
 Ingress & egress rules. By default allow all.
@@ -402,7 +405,11 @@ resource "aws_security_group" "nginx_demo" {
 ```
 
 
-#### vim outputs.tf
+#### Outputs
+```bash
+vim outputs.tf
+```
+
 * output "ec2_instance_public_ips"
 Here we define that after the terraform run the public IP provided, by the AWS is echoed on the screen.
 
@@ -414,7 +421,11 @@ output "ec2_instance_public_ips" {
   value       = module.ec2_instances[*].public_ip
 }
 ```
-#### vim userdata.tpl
+#### "Userdata"
+```bash
+vim userdata.tpl
+```
+
 In this file, we define, all of the commands, that is going to run on the instance after the main deployment.
 
 
@@ -455,7 +466,7 @@ terraform apply -auto-approve
 
 ## Validate the deploy
 ### Output
-After a few seconds, you should see the IP address in terminal output, that we defined in our output.tf file.
+After a few seconds, you should see the IP address in terminal output, that we defined in our "output.tf" file.
 
 
 It should look like this.
@@ -503,7 +514,7 @@ systemctl status nginx
 
 
 ### Browser check
-And finally, the main check is the "browser check" or rather http traffic test. After all we've deployed webserver so what's the better way.  
+And finally, the main check is the "browser check" or rather http traffic test. After all we've deployed web server so what's the better way.  
 
 
 Type in the IP address you got from the output, and paste it into your web browser.

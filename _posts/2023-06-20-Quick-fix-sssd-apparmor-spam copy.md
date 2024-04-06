@@ -46,7 +46,7 @@ Try to get this number as low as possible by creating the smallest list of infor
 
 In some cloud provider cases like, Google Workspace, you can select which Users, groups, OUs you want to include.  
 
-Maybe you don't need the whole company and all of the OUs, maybe you can have a group that contains all the necessary users. Start by cutting these output informations first, which will help with the traffic and CLoud Provider (google workspace) site of things 
+Maybe you don't need the whole company and all of the OUs, maybe you can have a group that contains all the necessary users. Start by cutting these output information first, which will help with the traffic and CLoud Provider (google workspace) site of things 
 
 
 

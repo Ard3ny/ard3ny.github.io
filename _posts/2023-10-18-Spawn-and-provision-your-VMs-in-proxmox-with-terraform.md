@@ -68,7 +68,7 @@ Complete.
 ## Configuration
 
 
-### Create env
+### Create envvironment structure
 Create working folder and copy the environment variable files and edit them with your own parameters.
 
 

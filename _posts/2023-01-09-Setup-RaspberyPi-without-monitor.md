@@ -71,7 +71,7 @@ And the process will start. Be aware this can take a couple of minutes depending
 
 After this you can insert the SD card/USB into a PI, connect all your peripherals (keyboard and mouse) and a network cable. The other side of the network cable connects to your PC.
 
-We will need some sort of SSH client. One of the most popular and user friendly ones is the PuTTY. You can download it here. After you have downloaded and installed PuTTY, type raspberrypi.local into a hostname and select port 22. After that just select Open.
+We will need some sort of SSH client. One of the most popular and user friendly ones is the PuTTY. You can download it here. After you have downloaded and installed PuTTY, type "raspberrypi.local" into a hostname and select port 22. After that just select Open.
 
 
 ![img-description](/assets/img/posts/2023-01-09-Setup-RaspberyPi-without-monitor.md/faf.png)
@@ -97,14 +97,14 @@ Then go back into the menu again and select System Options and S5 Boot / Auto lo
 
 ![img-description](/assets/img/posts/2023-01-09-Setup-RaspberyPi-without-monitor.md/dasda.png)
 
-And now just leave the menu with ESC and for a reboot type
+And now just leave the menu with "ESC" and for a reboot type
 
 ```
 sudo shutdown -r +0
 ```
 After a few minutes your PI should be up again and we can continue.
 
-We will need to download the VNC that serves as a virtual bridge to our PI display interface. Install and open the VNC and on the top side of the software type the hostname of our device which we previosly entered into the PuTTY is raspberrypi.local. Enter our username which is PI and password raspberry and press ok.
+We will need to download the VNC that serves as a virtual bridge to our PI display interface. Install and open the VNC and on the top side of the software type the hostname of our device which we previously entered into the PuTTY is "raspberrypi.local". Enter our username which is PI and password raspberry and press ok.
 
 
 ![img-description](/assets/img/posts/2023-01-09-Setup-RaspberyPi-without-monitor.md/dasdasdaaa.png)

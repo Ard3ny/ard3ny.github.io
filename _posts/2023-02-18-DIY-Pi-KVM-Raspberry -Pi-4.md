@@ -239,7 +239,7 @@ You should see new the device in your Netbird peer’s menu and you should be ab
 From Tailscale documentation
 https://docs.pikvm.org/tailscale/
 
-1. Install the client, run tailscaled service and register it in the network:
+1. Install the client, run "tailscaled service" and register it in the network:
 ```bash
 [root@pikvm ~]# rw
 [root@pikvm ~]# pacman -Syu

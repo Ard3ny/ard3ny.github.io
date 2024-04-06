@@ -15,7 +15,7 @@ It just had one small problem. To make them up to date, from time to time, you h
 
 If you wouldn't do this, then after some time update/upgrade on the VM boot would took even a few minutes, which defeats the whole purpose of making your life easier with using the cloud-init enabled images in the first place.
 
-To fix this, I combined shell, proxmox CLI and packer to regularly run updates on the templates, so they would be ready and up to date, when you need them. I've packed this into easy to clone and re-deploy git repo.
+To fix this, I combined shell, proxmox CLI and packer to regularly run updates on the templates, so they would be ready and up to date, when you need them. I've packed this into easy to clone and re-deploy git repository.
 
 You can the find it on my [GitHub.](https://github.com/Ard3ny/proxmox-build-template) 
 
@@ -34,9 +34,7 @@ To automate this chain, cloud-init images are used in combination with proxmox C
 2. `packer` creates templates from newly prepared VMs and configures the templates with cloud-init defaults (SSH user and public key). 
 
 You can easily customize this and add more cloud-init defaults. 
-List of all possible defaults:
-https://pve.proxmox.com/wiki/Cloud-Init_Support
-
+[List of all possible defaults](https://pve.proxmox.com/wiki/Cloud-Init_Support)
 
 If the systemd service fails for any reason, it's configured to trigger the `notify-email@%i.service`. It also sends a notification with `proxmox-mail-forward` on successful build.
 
@@ -52,24 +50,26 @@ If the systemd service fails for any reason, it's configured to trigger the `not
 Installation is intended to be done on the Proxmox host itself, otherwise it won't work.
 
 ### Install dependencies
-```
+```bash
 apt-get update && apt-get install libguestfs-tools wget vim git unzip
 ```
 
 ### Manually install packer 
 
-Because I'm using token ID/secret as proxmox authentication method, packer must be install manually to attain newer version than proxmox currently supports as default package. New versions support this auth method and also fixes a lot of bugs you may encounter.
+Because I'm using token ID/secret as proxmox authentication method, packer must be install manually to attain newer version than proxmox currently supports as default package. New versions support this authentication method and also fixes a lot of bugs you may encounter.
 
 https://developer.hashicorp.com/packer/tutorials/docker-get-started/get-started-install-cli
 
 TLDR 
 Download the newest version (currently 201.9.4)
+```bash
 wget https://developer.hashicorp.com/packer/downloads#:~:text=Version%3A%201.9.4-,Download,-AMD64
-
-Unzip && move the precompile file
+```
+Unzip && move the "precompile" file
+```
 unzip packer*
 mv packer /usr/bin/
-
+```
 
 ### Make sure these VM IDs are not used:
 8999, 9000, 8000, 7999, 7000, 6999
@@ -80,7 +80,7 @@ mv packer /usr/bin/
 
 Clone the repository to `/opt`.
 
-```
+```bash
 git clone https://github.com/Ard3ny/proxmox-build-template.git /opt/build-template
 cd /opt/build-template
 ```
@@ -112,11 +112,12 @@ When you click add you will get secret and ID info. Save those.
 ![Add-perm2](/assets/img/posts/2023-10-14-Build-a-cloud-init-enabled-Linux-VM-templates-on-Proxmox-provisioned-by-packer.md/user_permissions3.png)
 
 ### Or Over CLI (you dont have to do both)
+```bash
 pveum user add kubernetes@pve
 pveum acl modify / -user kubernetes@pve -role Administrator
 pveum acl modify / -user kubernetes@pve -role PVEAdmin
 pveum user token add kubernetes@pve test_id -privsep 0
-
+```
 
 Complete.
  
@@ -148,16 +149,16 @@ systemctl enable --now build-template.timer
 
 # Disclaimer
 
-I've forked this project originally created by https://github.com/mfin/proxmox-build-template
-I've fix few bugs, added more cloud-init templates, changed install and auth methods and extended documentation, so big shoutout goes to him.
+I've forked this project originally created by [mfin](https://github.com/mfin/proxmox-build-template)
+I've fix few bugs, added more cloud-init templates, changed install and authentication methods and extended documentation, so big "shout-out" goes to him.
 
 
 # Useful links
 
-https://developer.hashicorp.com/packer/integrations/hashicorp/proxmox/latest/components/builder/clone
-https://www.libguestfs.org/virt-customize.1.html
+[Packer proxmox intregration](https://developer.hashicorp.com/packer/integrations/hashicorp/proxmox/latest/components/builder/clone)
+[Virt customize](https://www.libguestfs.org/virt-customize.1.html)
 
 # To be continue
 
-In the next post, I'll show you how you can use terraform to deploy VMs from this packer privisioned template.
+In the next post, I'll show you how you can use terraform to deploy VMs from this packer provisioned template.
 

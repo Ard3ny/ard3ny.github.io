@@ -26,7 +26,7 @@ The configuration information can include user-data like
 
 Generally, “cloud images” are configured to run in a IaaS (infrastructure as a service), but we can use them as an easy jumping point for VM deployment in our own homelab.
 
-What’s even the difference between your homelab and Cloudflare for example, right pfff?!
+What’s even the difference between your homelab and Cloudflare for example, right?!
 
 ## What OS to choose?
 The major ones are usually cloudInit supported (ubuntu,debian, CentStream, almaLinux). You can find some of them on these sites, but you can just google around as well.
@@ -128,7 +128,7 @@ But they are slower to create and less efficient when making many copies of the 
 Linked Clone
 A linked clone VM requires less disk space but cannot run without access to the base VM Template.
 
-Linked Clones works for theses storages: files in raw, "qcow2, vmdk format (either on local storage or nfs); LVM-thin, ZFS, rbd, sheepdog, nexenta and It’s not supported with LVM & ISCSI" storage.
+Linked Clones works for theses storage: files in raw, "qcow2, vmdk format (either on local storage or nfs); LVM-thin, ZFS, rbd, sheepdog, nexenta and It’s not supported with LVM & ISCSI" storage.
 
 
 Benefits of linked clones
@@ -137,7 +137,7 @@ Benefits of linked clones
 * Save on RAM usage: Kernel Same-page Merging (KSM) works best when there are more common resources shared between VMs
 
 Drawbacks of linked clones
-* Templates cannot be deleted or modified if any clones exist, so you can’t install updates or add configuration to the template for future clones, you’d have to make a new template, this can lead to many templates cluttering your VM list as OS releases come out and your preconfiguration grows
+* Templates cannot be deleted or modified if any clones exist, so you can’t install updates or add configuration to the template for future clones, you’d have to make a new template, this can lead to many templates cluttering your VM list as OS releases come out and your "pre-configuration" grows
 * "KSM" can increase the attack surface for side-channel memory attacks
 
 Because I know all of my VM’s will share the same settings (like user,ssh keys, DNS) and I’m not really gonna benefit from the space efficiency and faster speed deployment, I’m going to configure cloud-init now and use full-clone.

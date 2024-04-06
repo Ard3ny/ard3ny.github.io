@@ -52,7 +52,7 @@ It’s a solution for virtualization software at the operating system level with
 
 You may notice LXC is a lot like Docker container, it’s because LXC used to be the underlying technology that made Docker. More recently, however, Docker has gone in its own direction and no longer depends on LXC
 
-### Keypoints
+### Key points
 
 * LXC is virtual OS that can be used to install application
 * LXC works like a Virtual Machine, but it’s faster and leaner
@@ -70,9 +70,9 @@ LXD is a lightweight container hypervisor. It’s an extension/interface of LXC
 
 LXD is basically a management CLI system on top of LXC
 
-The more technical way to define LXD is to describe it as a REST API that connects to libxlc, the LXC software library. LXD, which is written in Go, creates a system daemon that apps can access locally using a Unix socket, or over the network via HTTPS.
+The more technical way to define LXD is to describe it as a REST API that connects to "libxlc", the LXC software library. LXD, which is written in Go, creates a system daemon that apps can access locally using a Unix socket, or over the network via HTTPS.
 
-LXD’s main selling points include the following:
+"LXD’s" main selling points include the following:
 
 A host can run many LXC containers using only a single system daemon, which simplifies management and reduces overhead. With pure-play LXC, you’d need separate processes for each container.
 The LXD daemon can take advantage of host-level security features to make containers more secure. On plain LXC, container security is more problematic.

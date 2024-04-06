@@ -15,7 +15,7 @@ Well, in that case, you can just add another proxmox node and cluster them toget
 
 * Centralized, web-based management
 * Multi-master clusters: each node can do all management tasks
-* Use of pmxcfs, a database-driven file system, for storing configuration files, replicated in real-time on all nodes using corosync
+* Use of pmxcfs, a database-driven file system, for storing configuration files, replicated in real-time on all nodes using "corosync"
 * Easy migration of virtual machines and containers between physical hosts
 * Fast deployment
 * Cluster-wide services like firewall and HA
@@ -64,4 +64,4 @@ You should see a Task viewer: Join Cluster window. It may seem like it stuck, bu
 
 Now you can monitor and provision both of them from one place.
 
-You can also migrate your Vm’s and LXC containers between them and you can also set up something called HA (high viability) which will keep your nodes running even if one of the nodes shuts down.
+You can also migrate your "VM’s" and LXC containers between them and you can also set up something called HA (high viability) which will keep your nodes running even if one of the nodes shuts down.
