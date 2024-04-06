@@ -76,3 +76,13 @@ truechart
 caddy
 ansible
 cronjobs
+dnf
+ZFS
+thetechcorner
+postgres
+ufw
+selfhosted
+backend
+ARP
+su
+

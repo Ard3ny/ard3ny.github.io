@@ -185,14 +185,15 @@ In this case it’s even better because this is the whole purpose of pi-KVM to r
 
 ### How to
 
-ecause it’s an Arch system and Raspberry Pi with 32 bit system, it’s a little bit different to set it up this time.
+Because it’s an Arch system and Raspberry Pi with 32 bit system, it’s a little bit different to set it up this time.
 
 List out all of the Netbird version and pick the latest one
 https://github.com/netbirdio/netbird/releases
 
 Right click copy https link and use wget ( my PI has ARM so I’m going with that version and also 32bit so look for v6)
 
-```
+
+```bash
 #read&write filesystem
 rw
 
