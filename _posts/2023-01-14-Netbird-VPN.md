@@ -23,7 +23,7 @@ Pros
 
 Cons
 * WireGuard is faster and more lightweight
-* WireGuard’s simpler codebase may have fewer bugs and security vulnerabilities
+* WireGuard's impler codebase may have fewer bugs and security vulnerabilities
 * no centralized server
 
 
@@ -42,7 +42,7 @@ The default policy is that every node can communicate with every other node in t
 
 ![img-description](/assets/img/posts/2023-01-14-Netbird-VPN.md/image-27-768x641.png)
 
-Another great benefit is that some nodes can be promoted to routers and can serve as DHCP server with some range of IPs address for devices behind this node. Meaning it can NAT those devices over this one node that is connected on the Netbird network and all of those devices don’t have to be on the Netbird VPN.
+Another great benefit is that some nodes can be promoted to routers and can serve as DHCP server with some range of IP addresses for devices behind this node. Meaning it can NAT those devices over this one node that is connected on the Netbird network and all of those devices don’t have to be on the Netbird VPN.
 
 ## How to connect your devices
 

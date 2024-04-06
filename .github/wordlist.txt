@@ -92,3 +92,7 @@ symlinks
 WPCLI
 ui
 XTD
+quickfix
+WireGuard's
+GW
+VE

@@ -30,9 +30,9 @@ wc -l test1
 
 Try to get this number as low as possible by creating the smallest list of information possible (number of users, groups etc.)
 
-In some cloud provider cases like, Google workspace, you can select which Users, groups, OUs you want to include.  
+In some cloud provider cases like, Google workspace, you can select which Users, groups, "OUs" you want to include.  
 
-Maybe you dont need the whole company and all of the OUs, maybe you can have a group that contains all the necessary users. Start by cutting the these output informations first , which will help with the traffic and CLoud Provider (google workspace) site of things 
+Maybe you don't need the whole company and all of the "OUs", maybe you can have a group that contains all the necessary users. Start by cutting the these output information first , which will help with the traffic and CLoud Provider (google workspace) site of things 
 
 
 
@@ -45,7 +45,7 @@ Maybe you dont need the whole company and all of the OUs, maybe you can have a g
 
 ## Change the Gerrit search-through LDAP scope 
 
-To help the speed on the gerrit side of problem, try to define the exact OU's where users and groups are stored, pattern of name it should look for..
+To help the speed on the gerrit side of problem, try to define the exact "OUs" where users and groups are stored, pattern of name it should look for..
 
 ```
 vim /etc/gerrit.config
@@ -87,10 +87,7 @@ maxAge = 12 hour
 maxAge = 4 hour
 ```
 
-If you wanna check out what precisely these settings do, go to Gerrit documentation.
-
-https://gerrit-review.googlesource.com/Documentation/config-gerrit.html
-
+If you wanna check out what precisely these settings do, go to [Gerrit documentation.](https://gerrit-review.googlesource.com/Documentation/config-gerrit.html)
 
 ## Resize gerrit heapsize
 
@@ -101,7 +98,7 @@ What is heap size you may ask?
 
 Default value should be max heapsize = 1/4 of available RAM. So to do this automatically, just increase your RAM and the heapsize will follow.
 
-To do it manually (not recommended) change "Xmx" value of gerrit ExectStart
+To do it manually (not recommended) change 'Xmx' value of gerrit 'ExectStart'
 
 ```
 ExecStart=/usr/bin/java -Xmx2048m -jar ${GERRIT_HOME}/bin/gerrit.war daemon -d ${GERRIT_HOME}

@@ -48,7 +48,7 @@ mkdir -p /root/admin/GAMConfig
 export GAMCFGDIR="/root/admin/GAMConfig"
 ```
 
-### 3. Cange the alias to new GAMADV-XTD3
+### 3. Change the alias to new GAMADV-XTD3
 ```bash
 alias gam="/Users/admin/bin/gamadv-xtd3/gam"
 source ~/.bashrc
@@ -59,7 +59,7 @@ cd ~/bin/gamadv-xtd3
 gam config drive_dir /root/admin/GAMConfig verify
 ```
 
-### 5. Copy old GAM auth files into the new GAM3 directory
+### 5. Copy old GAM authorization files into the new GAM3 directory
 ```bash
 root@gw-utils:~/bin/gamadv-xtd3 # cp -p ~/bin/gam/client_secrets.json /root/admin/GAMConfig/
 root@lgw-utils:~/bin/gamadv-xtd3 # cp -p ~/bin/gam/oauth2service.json /root/admin/GAMConfig/
@@ -128,7 +128,7 @@ Path: /Users/admin/bin/gamadv-xtd3
 Config File: /Users/admin/GAMConfig/gam.cfg, Section: DEFAULT, customer_id: my_customer, domain.com
 ```
 
-### 8. Authorrize scopes of access
+### 8. Authorize scopes of access
 ```bash
 gam oauth create
 ```

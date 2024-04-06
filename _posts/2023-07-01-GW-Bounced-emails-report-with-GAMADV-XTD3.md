@@ -24,7 +24,7 @@ One of that features is tracking emails with specific attributes such as:
 ### When does the email bounce?
 A bounced email can be either a hard bounce or a soft bounce. A hard bounce means that the email address is permanently unavailable and should not receive electronic mail. A soft bounce is temporary and may be caused by server outages or a full inbox.
 
-When the email bounces in the Gmail you automatically receive a notification email back about the email being bounced. This mail is always sent from the same address: mailer-daemon@googlemail.com
+When the email bounces in the Gmail you automatically receive a notification email back about the email being bounced. This mail is always sent from the same address: "mailer-daemon@googlemail.com"
 
 We are going to use this feature and automate it with the script.
 
