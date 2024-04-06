@@ -189,7 +189,7 @@ Because it’s an Arch system and Raspberry Pi with 32 bit system, it’s a litt
 
 [List out all of the Netbird version and pick the latest one](https://github.com/netbirdio/netbird/releases)
 
-Right click copy https link and use wget ( my PI has ARM so I’m going with that version and also 32bit so look for v6)
+Right click copy https link and use "wget" ( my PI has ARM so I’m going with that version and also 32bit so look for v6)
 
 
 ```bash

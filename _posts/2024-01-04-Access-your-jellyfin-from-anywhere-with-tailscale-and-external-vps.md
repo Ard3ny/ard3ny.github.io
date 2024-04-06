@@ -27,18 +27,18 @@ This is a simple guide that shows you how to access your Jellyfin server using a
 * Cloudflare also [inspects](https://developers.cloudflare.com/analytics/network-analytics/reference/data-collection/) your traffic, which may not really be a good combination with you streaming "all your bought movies"
 * By default the bandwidth is too small for movie streaming ** 
 
-** this can be overcomed with some tinkering [A] (https://www.cloudflare.com/learning/cdn/what-is-a-cdn/) [B] (https://selfhosters.net/docker/plex/cloudflare/)
+** this can be overcome with some tinkering [A] (https://www.cloudflare.com/learning/cdn/what-is-a-cdn/) [B] (https://selfhosters.net/docker/plex/cloudflare/)
 
 ## Why not just Wireguard, netbird, twingate?
 * While all of these VPN providers use wireguard as their tunnel technology, wireguard on it's own can be difficult to start with for beginners.
 * Netbird, twingate are good alternatives to tailscale. In the end it's all about the preference and what you are already using.
 
 
-## Prereq
+## Prerequisite
 ### Choosing VPN provider
 You can find best deals using site [lowendstock.com/](https://lowendstock.com/). 
-While these providers can be on the more "suspicious" site of things, when you compare the pricing it's a nobrainer for VPN proxy like this. 
-You can find VPS for as little as 10USD/year on Black fridays/Chinese New Year.
+While these providers can be on the more "suspicious" site of things, when you compare the pricing it's a "no-brainer" for VPN proxy like this. 
+You can find VPS for as little as 10$/year on Black fridays/Chinese New Year.
 
 #### Tips
 * use linux KVM platform
@@ -57,14 +57,14 @@ With duck dns, you can create account and domain without any back-tracing inform
 
 
 #### Buy/Use an existing domain 
-Use cloudflare or some other domain provider and buy something cheap for few USD/year.
+Use cloudflare or some other domain provider and buy something cheap for few $/year.
 If you already own a domain, just use that. In the end we only need one A record.
 
 
 ## How to
 ### Buy/setup VPS and open necessary ports
 
-I'm not going to go through everthing with you, but when you choose the best deal for you, the process is very simular.
+I'm not going to go through everything with you, but when you choose the best deal for you, the process is very similar.
 Register -> Choose VPS package deal -> Run
 
 After that we need to open some ports
@@ -77,7 +77,7 @@ After that we need to open some ports
 {: .prompt-info }
 
 ### Point domain to IP of your VPS
-After you've succesfully deployed your VPS, you should now know it's public IPv4. Copy that address and point your domain to IT
+After you've successfully deployed your VPS, you should now know it's public IPv4. Copy that address and point your domain to IT
  
 ![DuckDns example](/assets/img/posts/2024-01-04-Access-your-jellyfin-from-anywhere-with-tailscale-and-external-vps.md/duck_dns_example.png)
 
@@ -86,7 +86,7 @@ After you've succesfully deployed your VPS, you should now know it's public IPv4
 {: .prompt-info }
 
 #### Truenas site
-You can find whole truechart guide wich gets updated ever so often [here](https://truecharts.org/charts/stable/tailscale/How-To-Guide/), but if not available use mine bellow which should be sufficient.
+You can find whole truechart guide which gets updated ever so often [here](https://truecharts.org/charts/stable/tailscale/How-To-Guide/), but if not available use mine bellow which should be sufficient.
 * We will need to create [tailscale account](https://www.tailscale.com/)  
 * For LAN access to your other truenas apps, you will need to set "sysctl" values in system settings. Go to System settings -> Advanced -> Add following and set them to "1" and "Enabled"
 ```bash
@@ -102,9 +102,9 @@ net.ipv4.conf.all.src_valid_mark
 
 * In the truenas go to Apps -> Discover Apps -> Type in "tailscale". (Note: You may need truecharts repo to  by enabled)
 Leave everything default except
-Auth key
-Userspace: Needs to be checked
-Routes: "Your subnet range where jellyfin is running" (example 10.1.1.0/24)
+"Auth key"
+"Userspace": Needs to be checked
+"Routes": "Your subnet range where jellyfin is running" (example 10.1.1.0/24)
 
 ![Tailscale setup example](/assets/img/posts/2024-01-04-Access-your-jellyfin-from-anywhere-with-tailscale-and-external-vps.md/tailscale_setup_example.png)
 
@@ -120,7 +120,7 @@ The last thing is to tell the VPS tailscale client to accept routes from differe
 ```bash
 sudo tailscale up --accept-routes
 ```
-#### Validate all necesarry tailscale/wireguard ports are open
+#### Validate all necessary tailscale/wireguard ports are open
 By default wireguard requires one open UDP port (most commonly 51820) and without this connection/tunnel wouldn't work. But tailscale doesn't require you to open any port how is that possible?
 Well the workaround/feature they use is called "Relayed connections" or how the call it "DERP".
 
@@ -181,7 +181,7 @@ We can see that "UDP: true" which means that connection with THIS client should 
 
 
 #### Validate wireguard connection between these 2 clients
-You should now see both clients with their IP's in your tailscale Admin console. 
+You should now see both clients with their IPs in your tailscale Admin console. 
 We can validate this connection with simple test.
 
 Check the status and peers
@@ -198,7 +198,7 @@ Ping device
 ping <IP of another device> 
 ```
 
-You should see succesful ping output like this
+You should see successful ping output like this
 ```
 PING 100.x.x.x (100.x.x.x) 56(84) bytes of data.
 64 bytes from 100.x.x.x: icmp_seq=1 ttl=64 time=48.5 ms
@@ -224,7 +224,7 @@ Again we can see connection is "direct". If it would be otherwise it would say "
 
 
 ### Setup reverse proxy
-This can be any reverse proxy of your choice, I'll be had great experience lately with caddy so I'be using that. 
+This can be any reverse proxy of your choice, I'll be had great experience lately with caddy so I'll be using that. 
 
 > I had some freezing issues with nginx so maybe don't use that, but your experience may vary
 {: .prompt-info }
@@ -258,7 +258,7 @@ reverse_proxy 10.1.1.20:8096
 ### Verify 
 * Check if the site is working
 ![Jellyfin](/assets/img/posts/2024-01-04-Access-your-jellyfin-from-anywhere-with-tailscale-and-external-vps.md/jellyfin.png)
-* Try watching some content to see if you see any studdering. If you do tshoot the bandwidth of the tunnel with iperf3
+* Try watching some content to see if you see any stuttering. If you do tshoot the bandwidth of the tunnel with "iperf3"
 
 One one side (VPS). Stop the caddy and run
 ```

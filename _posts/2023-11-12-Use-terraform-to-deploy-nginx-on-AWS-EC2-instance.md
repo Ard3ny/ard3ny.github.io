@@ -440,7 +440,7 @@ echo "Hello Nginx Demo" > /var/www/html/index.html
 ```
 
 
-### Run terraform upgrade & valdiate & plan & apply
+### Run terraform upgrade & validate & plan & apply
 
 
 The terraform init command initializes a working directory containing Terraform configuration files. This is the first command that should be run after writing a new Terraform configuration or cloning an existing one from version control.  

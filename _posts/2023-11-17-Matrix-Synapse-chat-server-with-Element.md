@@ -343,7 +343,7 @@ total-quota=1200
 sudo systemctl restart coturn.service
 ```
 
-#### Implemenet coturn  into matrix Synapse config
+#### Implement coturn  into matrix Synapse config
 ```
 sudo vim /etc/matrix-synapse/conf.d/turn.yaml
 ```
@@ -364,7 +364,7 @@ sudo systemctl restart matrix-synapse.service
 ```
 
 #### Check if new TURN server is working
-#####  test.voip.librepush.net
+#####  "test.voip.librepush.net"
 You can use [this](https://test.voip.librepush.net/) test voip open-source online tool. 
 Just type in your 
 * Homeserver URL: https://turn.example.com 
