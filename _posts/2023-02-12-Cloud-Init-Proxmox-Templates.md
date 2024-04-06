@@ -140,7 +140,7 @@ Drawbacks of linked clones
 * Templates cannot be deleted or modified if any clones exist, so you can’t install updates or add configuration to the template for future clones, you’d have to make a new template, this can lead to many templates cluttering your VM list as OS releases come out and your "pre-configuration" grows
 * "KSM" can increase the attack surface for side-channel memory attacks
 
-Because I know all of my VM’s will share the same settings (like user,ssh keys, DNS) and I’m not really gonna benefit from the space efficiency and faster speed deployment, I’m going to configure cloud-init now and use full-clone.
+Because I know all of my VMs will share the same settings (like user,ssh keys, DNS) and I’m not really gonna benefit from the space efficiency and faster speed deployment, I’m going to configure cloud-init now and use full-clone.
 
 Configure user, password, ssh-keys, DNS, IP address and the gateway
 
