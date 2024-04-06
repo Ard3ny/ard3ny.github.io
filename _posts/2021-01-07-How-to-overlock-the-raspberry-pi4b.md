@@ -41,10 +41,10 @@ watch -n 1 vcgencmd measure_clock arm
 ```
 As you can see our clock speed is idling around 600MHz. And if I open something in the background (browser, for example) It changes to 1.5GHz
 
-![](/assets/img/posts/2021-01-07-How-to-overlock-the-raspberry-pi4b.md/image-2222.png)
+![4](/assets/img/posts/2021-01-07-How-to-overclock-the-raspberry-pi4b.md/image-2222.png)
 
 
-![](/assets/img/posts/2021-01-07-How-to-overlock-the-raspberry-pi4b.md/image-2233333.png)
+![5](/assets/img/posts/2021-01-07-How-to-overclock-the-raspberry-pi4b.md/image-2233333.png)
 
 4. We are going to set a new value for our frequency in a config file. For that we need to open a new terminal and type:
 ```
@@ -52,7 +52,7 @@ sudo nano /boot/config.txt
 ```
 You should be in the "config.txt" file. Scroll down a little bit and you should see something like this
 
-![](/assets/img/posts/2021-01-07-How-to-overlock-the-raspberry-pi4b.md/image-24.png)
+![6](/assets/img/posts/2021-01-07-How-to-overclock-the-raspberry-pi4b.md/image-24.png)
 
 Now change it to over_voltage=2 and arm_freq=1750. Over voltage is a setting that tells how much voltage should PI send into the CPU/GPU. With higher clocks you need to give a PI more juice right? The default value is 0, but you can change it anywhere between -18 and 8.
 
@@ -60,16 +60,15 @@ You need to be careful because with higher voltage intake there is a higher temp
 
 On the other side if you would see a yellow lightning bolt looking like this
 
-![](/assets/img/posts/2021-01-07-How-to-overlock-the-raspberry-pi4b.md/ezgif-4-beb0a7cb95d5-150x150.png
-)
+![1](/assets/img/posts/2021-01-07-How-to-overclock-the-raspberry-pi4b.md/ezgif-4-beb0a7cb95d5-150x150.png)
 
 then your PI is not getting enough voltage or amps (in this case you would need a stronger power supply)
 
-![](/assets/img/posts/2021-01-07-How-to-overlock-the-raspberry-pi4b.md/image-25.png)
+![2](/assets/img/posts/2021-01-07-How-to-overclock-the-raspberry-pi4b.md/image-25.png)
 
 If you do have a fan, you can probably push it even more. You can see my settings here:
 
-![](/assets/img/posts/2021-01-07-How-to-overlock-the-raspberry-pi4b.md/image-26.png)
+![3](/assets/img/posts/2021-01-07-How-to-overclock-the-raspberry-pi4b.md/image-26.png)
 
 Press "ctrl + o" to save changed edited file and confirm with ENTER. Then press "ctrl + x" to exit from the file.
 
@@ -88,7 +87,7 @@ For last but not least I will show you how to overclock the GPU. This can be ver
 
 Again open "/boot/config.txt" file and add a new line gpu_freq=750.
 
-![](/assets/img/posts/2021-01-07-How-to-overlock-the-raspberry-pi4b.md/image-27.png)
+![7](/assets/img/posts/2021-01-07-How-to-overclock-the-raspberry-pi4b.md/image-27.png)
 
 Save and exit from the file, reboot the PI and you are ready to go!
 
