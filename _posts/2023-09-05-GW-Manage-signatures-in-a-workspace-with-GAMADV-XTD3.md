@@ -84,7 +84,7 @@ You've maybe noticed multiple variables/tags in the template.
 
 These are going to be dynamically replaced by the value of your User. So if you are using your own signature template, you need to add these variables.
 
-Adding {RT}{/RT} around the tag makes the variable skipable if user/users don't have it, therefore not leaving an empty ugly space.
+Adding {RT}{/RT} around the tag makes the variable skippable if user/users don't have it, therefore not leaving an empty ugly space.
 
 
 > Note that for this to work USER HAVE TO HAVE THESE FILLED OUT. Otherwise, you'll get the error phones.0.value" not found, organizations.0.title etc..
