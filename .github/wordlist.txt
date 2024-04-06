@@ -18,7 +18,7 @@ rhel
 netbird
 wireguard
 dhcp
-cli 
+cli
 GAM
 GAMADV 
 SSO
