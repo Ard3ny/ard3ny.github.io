@@ -13,13 +13,15 @@ matrix:
       context_visible_first: true
       escapes: \\[\\`~]
       delimiters:
-        # Ignore text in brackets [] and ()
+        # Ignore text in brackets [] and () and ""
         - open: '\['
           close: '\]'
         - open: '\('
           close: '\)'
         - open: '\{'
           close: '\}'
+        - open: '\"'
+          close: '\"'
   - pyspelling.filters.markdown:
       markdown_extensions:
       - pymdownx.superfences
