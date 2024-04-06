@@ -5,7 +5,7 @@ matrix:
     lang: en
     ignore-case: true
   dictionary:
-    wordlist:
+    wordlists:
     - .github/wordlist2.txt
     encoding: utf-8
   pipeline:
