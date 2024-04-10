@@ -16,6 +16,7 @@ I focus mainly on the system administration, automatization, virtualization and 
 
 I’m also a tech enthusiast and I like to play with a tech a lot. I’m running my own homelab with a Raspberry Pi as a DNS sink-hole,Pi-KVM, proxmox server where I have several LXS containers like Bookstack, Netbird, jellyfish, Unifi controller…
 
+{% include mail.html %}
 
 
 
