@@ -13,7 +13,3 @@ I focus mainly on the system administration and dev-ops technologies.
 
 
 
-
-
-{% include mail.html %}
-
