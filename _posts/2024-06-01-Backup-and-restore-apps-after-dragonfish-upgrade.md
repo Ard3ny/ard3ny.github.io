@@ -79,10 +79,8 @@ heavyscript -> Backup options -> Create backup -> Specify the retention
 
 
 ### Cron job for automatic backup/update apps
-Because the backup option doesn't support the update flag, we need to combine the new option with the old one, which only backups the ix-application dataset.
-
 ```bash
-heavyscript backup --create 14 && heavyscript update --concurrent 10 --prune --rollback --sync --self-update --include-major --major
+heavyscript update --backup --concurrent 10 --prune --rollback --sync --self-update --include-major --major
 ```
 
 ### Restore single app
