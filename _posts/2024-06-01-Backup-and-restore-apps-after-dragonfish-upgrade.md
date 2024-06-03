@@ -1,5 +1,5 @@
 ---
-title: Backup-and-restore-apps-after-dragonfish-upgrade
+title: Backup and restore apps after dragonfish upgrade
 date: 2024-06-01 10:00:00 +0100
 categories: [Homelab. truenas]
 tags: [truenas, cobia, dragonfish, heavyscript]
@@ -80,7 +80,7 @@ heavyscript -> Backup options -> Create backup -> Specify the retention
 
 ### Cron job for automatic backup/update apps
 ```bash
-heavyscript update --backup --concurrent 10 --prune --rollback --sync --self-update --include-major --major
+heavyscript update --backup 14 --concurrent 10 --prune --rollback --sync --self-update --include-major --major
 ```
 
 ### Restore single app
@@ -200,6 +200,9 @@ For each app:
 * Add the name you gave to the S3 credentials earlier, under the credentials section.
 
 * Confirm the data is being sent to your S3 host after ~5 minutes
+
+![cnpg](/assets/img/posts/2024-05-31-Backup-charts-and-pvc-after-dragonfish-upgrade.md/cnpg.png)
+
 
 > The official guide also mentions that you should "Set the “mode” to restore, this should prevent the app starting with an empty database upon restore". DO NOT DO THIS. First of all it's a typo and it should be __recovery__ and it's only meant for the recovery process, not for the backup.
 {: .prompt-warning }
