@@ -1,7 +1,7 @@
 ---
 title: Backup and restore apps after dragonfish upgrade
 date: 2024-06-01 10:00:00 +0100
-categories: [Homelab. truenas]
+categories: [Homelab, truenas]
 tags: [truenas, cobia, dragonfish, heavyscript]
 math: false
 mermaid: false

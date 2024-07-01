@@ -1,7 +1,7 @@
 ---
 title: Cobia to Dragonfish Upgrade
 date: 2024-05-30 20:00:00 +0100
-categories: [Homelab. truenas]
+categories: [Homelab, truenas]
 tags: [truenas, cobia, dragonfish]
 math: false
 mermaid: false
