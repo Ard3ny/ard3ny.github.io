@@ -16,7 +16,7 @@ But even after spamming update button and enabling all updates for all products 
 ## Disclaimer 
 Due to config changes that happened in the WSL2 kernel release 6.6.x, some of the configs Docker requires were changed to be loadable modules instead of their previously built-in state. 
 
-Github issues links [1](https://github.com/microsoft/WSL/issues/11771) [2]{https://github.com/microsoft/WSL/issues/11742}
+Github issues links [1](https://github.com/microsoft/WSL/issues/11771) [2](https://github.com/microsoft/WSL/issues/11742)
 
 
 Warning: If you don't add these changes, the docker won't work with WSL2.
@@ -70,7 +70,7 @@ kernel=C:\\Users\\<your-user>\\bzImage
 
 ## Restart WSL
 From the powershell of your PC shutdown the WSL
-```bash
+```powershell
 #shutdown
 wsl --shutdown
 #start again
