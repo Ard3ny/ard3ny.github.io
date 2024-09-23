@@ -18,8 +18,8 @@ Due to config changes that happened in the WSL2 kernel release 6.6.x, some of th
 
 Github issues links [1](https://github.com/microsoft/WSL/issues/11771) [2](https://github.com/microsoft/WSL/issues/11742)
 
-
-Warning: If you don't add these changes, the docker won't work with WSL2.
+> If you don't add these changes, the docker won't work with WSL2.
+{: .prompt-warning }
 
 
 ## Compile 
@@ -45,8 +45,10 @@ curl -o /src/Microsoft/config-wsl https://blog.thetechcorner.sk/assets/text/conf
 # build the kernel
 make -j2 KCONFIG_CONFIG=Microsoft/config-wsl
 yes "" | make -j2 KCONFIG_CONFIG=Microsoft/config-wsl
-
 ```
+
+> The credit for config-wsl goes to [@eapotapov](https://github.com/eapotapov), which kindly shared it on already mentioned gihub issue.
+{: .prompt-info }
 
 ## Copy the image out of the container
 Create a directory for kernels on Windows filesystem
@@ -82,6 +84,7 @@ wsl
 uname -r
 ```
 And you should see 6.6.x like so
+
 ```bash
 6.6.36.6-microsoft-standard-WSL2+
 ```
