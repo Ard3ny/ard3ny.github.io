@@ -43,7 +43,6 @@ git checkout --progress --force -B build/linux-msft-wsl-6.6.y refs/remotes/origi
 curl -o /src/Microsoft/config-wsl https://blog.thetechcorner.sk/assets/text/config-wsl
 
 # build the kernel
-make -j2 KCONFIG_CONFIG=Microsoft/config-wsl
 yes "" | make -j2 KCONFIG_CONFIG=Microsoft/config-wsl
 ```
 
