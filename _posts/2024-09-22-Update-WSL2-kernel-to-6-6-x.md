@@ -9,9 +9,10 @@ mermaid: false
 
 ## Update
 
-Only follow this post if you need kernel 6.6. If you plan on playing with cilium/eBPF or you don't need any specific feature from newer kernel go with 5.15.x.
+> Only follow this post if you need kernel 6.6. If you plan on playing with cilium/eBPF or you don't need any specific feature from newer kernel go with 5.15.x.
+{: .prompt-info }
 
-I've created tutorial on that [here] (https://blog.thetechcorner.sk/posts/Install-Cilium-under-WSL2-with-minikube)
+I've created tutorial on that [here](https://blog.thetechcorner.sk/posts/Install-Cilium-under-WSL2-with-minikube/)
 
 ## Introduction
 A few days ago, I wanted to update my linux kernel running under WSL to a newer 6.x version, because I saw they have already published 6.6.36.6 on their [microsoft WSL2 github](https://github.com/microsoft/WSL2-Linux-Kernel/releases) and I was running just 5.15.x.
