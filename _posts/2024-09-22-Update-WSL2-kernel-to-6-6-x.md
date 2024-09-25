@@ -7,6 +7,12 @@ math: false
 mermaid: false
 ---
 
+## Update
+
+Only follow this post if you need kernel 6.6. If you plan on playing with cilium/eBPF or you don't need any specific feature from newer kernel go with 5.15.x.
+
+I've created tutorial on that [here] (https://blog.thetechcorner.sk/posts/Install-Cilium-under-WSL2-with-minikube)
+
 ## Introduction
 A few days ago, I wanted to update my linux kernel running under WSL to a newer 6.x version, because I saw they have already published 6.6.36.6 on their [microsoft WSL2 github](https://github.com/microsoft/WSL2-Linux-Kernel/releases) and I was running just 5.15.x.
 
@@ -22,18 +28,22 @@ Github issues links [1](https://github.com/microsoft/WSL/issues/11771) [2](https
 {: .prompt-warning }
 
 
-## Compile 
+## How to
 We can run everything in the docker container to make it clean.
+
+### Create script with the following content
+
 ```bash
-docker run --name wsl-kernel-builder --rm -it ubuntu@sha256:9d6a8699fb5c9c39cf08a0871bd6219f0400981c570894cd8cbea30d3424a31f bash
+vim build.sh
 ```
-From inside the container run
 
 ```bash
 WSL_COMMIT_REF=linux-msft-wsl-6.6.36.6
 apt update && apt install -y git build-essential flex bison libssl-dev libelf-dev bc python3 cpio dwarves curl vim
 
-mkdir src && cd src && git init
+mkdir src 
+cd src 
+git init
 git remote add origin https://github.com/microsoft/WSL2-Linux-Kernel.git
 git config --local gc.auto 0
 git -c protocol.version=2 fetch --no-tags --prune --progress --no-recurse-submodules --depth=1 origin +${WSL_COMMIT_REF}:refs/remotes/origin/build/linux-msft-wsl-6.6.y
@@ -43,26 +53,36 @@ git checkout --progress --force -B build/linux-msft-wsl-6.6.y refs/remotes/origi
 curl -o /src/Microsoft/config-wsl https://blog.thetechcorner.sk/assets/text/config-wsl
 
 # build the kernel
-yes "" | make -j$(nproc) KCONFIG_CONFIG=Microsoft/config-wsl
+echo -ne '\n' | make -j$(nproc) KCONFIG_CONFIG=Microsoft/config-wsl
+
+#copy the files from container
+rm -rf .git
+cp -r /src /output
 ```
 
-> The credit for config-wsl goes to [@eapotapov](https://github.com/eapotapov), which kindly shared it on already mentioned gihub issue.
+### Run the container with the script
+```bash
+docker run --name wsl2-build --rm -it -v $PWD/output/:/output/ -v $PWD/build.sh:/build.sh ubuntu:22.04 bash -c "./build.sh"
+```
+
+
+
+> The credit for config-wsl goes to [@eapotapov](https://github.com/eapotapov), which kindly shared it on already mentioned github issue.
 {: .prompt-info }
 
-## Copy the image out of the container
+## Copy the image to /mnt/c
 Create a directory for kernels on Windows filesystem
 
 ```bash
-#go to your User folder
-cd /mnt/c/Users/<your-user>/
-docker cp wsl-kernel-builder:/src/arch/x86/boot/bzImage .
+cd output/src
+cp arch/x86/boot/bzImage /mnt/c/Users/<your-user>/bzImage
 ```
 
 ## Edit WSL config
 Edit WSL config so it, uses our freshly compiled kernel. Keep the double slashes.
 
-```bash
-vim C:\Users\something\.wslconfig
+```
+C:\Users\something\.wslconfig
 ```
 ```
 [wsl2]
