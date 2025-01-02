@@ -196,7 +196,10 @@ database:
 ```
  echo "registration_shared_secret: '$(cat /dev/urandom | tr -cd '[:alnum:]' | fold -w 256 | head -n 1)'" | sudo tee /etc/matrix-synapse/conf.d/registration_shared_secret.yaml
 ```
-
+#### Restart the matrix service
+```
+ systemctl restart matrix-synapse.service
+```
 #### Create Synapse admin account
 We will need this account later for API uses as well
 
