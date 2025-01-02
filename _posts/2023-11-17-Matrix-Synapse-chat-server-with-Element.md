@@ -215,7 +215,7 @@ curl -X POST --header 'Content-Type: application/json' -d '{
     "identifier": { "type": "m.id.user", "user": "test" },
     "password": "your_password",
     "type": "m.login.password"
-}' 'https:/matrix.example.com/_matrix/client/r0/login'
+}' 'http:/localhost:8008/_matrix/client/r0/login'
 ```
 > Change user, password, and domain to yours.
 {: .prompt-warning }
@@ -412,7 +412,7 @@ And finally feed these into WEB UI.
 
 ## Element (web interface)
 ### Setup 
-We have successfully created a backend for our chat application and we can already connect to it with some public clients like [Elemenet](https://app.element.io/#/welcome)
+We have successfully created a backend for our chat application and we can already connect to it with some public clients like [Element](https://app.element.io/#/welcome)
 
 But because we want everything private and selfhosted, we are going to install element on our server as well.
 
@@ -500,6 +500,9 @@ sudo vim /var/www/element/config.json
 {: .prompt-warning }
 
 #### Create new element nginx site
+```
+vim /etc/nginx/sites-available/element
+```
 ```
 server {
     listen 80;
