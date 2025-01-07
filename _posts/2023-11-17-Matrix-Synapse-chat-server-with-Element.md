@@ -533,8 +533,7 @@ server {
     ssl_prefer_server_ciphers on;
 }
 ```
-> Change all 4 occurences of turn.example.com to your domain. 
-{: .prompt-warning }
+
    
 #### Create TLS certificate for element site
 ```
@@ -578,10 +577,22 @@ This is very inconvenient for regular non-tech user, or just for the user who do
 
 
 ### Matrix-registration-bot
-I've chosen [this github project](https://github.com/moan0s/matrix-registration-bot) from
-a [moan0s](https://github.com/moan0s/) so all credit goes to him.
+> DEPRECATED. I've switched to [synapse-admin](https://github.com/etkecc/synapse-admin) instead.
+{: .prompt-warning }
 
-#### Create admin account for a bot
+
+### Synapse-admin
+Previously as I've mentioned I've used [Matrix-registration-bot](https://github.com/moan0s/matrix-registration-bot). But the bot didn't worked that well, often I needed to restart the service and in general it just didn't got any more updates. Because of that I've decided to switch to [synapse-admin](https://github.com/etkecc/synapse-admin) which has many more great features like:
+* create, delete, manage and edit users (activated, guests, locked, deactivated...)
+* create, delete, manage and edit rooms
+* export info about users, rooms to CSV
+* manager users media
+* manage tokens
+* manage federation 
+...
+
+
+#### Create admin account for synapse-admin
 Or you can just use account admin, but I prefer when all accounts have their own purpose.
 
 ```
@@ -589,7 +600,7 @@ register_new_matrix_user -c /etc/matrix-synapse/conf.d/registration_shared_secre
 
 ```
 ```
-New user localpart [root]: registration-bot
+New user localpart [root]: synapse-admin
 Password:
 Confirm password:
 Make admin [no]: yes
@@ -603,127 +614,96 @@ curl -X POST --header 'Content-Type: application/json' -d '{
     "password": "YOURpassword",
     "type": "m.login.password"
 }' 'https://matrix.example.com/_matrix/client/r0/login'
-{"user_id":"@registration-bot:matrix.example.com","access_token":"syt_YOURTOKEN","home_server":"matrix.example.com","device_id":"RVVCPTXXYH"}
+{"user_id":"@synapse-admin:matrix.example.com","access_token":"syt_YOURTOKEN","home_server":"matrix.example.com","device_id":"RVVCPTXXYH"}
 ```
 
-#### Install python and pip
-```
-sudo apt-get install python3 pip3 -y
-```
+#### Install synapse-admin
+There are 3 options on how to install synapse-admin:
+* Download the tarball and serve with any webserver
+* Download the source code from github and run using nodejs
+* Run the Docker container
 
-#### Install bot
-```
-pip3 install matrix-registration-bot --break-system-packages
-```
+I'm gonna go with first one, but feel free to use which one you prefer. YOu can find info on their [github](https://github.com/etkecc/synapse-admin?tab=readme-ov-file#steps-for-1)
 
-#### Create working dir 
-```
-mkdir -p /matrix/matrix-registration-bot
-```
+#### Download the latest release here
+[releases] (https://github.com/etkecc/synapse-admin/releases)
 
-#### Create config file
 ```
-vim /matrix/matrix-registration-bot/config.yml
-```
-```
-bot:
-  server: "https://matrix.example.com"
-  username: "registration-bot"
-  access_token: "yourTOKEN"
-  # It is also possible to use a password based login by commenting out the access token line and adjusting the line below
-  # password: "secretpassword"
-  prefix: ""
-api:
-  # API endpoint of the registration tokens
-  base_url: 'matrix.example.com'
-  # Access token of an administrator on the server. If you configured the bot to be an admin on the sever you can use the same token as above.
-  token: "yourTOKEN"
-logging:
-  level: ERROR
+#current latest release as 7.1.2025
+wget https://github.com/etkecc/synapse-admin/releases/download/v0.10.3-etke35/synapse-admin.tar.gz
 ```
 
-> Change botj occurences of matrix.example.com to your domain and username/password to credentials of your bot (which we got earlier)
-{: .prompt-warning }
-
-
-#### Create a service 
-Create a service that will automatically run and restart the bot.   
+#### Untar the file
 ```
-sudo vim /etc/systemd/system/matrix-registration-bot.service
-```
-```
-[Unit]
-Description=matrix-registration-bot
-
-[Service]
-Type=simple
-
-WorkingDirectory=/matrix/matrix-registration-bot
-ExecStart=python3 -m matrix_registration_bot.bot
-
-Restart=always
-RestartSec=30
-SyslogIdentifier=matrix-registration-bot
-
-[Install]
-WantedBy=multi-user.target
+tar -xvzf synapse-admin.tar.gz
 ```
 
-#### Enable and start the service
+#### Mope file to web root directory
 ```
-sudo systemctl daemon-reload
-sudo systemctl start matrix-registration-bot
-sudo systemctl enable matrix-registration-bot
+mv synapse-admin /var/www/
 ```
 
-#### Test the bot
-1. Now go to your https://element.example.com and login with admin credentials. (or just create a new user)    
-
-2. Click on "Send a new message"    
-3. Fill out the bot name: "@registration-bot:matrix.example.com" and click GO.   
-4. The room should open and you can type in the command. Try typing 
+#### Create new synapse-admin nginx site
 ```
-help
+vim /etc/nginx/sites-available/synapse-admin
+```
+```
+server {
+    listen 80;
+    listen [::]:80;
+
+    server_name synapse-admin.example.com;
+
+    return 301 https://$host$request_uri;
+}
+
+server {
+    listen 443 ssl http2;
+    listen [::]:443 ssl http2;
+
+    server_name synapse-admin.example.com;
+
+    root /var/www/synapse-admin;
+    index index.html;
+
+    location / {
+        try_files $uri $uri/ /index.html;
+    }
+    location ~* \.(?:css|js|jpg|jpeg|gif|png|svg|ico|woff|woff2|ttf|eot|webp)$ {
+        expires 30d; # Set caching for static assets
+        add_header Cache-Control "public";
+    }
+
+    gzip on;
+    gzip_types text/plain application/javascript application/json text/css text/xml application/xml+rss;
+    gzip_min_length 1000;
+
+
+    # TLS configuration
+    ssl_certificate /etc/letsencrypt/live/synapse-admin.example.com/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/synapse-admin.example.com/privkey.pem;
+    ssl_protocols TLSv1.2 TLSv1.3;
+    ssl_prefer_server_ciphers on;
+}
 ```
 
-If everything is working correctly the bot should answer like this.   
-
-![Bot](/assets/img/posts/2023-11-17-Matrix-Synapse-chat-server-with-Element.md/bot1.png)
-
-If you receive the error message
+#### Create TLS certificate for synapse-admin
 ```
-Failed to decrypt your message. Make sure encryption is enabled in my config and either enable sending messages to unverified devices or verify me if possible.
+sudo certbot certonly --nginx -d synapse-admin.example.com
 ```
 
-You need to verify the user. To do that:
-* 1. click on in profile picture
-
-* 2. Click on session under verify   
-![Bot2](/assets/img/posts/2023-11-17-Matrix-Synapse-chat-server-with-Element.md/bot2.png)
-   
-      
-* 3. click on Manually verify by text   
-![Bot3](/assets/img/posts/2023-11-17-Matrix-Synapse-chat-server-with-Element.md/bot3.png)
-   
-
-* 4. click on verify session   
-![Bot4](/assets/img/posts/2023-11-17-Matrix-Synapse-chat-server-with-Element.md/bot4.png)
-
-* 5. Now leave the room with the bot  
-![Bot5](/assets/img/posts/2023-11-17-Matrix-Synapse-chat-server-with-Element.md/bot5.png)
-
-* 6. Finally, just start the chat with him again and it should work.   
-
-#### Create token
-To create a new one time use token just type in 
+#### Enable the new synapse-admin site
 ```
-create
+ sudo ln -s /etc/nginx/sites-available/synapse-admin /etc/nginx/sites-enabled
+```
+```
+nginx -t
+sudo systemctl reload nginx.service
 ```
 
-And give this token to the person you want to able to register to your matrix synapse server.
 
 ## Congratulation
-You've successfully deployed matrix synapse server with an element interface with VOIP over your own TURN server and chatbot token-managed registration. 
+You've successfully deployed matrix synapse server with an element interface with VOIP over your own TURN server and synapse-admin for user,room management.
 
 
 
