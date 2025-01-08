@@ -75,7 +75,6 @@ The way zfs RAIDZ1 works is that we have 3 drives and data is "striped" across a
 
 
 > This process is very dangerous and can lead to complete data loss. Since data is copied from a single drive, if that drive fails, all data is gone. Additionally, the copying process stresses the drive, increasing the likelihood of failure.
-
 {: .prompt-warning }
 
 
@@ -157,7 +156,6 @@ We can see drive "wwn-0x5000c500f7dc72e5 -> ../../sdg" doesn't have a partition 
 
 
 > Uou drives will probably have different name so adjust grep accordingly.
-
 {: .prompt-note }
 
 
@@ -274,7 +272,6 @@ I liked the explanation from the original post:
 
 
 > Some things has changed since orignal post, we need much more space than 140Gb. We need 8tb in our case, which hits limitations of some of the filesystems. That's why I recommend you to create the sparse file on the zfs filesystem (yes it can be on the disk we are migrating now)
-
 {: .prompt-note }
 
 
@@ -634,7 +631,6 @@ rsync -ah --info=progress2 /pool-01/subvol-116-disk-0 /pool-02/subvol-116-disk-0
 
 
 > This is going to take few/many hours. For me it was arround 12hours.
-
 {: .prompt-note }
 
 
