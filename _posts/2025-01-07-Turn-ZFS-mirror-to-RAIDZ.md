@@ -94,7 +94,7 @@ lrwxrwxrwx 1 root root 10 Dec 26 15:28 wwn-0x5dc663a341b1f8cb-part9 -> ../../sdb
 We can see drive "wwn-0x5000c500f7dc72e5 -> ../../sdg" doesn't have a partition as the only one.
 
 
-> Uou drives will probably have different name so adjust grep accordingly.
+> Your drives will probably have different name so adjust grep accordingly.
 {: .prompt-tip }
 
 > This process is very dangerous and can lead to complete data loss. Since data is copied from a single drive, if that drive fails, all data is gone. Additionally, the copying process stresses the drive, increasing the likelihood of failure.
