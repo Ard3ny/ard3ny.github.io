@@ -3,7 +3,12 @@
 source "https://rubygems.org"
 
 gem "jekyll-theme-chirpy", "~> 6.0", ">= 6.0.1"
-gem 'jekyll-compose', group: [:jekyll_plugins]
+
+# Group all Jekyll plugins together
+group :jekyll_plugins do
+  gem 'jekyll-compose'
+  gem 'jekyll_picture_tag'
+end
 
 group :test do
   gem "html-proofer", "~> 3.18"
