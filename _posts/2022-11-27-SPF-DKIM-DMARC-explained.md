@@ -21,7 +21,7 @@ v=spf1 include:5123454.thetechcorner.org ~all
 ```
 
 
-![](/assets/img/posts/2022-11-27-SPF-DKIM-DMARC-explained.md/image-1-768x432.png)
+![1](/assets/img/posts/2022-11-27-SPF-DKIM-DMARC-explained.md/image-1-768x432.png)
 
 ## DKIM
 
@@ -36,7 +36,7 @@ DKIM does not directly prevent abusive/malicious behavior. DKIM is just a signat
 k=rsa; p=MIGfMA0GCksjlkdixcieJDDSFIELDSKfdsfsdfsdfsfksflsfldfsfjhsdfsdfhuisdhfuiehfhNyyHs77EoDFDDEEFFEKJKLJHLKifLN51IIvwIDAQABQp6nIyi5oioyZh+1jDXoCDDFDSFEEDSFSEFE85N7b76aTtHmy2wTgR2LFS
 ```
 
-![](/assets/img/posts/2022-11-27-SPF-DKIM-DMARC-explained.md/image-2-768x432.png)
+![2](/assets/img/posts/2022-11-27-SPF-DKIM-DMARC-explained.md/image-2-768x432.png)
 
 
 ## DMARC
@@ -63,7 +63,7 @@ DKIM Alignment: DMARC requires a valid signature where the domain specified in t
  _dmarc.thetechcorner.org. IN TXT "v=DMARC1\; p=none\; rua=mailto:dmarc-aggregate@65.108.148.51\; ruf=mailto:dmarc-afrf@65.108.148.51\; pct=100"
 ```
 
-![](/assets/img/posts/2022-11-27-SPF-DKIM-DMARC-explained.md/image-3-1024x574.png)
+![3](/assets/img/posts/2022-11-27-SPF-DKIM-DMARC-explained.md/image-3-1024x574.png)
 
 
 ## TLDR:

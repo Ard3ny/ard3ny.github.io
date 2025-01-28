@@ -38,17 +38,17 @@ The transistor is an electrical component used in circuits to switch or amplify 
 We are going to connect the positive lead aka Emitor (E )to 5v+ on the PI and the collector (C ) to the ground on the PI. Last but not least, we are going to connect the base (B ) of the transistor to the PIN 17 and place a 680 Ohm resistor between them. You can see which leg of the NPN transistor is what on the picture below as well as the GPIO name scheme of the PI
 
 
-![](/assets/img/posts/2022-12-17-Automatically-controlled-Fan-on-the-Raspberry-PI.md/image-21.png)
+![21](/assets/img/posts/2022-12-17-Automatically-controlled-Fan-on-the-Raspberry-PI.md/image-21.png)
 
-![](/assets/img/posts/2022-12-17-Automatically-controlled-Fan-on-the-Raspberry-PI.md/image-17.png)
+![17](/assets/img/posts/2022-12-17-Automatically-controlled-Fan-on-the-Raspberry-PI.md/image-17.png)
 
 Finally, the final wired up product should look like this.
 
-![](/assets/img/posts/2022-12-17-Automatically-controlled-Fan-on-the-Raspberry-PI.md/image-18.png)
+![18](/assets/img/posts/2022-12-17-Automatically-controlled-Fan-on-the-Raspberry-PI.md/image-18.png)
 
 Here is my PI with the hot glue used to keep everything together and protected. It doesn’t look the nicest, but it gets the job done, and it’s pretty reliable.
 
-![](/assets/img/posts/2022-12-17-Automatically-controlled-Fan-on-the-Raspberry-PI.md/image-16-1024x623.png)
+![16](/assets/img/posts/2022-12-17-Automatically-controlled-Fan-on-the-Raspberry-PI.md/image-16-1024x623.png)
 
 ## 4. Script for a fan
 First, we will need to install a python 3 for our script to work.
@@ -82,12 +82,12 @@ watch -n 1 vcgencmd measure_temp
 If everything goes correctly, a fan should turn on when temperature hits the 65° C
 
 
-![](/assets/img/posts/2022-12-17-Automatically-controlled-Fan-on-the-Raspberry-PI.md/image-13-1024x298.png)
+![13](/assets/img/posts/2022-12-17-Automatically-controlled-Fan-on-the-Raspberry-PI.md/image-13-1024x298.png)
 
 You can change the threshold of the fan settings by opening "fancontrol.py" config file and rewriting the temperatures:
 ```
 sudo vi /usr/local/bin/fancontrol.py
 ```
-![](/assets/img/posts/2022-12-17-Automatically-controlled-Fan-on-the-Raspberry-PI.md/image-14.png)
+![14](/assets/img/posts/2022-12-17-Automatically-controlled-Fan-on-the-Raspberry-PI.md/image-14.png)
 
 Your Pi should now be able to automatically control the fan, so both of you can be cool now.

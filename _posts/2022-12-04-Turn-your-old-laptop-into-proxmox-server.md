@@ -44,13 +44,13 @@ In my case, I’m going to use an old laptop (Asus X550vb) which has been sittin
 1. Download Proxmox
 You can download ISO from [the official site](https://www.proxmox.com/en/downloads/category/iso-images-pve)
 
-![](/assets/img/posts/2022-12-04-Turn-your-old-laptop-into-proxmox-server.md/image.png)
+![0](/assets/img/posts/2022-12-04-Turn-your-old-laptop-into-proxmox-server.md/image.png)
 
 2. Flash ISO onto USB
 
 There are multiple ways on how to flash ISO onto USB, but my favorite is using a utility called [Rufus](https://rufus.ie/en/)
 
-![](/assets/img/posts/2022-12-04-Turn-your-old-laptop-into-proxmox-server.md/image-1.png)
+![1](/assets/img/posts/2022-12-04-Turn-your-old-laptop-into-proxmox-server.md/image-1.png)
 
 3. Stick USB into the laptop and change BIOS boot options
 
@@ -65,18 +65,18 @@ Start your laptop/desktop with the USB stick inside and boot priority set for an
 
 You’ll be greeted by this screen. Select install proxmox VE
 
-![](/assets/img/posts/2022-12-04-Turn-your-old-laptop-into-proxmox-server.md/image-2-768x557.png)
+![2](/assets/img/posts/2022-12-04-Turn-your-old-laptop-into-proxmox-server.md/image-2-768x557.png)
 
 
 Accept the EULA
-![](/assets/img/posts/2022-12-04-Turn-your-old-laptop-into-proxmox-server.md/image-3-768x480.png)
+![3](/assets/img/posts/2022-12-04-Turn-your-old-laptop-into-proxmox-server.md/image-3-768x480.png)
 
 
 Choose your SSD as target hard disk
-![](/assets/img/posts/2022-12-04-Turn-your-old-laptop-into-proxmox-server.md/image-4-768x478.png)
+![4](/assets/img/posts/2022-12-04-Turn-your-old-laptop-into-proxmox-server.md/image-4-768x478.png)
 
 Select country and timezone of your choice
-![](/assets/img/posts/2022-12-04-Turn-your-old-laptop-into-proxmox-server.md/image-5-768x484.png)
+![5](/assets/img/posts/2022-12-04-Turn-your-old-laptop-into-proxmox-server.md/image-5-768x484.png)
 
 
 Choose your root password and mail for notifications
@@ -85,17 +85,17 @@ Choose your root password and mail for notifications
 Now type out hostname in FQDN (fully qualified domain name) which basically means with the domain you want to use. Mine is thetechcorner.sk so the hostname will look like this. If you don’t own any, you can just use ".home.arpa" which is used for homelab stuff.
 
 Also, choose some static IP address in your range of network.
-![](/assets/img/posts/2022-12-04-Turn-your-old-laptop-into-proxmox-server.md/image-7-768x477.png)
+![7](/assets/img/posts/2022-12-04-Turn-your-old-laptop-into-proxmox-server.md/image-7-768x477.png)
 
 Everything should be set and you can begin the installation.
-![](/assets/img/posts/2022-12-04-Turn-your-old-laptop-into-proxmox-server.md/image-8-768x480.png)
+![8](/assets/img/posts/2022-12-04-Turn-your-old-laptop-into-proxmox-server.md/image-8-768x480.png)
 
 
 When it’s done, you should see something like this on your screen
 
 
-![](/assets/img/posts/2022-12-04-Turn-your-old-laptop-into-proxmox-server.md/image-9-768x200.png)
+![9](/assets/img/posts/2022-12-04-Turn-your-old-laptop-into-proxmox-server.md/image-9-768x200.png)
 
 Now open up the browser in your local network and enter the URL.
-![](/assets/img/posts/2022-12-04-Turn-your-old-laptop-into-proxmox-server.md/image-10-768x362.png)
+![10](/assets/img/posts/2022-12-04-Turn-your-old-laptop-into-proxmox-server.md/image-10-768x362.png)
 
