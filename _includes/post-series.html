@@ -1,7 +1,7 @@
 {% if page.series %}
 {% assign posts = site.posts | where: "series", page.series | sort: 'date' %}
-<div class="col-md-12" id="post-series">
-  <div class="card series-list">
+<div class="post-preview row g-0 flex-md-row-reverse" id="post-series">
+  <div class="col-md-12">
     <div class="card-header">
         {{ page.series | upcase }} ({{ posts | size }} part series)
     </div>
