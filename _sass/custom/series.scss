@@ -1,22 +1,25 @@
-// Example override that works in both dark and light modes in Chirpy
-.card.series-list {
-    background-color: var(--card-bg);
-    color: var(--card-text);
+/* Force the card container and header to inherit Chirpy's themed background/text */
+#post-series {
+    .card.series-list {
+      background-color: var(--card-bg) !important;
+      color: var(--card-text) !important;
+      
+      .card-header {
+        background-color: var(--card-bg) !important;
+        color: var(--card-text) !important;
+      }
   
-    .card-header {
-      background-color: var(--card-bg);
-      color: var(--card-text);
-    }
-  
-    .list-group-item {
-      background-color: var(--card-bg);
-      color: var(--card-text);
-      border-color: var(--card-border-color); // or whichever var works best
-    }
-  
-    .list-group-item.active {
-      background-color: var(--card-hover-bg);
-      color: var(--card-text);
+      /* If needed, ensure list-group items also match */
+      .list-group-flush .list-group-item {
+        background-color: var(--card-bg) !important;
+        color: var(--card-text) !important;
+      }
+      
+      /* And the 'active' item can have a distinct background, e.g.: */
+      .list-group-item.active {
+        background-color: var(--card-hover-bg) !important;
+        color: var(--card-text) !important;
+      }
     }
   }
   
