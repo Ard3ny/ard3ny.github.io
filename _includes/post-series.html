@@ -1,33 +1,21 @@
 {% if page.series %}
-  {% assign posts = site.posts | where: "series", page.series | sort: "date" %}
+  {% assign related_posts = site.posts | where: "series", page.series | sort: "date" %}
+  
   <div class="row justify-content-center" id="post-series">
-    <!-- Apply .bg-dark and .text-light to make the card dark-themed -->
-    <div class="card series-list bg-dark text-light">
-      <div class="card-header bg-dark text-light">
-        {{ page.series | upcase }} ({{ posts | size }} part series)
+    <div class="card series-list">
+      <div class="card-header">
+        {{ page.series | upcase }} ({{ related_posts | size }} part series)
       </div>
       <ul class="list-group list-group-flush">
-        {% for post in posts %}
-          {% if post.title == page.title %}
-            <!-- Current post: use .active and tweak background color -->
-            <a 
-              href="#" 
-              class="list-group-item list-group-item-action active text-light"
-              style="background-color: #444;" 
-              aria-current="true"
-            >
-              {{ post.title }}
-            </a>
-          {% else %}
-            <!-- Other posts: still dark with light text -->
-            <a 
-              href="{{ post.url | relative_url }}" 
-              class="list-group-item list-group-item-action bg-dark text-light"
-              style="border-color: #444;"
-            >
-              {{ post.title }}
-            </a>
-          {% endif %}
+        {% for article in related_posts %}
+          {% assign is_current = (article.title == page.title) %}
+          <a
+            href="{% unless is_current %}{{ article.url | relative_url }}{% endunless %}"
+            class="list-group-item list-group-item-action {% if is_current %}active{% endif %}"
+            aria-current="{% if is_current %}true{% endif %}"
+          >
+            {{ article.title }}
+          </a>
         {% endfor %}
       </ul>
     </div>

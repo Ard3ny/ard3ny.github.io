@@ -1,19 +1,22 @@
-// Force a darker background and lighter text on the "card" and children
-.card.series-list,
-.card.series-list .card-header,
-.card.series-list .list-group-item {
-  background-color: #2b2b2b !important;
-  color: #fff !important;
-  border: none; // remove border if you like
-}
-
-// Active (current) post item
-.card.series-list .list-group-item.active {
-  background-color: #444 !important; 
-  color: #fff !important;
-}
-
-// Hover states, if desired
-.card.series-list .list-group-item:hover {
-  background-color: #3b3b3b !important;
-}
+// Example override that works in both dark and light modes in Chirpy
+.card.series-list {
+    background-color: var(--card-bg);
+    color: var(--card-text);
+  
+    .card-header {
+      background-color: var(--card-bg);
+      color: var(--card-text);
+    }
+  
+    .list-group-item {
+      background-color: var(--card-bg);
+      color: var(--card-text);
+      border-color: var(--card-border-color); // or whichever var works best
+    }
+  
+    .list-group-item.active {
+      background-color: var(--card-hover-bg);
+      color: var(--card-text);
+    }
+  }
+  
