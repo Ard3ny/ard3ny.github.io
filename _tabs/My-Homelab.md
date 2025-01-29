@@ -27,15 +27,15 @@ I'm living in a rented apartment. I couldn't go with something large,loud or pow
 * PCIe x16 slot for GPU (for hardware encoding)
 * 2.5G LAN
 * Low energy consumption
-
+* quiet operation when idle
 
 #### Hardware overview
 Setup guide here (coming soon) 
-* CPU: [Intel i5-13500T](https://www.intel.com/content/www/us/en/products/sku/230578/intel-core-i513500t-processor-24m-cache-up-to-4-60-ghz/specifications.html)
+* CPU: [Intel i5-13500T](https://www.intel.com/content/www/us/en/products/sku/230578/intel-core-i513500t-processor-24m-cache-up-to-4-60-ghz/specifications.html) with [Noctua NH L9i 17xx cooler](https://noctua.at/en/nh-l9i-17xx) 
 * Motherboard: [CWWK N13 q670](https://www.aliexpress.com/item/1005006953997214.html)
 * PSU: [Seasonic Platinum 520W](https://www.techpowerup.com/review/seasonic-ss-520fl/5.html)
 * GPU: [Intel Arc A380](https://www.intel.com/content/www/us/en/products/sku/227959/intel-arc-a380-graphics/specifications.html)
-* Case: [Fractal Node 304](https://www.fractal-design.com/products/cases/node/node-304/black/)
+* Case: [Fractal Node 304](https://www.fractal-design.com/products/cases/node/node-304/black/) with [200mm Fan Front for Fractal Node mode](https://www.printables.com/model/137181-200mm-fan-front-for-fractal-node-304/comments#makes)
 * RAM: 2x U-DIMM DDR5 (non ECC)
 * Disks:  3x 8tb HDD, 2x 1tb SSD, 2x 500Gb Nvme
 
@@ -90,3 +90,17 @@ Kubernetes cluster running on talos nodes manged with gitops principles
 
 * new node AMD Soft Router Ryzen 7 5600U
 
+
+## Storage pools
+I'm chose ZFS because it combines management of volumes, RAID arrays, and the file system. it's a "no-brainer" with rich feature set (copy-on-write, raidz (newly with expansion feature), differential snapshot backup...)    
+
+I'm currently running 3 main pools
+-3x8Tb HDD's in raid-z1 for storage (nextcloud, NAS, movies...)
+-2x1TB SSD's in mirror for the virtualization and all the containers
+-1x500TB nvme for transcoding
+
+I run biweekly proxmox default S.M.A.R.T. tests and ZFS scrubs.
+
+
+## Public access
+Because I don't have public IP in this apartment, and I'm limited by the range of ports I can port forward (CGN), I chose to use combination of the Cloudflare zero trust tunnels and VPS as proxy forwarder for higher load apps (jellyfin..)
