@@ -130,7 +130,7 @@ Because of no ECC support, I just went with cheap 2x 32 Gb U-DIMM DDR5.
 
 
 ## Disks
-You can find cheap disks with [Disk Prices](diskprices.com), which filter all of the amazon site for the best HDD deals
+You can find cheap disks with [Disk Prices](https://diskprices.com/), which filter all of the amazon site for the best HDD deals
 
 I bought
 * 3x 8tb HDD
