@@ -269,11 +269,10 @@ I ultimately decided not to go with the kubernetes route. The reason being I kne
 
 I'll definitely go down this rabbit hole with homelab 3.0
 
-## Conclusion
+# Conclusion
 This was short overview of why I've decided to use this specific hardware and software. I hope it helps you decide as well.
 
-
-
+![components](/assets/img/posts/2025-01-28-Hw-Sw-choices-alternatives.md/components.jpg)
 
 
 ## Check out other posts in the series
