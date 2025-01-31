@@ -59,7 +59,10 @@ Be mindful of the orientations. Follow the arrows on the fan. So the air is gett
 
 4. put the power button in the case
 
-Just push the power button, in the the hole and connect the cables, as you can see in the picture.
+PRIDAT LINK NA BUTTON
+
+
+Just push the power button in the the front panel hole and connect the cables, as you can see in the picture.
 
 ![button_wiring1](/assets/img/posts/2025-01-30-Setting-up-hw-sw-homelabe2-0.md/button_wiring1.jpg)
 
