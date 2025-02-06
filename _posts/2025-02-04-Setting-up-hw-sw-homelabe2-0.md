@@ -100,10 +100,20 @@ The motherboard requires both 24pins+8pins ATX 12V
 ### Basic BIOS configuration
 [PDF manual](/assets/text/2025-01-30-Setting-up-hw-sw-homelabe2-0.md/StoneStormQ670H670ProductManual-2.pdf) to the older version of the same motherboard. 
 
+For better power efficiency we can enable C states. 
+
+> In order to save energy when the CPU is idle, the CPU can be commanded to enter a low-power mode. Each CPU has several power modes and they are collectively called “C-states” or “C-modes.”.
+The lower the state the deeper the sleep is and the less power the CPU takes.
+{: .prompt-info }
+
 
 Advanced > Power & Performance > CPU > C states = Enabled
 Advanced > Power & Performance > CPU > Package C state Limit = C10
 Auto start on boot = Enabled
+
+I didn't find any other BIOS settings to make notable difference.
+
+
 ##### To enable features like ASPM, you need to used edited BIOS (or edit BIOS yourself) -> follow bellow
 
 
