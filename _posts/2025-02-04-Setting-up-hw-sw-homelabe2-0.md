@@ -185,6 +185,18 @@ We are going to run few post install proxmox scripts created by community (previ
 
 2. [Proxmox VE Processor Microcode](https://community-scripts.github.io/ProxmoxVE/scripts?id=microcode)
 
+
+### ZFS introduction
+The best article on ZFS I've come across by far [arstechnica](https://arstechnica.com/information-technology/2020/05/zfs-101-understanding-zfs-storage-and-performance/)
+
+It explains the whole zfs structure (pool, vdev, dataset, blocks...), how copy-on-write works and many more, so everything I would write here would just be copy or inferior explanation.
+
+
+> Just remember, that you issue "zfs" commands against datasets and "zpool" commands against pools and vdevs.
+{: .prompt-info }
+
+
+
 #### Import/Create ZFS pools 
 We will create/import 2 pools
 * pool-fast (SSD storage for all LXCs')
@@ -194,11 +206,20 @@ We will create/import 2 pools
 Go to node -> Disks -> ZFS -> Create: ZFS
 Choose name, raid level.
 
-Create zfs dataset (kinda like directory)
+We can create pool either over CLI or GUI
+##### GUI
 Datacenter -> Storage -> Add -> ZFS
 
+##### CLI
+```bash
+#create mirror pool
+zpool create pool-01 c1t0d0 c1t1d0
 
-##### Import 
+#create raid pool
+zpool create pool-01 raidz c1t0d0 c2t0d0 c3t0d0
+```
+
+##### Import [optional if not creating new]
 1. in proxmox node shell (CLI) type
 ```bash
 #to list all possible options (if there are multiple)
@@ -210,6 +231,24 @@ zpool import <pool-name>
 #If the pool was not cleanly exported, ZFS requires the -f flag to prevent users from accidentally importing a pool that is still in use on another system
 zpool import -f <pool-name>
 ```
+
+
+#### Create zfs dataset 
+ZFS datasets are a powerful and flexible organizational tool that let you easily and quickly structure your data, monitor size over time, and take backups.
+
+
+We can either create dataset over CLI or GUI
+##### GUI
+Datacenter -> Storage -> Add -> ZFS
+
+##### CLI
+```bash
+zfs create pool-01/test
+zfs list pool-01/test
+```
+
+> In later post I'll explain to you possibility of installing software like cockpit to manage your ZFS share and permissions.
+{: .prompt-info }
 
 ##### ZFS scrubs 
 Should be enabled on proxmox by default. You can check by running
