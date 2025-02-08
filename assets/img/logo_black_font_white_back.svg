@@ -2,14 +2,14 @@
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 20010904//EN"
  "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
 <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
-     width="583.000000pt" height="550.000000pt" viewBox="0 0 583 650"
+     width="400.000000pt" height="400.000000pt" viewBox="0 0 400 400"
      preserveAspectRatio="xMidYMid meet">
 
   <!-- White background -->
-  <rect x="0" y="0" width="583" height="450" fill="white" />
+  <rect x="0" y="0" width="400" height="400" fill="white" />
 
   <!-- Original logo -->
-  <g transform="translate(0.000000,604.000000) scale(0.100000,-0.100000)"
+  <g transform="translate(-85.00000,600.000000) scale(0.10000,-0.100000)"
      fill="#000000" stroke="none">
     <path d="M2745 4691 l-160 -97 -3 -381 c-2 -342 -1 -382 14 -394 31 -26 318
       -189 332 -189 30 0 334 185 343 208 8 21 2 349 -7 363 -11 19 -296 179 -317
