@@ -1,0 +1,31 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 20010904//EN"
+ "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
+<svg version="1.0" xmlns="http://www.w3.org/2000/svg"
+     width="583.000000pt" height="550.000000pt" viewBox="0 0 583 650"
+     preserveAspectRatio="xMidYMid meet">
+
+  <!-- White background -->
+  <rect x="0" y="0" width="583" height="450" fill="white" />
+
+  <!-- Original logo -->
+  <g transform="translate(0.000000,604.000000) scale(0.100000,-0.100000)"
+     fill="#000000" stroke="none">
+    <path d="M2745 4691 l-160 -97 -3 -381 c-2 -342 -1 -382 14 -394 31 -26 318
+      -189 332 -189 30 0 334 185 343 208 8 21 2 349 -7 363 -11 19 -296 179 -317
+      179 -13 0 -32 -9 -42 -20 -35 -38 -12 -64 130 -148 l130 -77 3 -122 3 -121
+      -121 -71 -120 -72 -118 69 -117 68 -6 110 c-4 60 -7 202 -8 315 -1 185 1 207
+      17 221 9 8 65 43 124 77 l108 63 97 -56 c54 -31 181 -105 283 -164 l185 -109
+      3 -329 2 -329 -285 -168 -285 -169 -290 169 -289 168 -1 348 c0 333 -1 348
+      -20 367 -25 25 -52 26 -73 2 -15 -17 -17 -59 -17 -394 0 -345 1 -376 18 -390
+      34 -29 654 -388 670 -388 10 0 166 88 347 194 l330 195 0 393 0 393 -85 51
+      c-273 164 -576 334 -594 333 -12 0 -93 -44 -181 -98z"/>
+  </g>
+
+  <!-- Added text below the logo -->
+  <text x="50%" y="330" text-anchor="middle"
+        font-family="Barriecito" font-size="40" fill="#000000">
+    <tspan font-weight="bold">TheTech</tspan><tspan>Corner</tspan>
+  </text>
+  
+</svg>
