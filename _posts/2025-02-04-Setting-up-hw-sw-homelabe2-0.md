@@ -258,7 +258,7 @@ crontab -e
 
 
 # Conclusion
-With the hardware mods and software configurations now in place, your Homelab 2.0 setup is ready to go. In the following posts, I'll show you what LXC I'm running and how to install/configure them!
+With the hardware mods and software configurations now in place, your Homelab 2.0 setup is ready to go. In the following posts, I'll show you what LXCs I'm running and how to install/configure them!
 
 
 
