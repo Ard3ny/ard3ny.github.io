@@ -1,6 +1,6 @@
 ---
-title: UPS proxmox setup (+ disable beeping) [Homelab 2.0]
-date: 2025-02-11 20:00:00 +0100
+title: UPS proxmox setup (+ disable UPS beeping) [Homelab 2.0]
+date: 2025-02-12 20:00:00 +0100
 categories: [Homelab]
 tags: [homelab-2.0]
 math: false
@@ -9,14 +9,30 @@ series: homelab-2.0
 ---
 
 # Introduction
-
-Using info from
-https://forum.proxmox.com/threads/config-for-network-ups-tool-nut-for-prolink.129105/
+In this post, I'll walk you through a complete guide for integrating an UPS (Eaton 5E 850i) with your Proxmox setup using Network UPS tools aka [NUT](https://networkupstools.org/) inside LXC container.
 
 
-using UPS eaton 5E 850i
+![ups](/assets/img/posts/2025-02-12-UPS-proxmox-setup.md/ups.png)
 
-They way it works we run 
+
+### Why is having UPS important
+* you get another xy minutes to save your WORK!! (which can get potentially lost)
+* avoid corrupting database, files
+* avoid stress from HDDs
+* avoid bricking motherboard (while flashing bios for example)
+* avoid damage to hardware caused by overcurrents and voltage spikes  
+..._many more_
+
+
+##### Disclaimer
+_I'm not reinventing the wheel here, this informaton can be partly found on many different blogs, but I've not found one which is A-Z complete and up to date._
+
+sources [proxmox forum](https://forum.proxmox.com/threads/config-for-network-ups-tool-nut-for-prolink.129105/) , [ltt forum](https://linux-tips.com/t/disabling-ups-beep-under-linux/592)
+
+
+
+## 30,000 foot overview
+We are going to run 
 * NUT client && NUT server on PVE itself   
 The server will communicate with the UPS over USB and serve data to all clients.   
 The client is listening to the server and take appropriate actions.
@@ -25,33 +41,39 @@ The client is listening to the server and take appropriate actions.
 The client will also listen to the server and show UPS information over webserver in the GUI
 
 
-#### Shutdown timeline
+This is probably also possible to achieve with just one privileged LXC container running everything (without running anything on PVE), but I (and many others) have tried it and it's complicating process a lot and introducing some unreliability, which is the last thing you want with UPS.
 
-    Main power failure occurs :
-        UPS device switches power to battery
-        UPS device notifies server with a “On battery” event message
-    USP battery is getting close to depletion :
-        UPS device notifies server with a “Battery low” event message
-        Server waits the set “Final delay” time
-        Server starts his shutdown procedure :
-            Sets the “Kill power” flag
-            Ends all running processes
-            Unmounts all file systems
-            Remounts file systems as read-only
-            Looks for the “Kill power” flag
-            Issues the “Kill power” command to the UPS device
-            Halts the system, but doesn’t power off
-        UPS device receives the “Kill power” command from the server :
-            UPS waits for the “Shutdown delay” time to pass
-            This is to give all systems enough time to properly shut down
-            UPS device cuts power on all outlets
-            All connected systems lose power
-        Main power supply has been restored :
-            UPS device starts to reload its battery
-            UPS device waits for the “Startup delay” time to pass
-            This is to reload the battery to a safe minimum level
-            UPS device restores power on all outlets
-            All connected systems start up again
+### Hardware && software used 
+__UPS:__ Eaton 5E 850i  
+__Hypervisor:__ Proxmox
+
+### Shutdown process overview
+   
+Main power failure occurs >>   
+* UPS device switches power to battery   
+    * UPS device notifies server with a “On battery” event message   
+* USP battery is getting close to depletion :   
+    * UPS device notifies server with a “Battery low” event message   
+    * Server waits the set “Final delay” time   
+* Server starts his shutdown procedure :   
+    * Sets the “Kill power” flag   
+    * Ends all running processes   
+    * Unmounts all file systems   
+    * Remounts file systems as read-only   
+    * Looks for the “Kill power” flag   
+    * Issues the “Kill power” command to the UPS device   
+    * Halts the system, but doesn’t power off   
+* UPS device receives the “Kill power” command from the server :   
+    * UPS waits for the “Shutdown delay” time to pass   
+    * This is to give all systems enough time to properly shut down   
+    * UPS device cuts power on all outlets   
+    * All connected systems lose power   
+* Main power supply has been restored :   
+    * UPS device starts to reload its battery   
+    * UPS device waits for the “Startup delay” time to pass   
+    * This is to reload the battery to a safe minimum level    
+    * UPS device restores power on all outlets   
+    * All connected systems start up again    
 
 
 # How to 
@@ -89,7 +111,7 @@ Install them
 apt-get install nut nut-server nut-client
 ```
 #### Connect NUT device over USB 
-We need to figure out which bus device is connected to the UPS 
+We need to figure out which bus device is UPS using
 ```bash
 lsusb
 Bus 002 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub
@@ -98,7 +120,7 @@ Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
 ```
 
 
-> In my case it's Bus 001 Device 009, but yours will differ.
+> In my case it's Bus 001 Device 009, but yours will probably differ.
 {: .prompt-info }
 
 #### Run nut scanner
@@ -241,7 +263,6 @@ LOCKFN /etc/nut/upssched.lock
 
 AT ONBATT * START-TIMER onbatt 30
 AT ONLINE * CANCEL-TIMER onbatt online
-AT ONBATT * START-TIMER earlyshutdown 30
 AT LOWBATT * EXECUTE onbatt
 AT COMMBAD * START-TIMER commbad 30
 AT COMMOK * CANCEL-TIMER commbad commok
@@ -257,10 +278,6 @@ AT SHUTDOWN * EXECUTE powerdown
  case $1 in
        onbatt)
           logger -t upssched-cmd "UPS running on battery"
-          ;;
-       earlyshutdown)
-          logger -t upssched-cmd "UPS on battery too long, early shutdown"
-          /usr/sbin/upsmon -c fsd
           ;;
        shutdowncritical)
           logger -t upssched-cmd "UPS on battery critical, forced shutdown"
@@ -345,7 +362,7 @@ ups.timer.shutdown: -1
 ups.vendorid: 0463
 ```
 
-Test delayed shutdown
+##### Test delayed shutdown
 ```bash
 upsrw -s ups.delay.shutdown=180 nutdev1@localhost
 
@@ -427,16 +444,16 @@ systemctl restart apache2
 ```
 
 
-We should see UPS status now   
-http://10.1.1.21/cgi-bin/nut/upsstats.cgi  
-http://10.1.1.21/cgi-bin/nut/upsstats.cgi?host=nutdev1@10.1.1.5
+#### We should see UPS status now   
+http://<LXC-IP>/cgi-bin/nut/upsstats.cgi  
+http://<LXC-IP>/cgi-bin/nut/upsstats.cgi?host=nutdev1@<LXC-IP>
 
 
 
 
 
 #### Disable beeping
-On the PVE node shell run "upscmd -l <devicename>" to determine if your device can disable beeper
+On the PVE node shell run "upscmd -l <devicename>" to determine if your device even can disable beeper
 ```bash
 upscmd -l nutdev1
 Instant commands supported on UPS [nutdev1]:
@@ -451,13 +468,13 @@ load.off.delay - Turn off the load with a delay (seconds)
 shutdown.stop - Stop a shutdown in progress
 ```
 
-As you can see we have the option
+##### As you can see we have the option
 ```
 beeper.disable - Disable the UPS beeper
 ```
 
 #### Temporary disable (wont survice reboot)
-To temp disable it simply run 
+To temp disable simply run 
 
 ```bash
 upscmd nutdev1 beeper.disable
