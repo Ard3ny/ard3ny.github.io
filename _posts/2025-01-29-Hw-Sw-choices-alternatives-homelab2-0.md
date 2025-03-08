@@ -2,7 +2,7 @@
 title: Hardware/software choices/alternatives [Homelab 2.0]
 date: 2025-01-29 20:00:00 +0100
 categories: [Homelab]
-tags: [homelab-2.0]
+tags: [homelab-2.0, proxmox]
 math: false
 mermaid: false
 series: homelab-2.0

@@ -2,7 +2,7 @@
 title: Setting up Hardware && Software [Homelab 2.0]
 date: 2025-02-04 20:00:00 +0100
 categories: [Homelab]
-tags: [homelab-2.0]
+tags: [homelab-2.0, proxmox, LXC]
 math: false
 mermaid: false
 series: homelab-2.0
