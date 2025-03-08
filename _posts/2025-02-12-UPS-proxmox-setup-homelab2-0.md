@@ -544,8 +544,6 @@ journalctl -u nut-monitor
 ```
 
 
-# Conclusion
-
 
 
 

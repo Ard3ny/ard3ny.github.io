@@ -1,5 +1,5 @@
 ---
-title: Combine NPM reverse proxy and Pi-hole DNS for Secure, seamless App Local Access
+title: Combine NPM reverse proxy && Pi-hole DNS for Secure, seamless app local app access [Homelab 2.0]
 date: 2025-03-07 20:00:00 +0100
 categories: [Homelab]
 tags: [homelab-2.0, proxmox, LXC]
@@ -9,7 +9,7 @@ series: homelab-2.0
 ---
 
 # Introduction
-In this post, I'll walk you step-by-step through setting up your own secure local environment, allowing seamless and encrypted local access to your self-hosted applications. No more security warnings, no more DNS headaches—just simple, secure, and efficient local networking.
+In this post, I'll walk you step-by-step through setting up your own secure local environment, allowing seamless and encrypted local access to your self-hosted applications. No more security warnings, no more DNS headaches—just simple, secure and efficient local networking.
 
 
 ![pihole](/assets/img/posts/2025-03-07-NPM-pihole-for-secure-seamless-app-access-homelab-2.0.md/pihole.png)
@@ -96,7 +96,7 @@ sudo pihole -a -p
 ```
 
 #### Login
-After that we can access the Pi-Hole interface by typing the IP you've chosen in the browser 
+After that we can access the Pi-Hole interface by typing the IP you've chosen in the browser    
 <Pi-Hole-IP:admin/login>
 
 #### Where do you find DNS blocking lists?
@@ -140,7 +140,8 @@ We need to configure our main router in a way that it uses pi-hole for DNS queri
 
 I'm using pfSens, but the name always is something like "DNS Server settings"
 
-In pfSens go to System -> General Setup -> DNS server Settings -> And add the IP of pi-hole. Save it, reload.
+In pfSens go to System -> General Setup -> DNS server Settings -> And add the IP of pi-hole (in my case 10.1.1.8)   
+Save it, reload.
 
 
 ![pfsense](/assets/img/posts/2025-03-07-NPM-pihole-for-secure-seamless-app-access-homelab-2.0.md/pfsense.png)
@@ -166,13 +167,13 @@ BIND: sudo /etc/init.d/named restart
 ```
 
 #### Android
-Open browser -> in the URL section type "chrome://net-internals/ -> Select DNS -> Clear host cache
-
+```bash
+#Open browser -> in the URL section type "chrome://net-internals/ -> Select DNS -> Clear host cache
+```
 
 
 ### Test AD blocking 
-I've this site very useful for testing ADs
-https://canyoublockit.com/
+[Useful site for testing ad blocking](https://canyoublockit.com/) 
 
 
 ## Setup reverse proxy [NPM]
@@ -202,7 +203,7 @@ unprivileged: 1
 
 ### Configure NPM
 NPM is using friendly web browser interface to configure everything.
-To access it type in the IP of LXC container where NPM is installed with the port 81
+To access it type in the IP of LXC container where NPM is installed with the port 81.   
 <NPM-IP:81>
 
 
@@ -294,3 +295,7 @@ If you want to add more Apps, simply
 We've successfully created configured and NPM with the pi-hole for our local DNS. 
 
 In the future I'll show you how we can go even futher and create split DNS, so we can also access our apps from the internet as well. Spoiler alert - with help of the Cloudflare tunnels!
+
+
+## Check out other posts in the series
+{% include post-series.html %}
