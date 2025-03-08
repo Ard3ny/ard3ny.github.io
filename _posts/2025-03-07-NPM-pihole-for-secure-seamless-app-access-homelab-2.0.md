@@ -1,5 +1,5 @@
 ---
-title: Combine NPM reverse proxy && Pi-hole DNS for Secure, seamless app local app access [Homelab 2.0]
+title: Combine NPM reverse proxy && Pi-hole DNS for Secure, seamless app local access [Homelab 2.0]
 date: 2025-03-07 20:00:00 +0100
 categories: [Homelab]
 tags: [homelab-2.0, proxmox, LXC]
@@ -97,7 +97,10 @@ sudo pihole -a -p
 
 #### Login
 After that we can access the Pi-Hole interface by typing the IP you've chosen in the browser    
+```
 <Pi-Hole-IP:admin/login>
+```
+
 
 #### Where do you find DNS blocking lists?
 There are many DNS block list providers. My favorite one was created be hagezi, you can check it out [here](https://github.com/hagezi/dns-blocklists?tab=readme-ov-file#normal)
@@ -204,8 +207,9 @@ unprivileged: 1
 ### Configure NPM
 NPM is using friendly web browser interface to configure everything.
 To access it type in the IP of LXC container where NPM is installed with the port 81.   
+```
 <NPM-IP:81>
-
+```
 
 ### Install certbot plugin
 In the LXC container run
@@ -222,7 +226,7 @@ Password: changeme
 #### Authenticate your domain
 I'm using cloudflare provider and domain "thetechcorner" for my split DNS setup. 
 
-Authenticating in NPM with CF is very easy. 
+Authenticating in NPM with CF is pretty straightforward:
 1. Go to your Cloudflare profile and generate API token. Here is offical how to from cloudflare [blog post](https://developers.cloudflare.com/fundamentals/api/get-started/create-token/)
 2. Go to NPM -> SSL Certificates -> Add SSL Cert -> Let's encrypt -> Type in your domain.
 3. Check Use DNS Challenge -> DNS Provider: Cloudflare 
