@@ -138,7 +138,12 @@ Unfortunately, it doesn't help that much in my homelab NAS scenario, where I eit
 It may be useful for scenarios like those where you frequently access nextcloud/immrich/bookstack instances, where the caching provides a great buffer for slow HDD speeds. 
 
 
-That's why I leave it at approximately 15%. 
+
+> Rule of thumb according to some people on reddit and forums is: use 2GB + 1GB for every 1TB of effective storage you will be using. For example if effective storage 8TB, then you should use 10GB of ARC.
+{: .prompt-info }
+
+
+ I leave it at approximately 15%, which 10GB for me.
 
 
 ##### Check the current ARC limit
@@ -202,16 +207,31 @@ Swap is a type of virtual memory that acts as an overflow area when your systemâ
 This indeed prevents out-of-memory errors but significantly reduces performance. (because SSD is much slower than RAM)
 
 
-By default, Proxmox is using vm.swappiness=60, which is a lot in my opinion. 
+By default, Proxmox is using vm.swappiness=60, which is a lot in my opinion. And if you are going to use ZFS like me, it actually causes more problems.
 
 The swappiness value is scaled in a way that confuses people.
 
 The number doesn't represent any simple value, like when vm.swappiness=60, this means start swapping when 60%RAM is used. 60 roughly means don't swap until we reach about 80% memory usage, leaving 20% for cache and such. 50 means wait until we run out of memory. Lower values mean the same, but with increasing aggressiveness in trying to free memory by other means. You can check out swapping behavior in this [article](https://lwn.net/Articles/83588/)
 
 
-According to [proxmox documentation](https://pve.proxmox.com/pve-docs/chapter-sysadmin.html#zfs_swap), the value to improve performance when sufficient memory exists in a system, but doesn't entirely disable it is "vm.swappiness = 10"
+According to [proxmox documentation](https://pve.proxmox.com/pve-docs/chapter-sysadmin.html#zfs_swap), the value to improve performance when sufficient memory exists in a system is "vm.swappiness = 10". I would argue that swap on ZFS is very bad idea and it's not supported.
 
 
+TLDR
+* If you are running PVE root OS system on ZFS don't use SWAP (running swap file on ZFS dataset is the worst scenario)
+* If you wanna be on the safe side of things and you expected higer RAM spikes which cloud lead too OOM use "vm.swappiness = 10".   
+* If you wanna "more aggresive" approach go with "vm.swappiness = 1" (Which uses minimum amount of swapping without disabling it entirely.)
+
+I will go with "vm.swappiness = 1".
+
+##### Find our where your swap file exists
+Mine for example is stored under /dev/dm-o on non-zfs filesytem. So in reality I should be OK with vm.swappiness = 10, but I dont deem it necessary.
+
+```bash
+swapon -s
+Filename                                Type            Size            Used            Priority
+/dev/dm-0                               partition       8388604         546048          -2
+```
 ##### Change swapiness value
 Check the current swap value
 
@@ -228,7 +248,7 @@ vim /etc/sysctl.conf
 
 ```bash
 #add the line
-vm.swappiness = 10
+vm.swappiness = 1
 ```
 
 
