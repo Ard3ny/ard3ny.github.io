@@ -1,5 +1,5 @@
 ---
-title: Setting up Hardware && Software [Homelab 2.0]
+title: Setting up Hardware && BIOS [Homelab 2.0]
 date: 2025-02-04 20:00:00 +0100
 categories: [Homelab]
 tags: [homelab-2.0, proxmox, LXC]
@@ -16,14 +16,6 @@ After we've [successfully chosen](https://blog.thetechcorner.sk/posts/Hw-Sw-choi
 * mode Fractal node 304 front panel to fit 200mm noctua fan
 * put all components together
 * connect new power button to the motherboard
-
-## Software
-* flash bios on Cwwk q670 plus [optional] 
-* do basic BIOS configuration on Cwwk q670 plus
-* install/configure proxmox hypervisor
-* import/create ZFS pools (SSD pool for apps, HDD pools for NAS storage)
-
-
 
 # How to
 ### Mode Fractal node 304 front panel
@@ -165,101 +157,8 @@ Looks like Intel I226-V is limiting ASPM. Trying to activate ASPM causes a syste
 With this free opensourced [UEFI-edit tool](https://github.com/BoringBoredom/UEFI-Editor/tree/master) you can even edit BIOS yourself. Here is a little [guide](https://winraid.level1techs.com/t/guide-enabling-hidden-bios-settings-on-gigabyte-z690-mainboards/94039) that can help you get started.
 
 
-
-### Install/Configure Proxmox (PVE)
-There is A LOT of guides telling you how to install/configure proxmox so I'll be brief
-
-1. download the newest [PVE ISO](https://www.proxmox.com/en/downloads/proxmox-virtual-environment/iso)
-
-2. flash the iso to USB (with something like rufus)
-
-3. boot system with USB inserted
-
-4. install the system on desired IP, drive (mine being 512GB SSD)
-
-5. login at https://<IP>:8006
-#### Post-install configuration
-We are going to run few post install proxmox scripts created by community (previously by tteck)
-
-1. [Proxmox VE Post Install](https://community-scripts.github.io/ProxmoxVE/scripts?id=post-pve-install)
-
-2. [Proxmox VE Processor Microcode](https://community-scripts.github.io/ProxmoxVE/scripts?id=microcode)
-
-
-### ZFS introduction
-The best article on ZFS I've come across by far [arstechnica](https://arstechnica.com/information-technology/2020/05/zfs-101-understanding-zfs-storage-and-performance/)
-
-It explains the whole zfs structure (pool, vdev, dataset, blocks...), how copy-on-write works and many more, so everything I would write here would just be copy or inferior explanation.
-
-
-> Just remember, that you issue "zfs" commands against datasets and "zpool" commands against pools and vdevs.
-{: .prompt-info }
-
-
-
-#### Import/Create ZFS pools 
-We will create/import 2 pools
-* pool-fast (SSD storage for all LXCs')
-* pool-01 (main HDD storage that will contain stuff like photos, movies..)
-
-##### create ZFS pool
-Go to node -> Disks -> ZFS -> Create: ZFS
-Choose name, raid level.
-
-We can create pool either over CLI or GUI
-##### GUI
-Datacenter -> Storage -> Add -> ZFS
-
-##### CLI
-```bash
-#create mirror pool
-zpool create pool-01 c1t0d0 c1t1d0
-
-#create raid pool
-zpool create pool-01 raidz c1t0d0 c2t0d0 c3t0d0
-```
-
-##### Import [optional if not creating new]
-1. in proxmox node shell (CLI) type
-```bash
-#to list all possible options (if there are multiple)
-zpool import
-
-#specify which pool to import
-zpool import <pool-name>
-
-#If the pool was not cleanly exported, ZFS requires the -f flag to prevent users from accidentally importing a pool that is still in use on another system
-zpool import -f <pool-name>
-```
-
-
-#### Create zfs dataset 
-ZFS datasets are a powerful and flexible organizational tool that let you easily and quickly structure your data, monitor size over time, and take backups.
-
-
-We can either create dataset over CLI or GUI
-##### GUI
-Datacenter -> Storage -> Add -> ZFS
-
-##### CLI
-```bash
-zfs create pool-01/test
-zfs list pool-01/test
-```
-
-> In later post I'll explain to you possibility of installing software like cockpit to manage your ZFS share and permissions.
-{: .prompt-info }
-
-##### ZFS scrubs 
-Should be enabled on proxmox by default. You can check by running
-```bash
-crontab -e 
-```
-
-
 # Conclusion
-With the hardware mods and software configurations now in place, your Homelab 2.0 setup is ready to go. In the following posts, I'll show you what LXCs I'm running and how to install/configure them!
-
+With the hardware mods now in place, we can start installing our choise of hypervisor (proxmox).
 
 
 ## Check out other posts in the series
