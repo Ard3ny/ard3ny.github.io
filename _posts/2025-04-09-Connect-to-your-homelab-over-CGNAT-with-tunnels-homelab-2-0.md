@@ -1,7 +1,6 @@
 ---
-
-title: - Cloudflare | Pangolin - Access your homelab from the Internet over CGNAT with help of the tunnels [Homelab 2.0]
-date: 2025-04-09 20:00:00 +0100
+title: Cloudflare | Pangolin - Access your homelab from the Internet over CGNAT with help of the tunnels [Homelab 2.0]
+date: 2025-04-11 20:00:00 +0100
 categories: [Homelab]
 tags: [homelab-2.0, cloudflare, pangolin]
 math: false
