@@ -1,5 +1,5 @@
 ---
-title: Replace Google Photos with immich and Pangolin/CF tunnel [Homelab 2.0]
+title: Replace Google Photos with Immich and Pangolin/CF tunnels [Homelab 2.0]
 date: 2025-04-20 20:00:00 +0100
 categories: [Homelab]
 tags: [homelab-2.0, cloudflare, pangolin, immich]
