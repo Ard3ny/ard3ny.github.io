@@ -224,9 +224,11 @@ This is very specific for the Oracle VPS free tier instances.
 
 ##### Explanation [source](https://www.reddit.com/r/oraclecloud/comments/122b4gf/a_simple_cron_controlled_load_generator_for/)
 
-Because my VPS randomly stopped working or froze I investigated and find out that Oracle idles free tier instances or straight-up stops them and sends you an email that they are out of free tier CPUs.
+Because my VPS randomly stopped working or froze I investigated and find out that Oracle idles/reclaim free tier instances or straight-up stops them and sends you an email that they are out of free tier CPUs.
 
+![oracle1](/assets/img/posts/2025-04-09-Connect-to-your-homelab-over-CGNAT-with-help-of-tunnels-homelab-2-0.md/oracle1.png)
 
+[Source](https://docs.oracle.com/en-us/iaas/Content/FreeTier/freetier_topic-Always_Free_Resources.htm)
 
 
 To get around this, we can create a dummy load to simulate our VPS never being idle
@@ -247,10 +249,64 @@ To get around this, we can create a dummy load to simulate our VPS never being i
 All credit goes to reddit user "u/eric0e". 
 
 
+##### Alternative stress script [If script above didn't help]
+Script and tutorial created from [TechTulege](https://www.youtube.com/watch?v=IjlZfikNKcI), but I'm going to change up values, because oracle changed 15% threshold to 20% and our instance is much smaller.
 
-##### [OPTIONAL] Change from free tier to PAYG (pay as you go) subcription
+I don't like this script that much, because it put much more stress on the CPU and takes up 20% of our already small RAM space, but it's an option you can do if you don't want to switch to pay-as-you-go (read down bellow)
 
-There is another trick that can help a lot.
+Test values
+```bash
+sudo su -
+apt update
+apt install supervisor stress-ng
+
+
+#to put 20% of stress CPU
+stress-ng --cpu 2 --cpu-load 20
+
+#RAM dummyload
+stress-ng --vm 1 --vm-bytes 20% --vm-hang 0
+
+/etc/supervisor/conf.d/stress.conf
+```
+
+```bash
+#create config
+vim /etc/supervisor/conf.d/stress.conf
+```
+
+```bash
+[program:cpu_stress]
+command=/usr/bin/stress-ng --cpu 2 --cpu-load 20 
+directory=/usr/bin/
+user=root
+autostart=true
+autorestart=true
+redirect_stderr=true
+stdout_logfile=/var/log/stress.log
+
+[program:memory_stress]
+command=/usr/bin/stress-ng --vm 1 --vm-bytes 20%% --vm-hang 0
+directory=/usr/bin/
+user=root
+autostart=true
+autorestart=true
+redirect_stderr=true
+stdout_logfile=/var/log/stress.log
+```
+
+```bash
+#Reload configuration for supervisor
+supervisorctl reread
+supervisorctl reload
+supervisorctl status
+
+```
+
+
+##### [OPTIONAL] Change from free tier to PAYG (pay as you go) subscription
+
+There is another trick that can help if dummy load is not enough. In my case creating dummy load helped to reduce freezes from multiple a week to once a week. But this was not enough for me.
 
 You can switch from free tier to a pay-as-you-go subscription. But because you still uses same VM instance CPU you still won't pay anything, but your VM will much less/or never goes to idle.
 
@@ -272,7 +328,6 @@ To make it safer, we can create a budget and alert that will email us if we are 
 * Set Threshold Type" to "Percentage of budget" 
 * Set "Percentage of budget threshold" to "1%" 
 * Add your email to email recipients.
-
 
 
 ### Install && Configure Pangolin (1.2.0)
