@@ -148,6 +148,20 @@ You can check this post from [Ryan Harrison blog](https://ryanharrison.co.uk/202
 * Paste your SSH key and you are all ready to go
 
 
+#### Non-free VPS alternatives [OPTIONAL]
+
+As I've mentioned down bellow after few weeks of testing I've found out that combination of very low CPU/RAM doesn't really work with using crowdsec. Crowdsec was just taking too much RAM from my 1GB VPS (over 30%). So If you are going with low end VPS I don't recommend it.
+
+###### Good/cheap alternatives
+* [Hetzner](https://www.hetzner.com/cloud)
+Probably community most favorite VPS provider. Good price/performance tiers. Great support. Very low CPU steal. But they do a little higher prices than some cheaper, scatchier VPS providers like racknerd, contabo... (but still very very good prices)
+
+* [RackNerd](https://www.racknerd.com/)
+This one is a little scatchy, you can check them out yourself, but they tend to have high CPU steal, not great history etc... BUT they do have good deals which you can check on this [community tracker](https://racknerdtracker.com/)
+
+So If money is an issue go with them, you should still be OK, just don't put anything important there.
+
+
 
 
 #### Update VPS Security Group
@@ -465,6 +479,10 @@ I would suggest you to "Type yes", I'll show how to properly configure it. Crowd
 * Reduced Attack Surface (By filtering out malicious traffic using CrowdSec’s curated blocklists)   
 
 But if you don't want to use I'll show you both options with and without it.
+
+
+!!!!!! UPDATE !!!!!!!!!!
+After few weeks of testing I've found out that combination of very low CPU/RAM doesn't really work with using crowdsec. Crowdsec was just taking too much RAM from my 1GB VPS (over 30%). So If you are going with low end VPS I don't recommend this combination. Either update VPS or go without crowdsec.
 
 
 ##### [Option A]   
