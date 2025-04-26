@@ -626,11 +626,12 @@ docker exec -it crowdsec cscli metrics
 
 
 #### Enable automatic CrowdSec updates  [Option A]
-owdSec regularly updates list of malicious IPs etc...
+CrowdSec regularly updates list of malicious IPs etc...
 
 ```bash
-#type
-echo "0 * * * * root exec crowdsec cscli hub update && docker exec crowdsec cscli hub upgrade" | sudo tee /etc/cron.d/crowdsec-update-hub 
+#type crontab -e
+#add
+docker exec crowdsec cscli hub update && docker exec crowdsec cscli hub upgrade
 ```
 
 
