@@ -547,6 +547,24 @@ docker compose up -d
 
 #### Link CrowdSec with traefik (optional if you didn't go with crowdsec) [Option A]
 
+UPDATE
+It looks like the bottom part was automated as well. To check if you have to do bottom part check for bouncer
+```bash
+docker exec crowdsec cscli bouncers list
+```
+If you see traefik-boncer already beeing there, you don't have to create crowdsecLapiKey and manually ad it to config/traefik/dynamic_config.yml (as that is already done)
+
+
+```bash
+root@pangolin-public:~# docker exec crowdsec cscli bouncers list
+-----------------------------------------------------------------------------
+ Name             IP Address  Valid  Last API pull  Type  Version  Auth Type
+-----------------------------------------------------------------------------
+ traefik-bouncer              ✔️                                   api-key
+-----------------------------------------------------------------------------
+```
+
+
 ```bash
 #bcs by defauly crowdsec is not configured by default we need extra steps (in 1.2.0 atleast)
 #https://hhf.technology/snippets/pangolin-commands#bouncer-management
