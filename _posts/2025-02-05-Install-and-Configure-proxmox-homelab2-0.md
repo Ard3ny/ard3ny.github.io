@@ -326,6 +326,33 @@ KSM_THRES_COEF=35
 ```
 
 
+#### Check disk speeds [OPTIONAL]
+We can easily check disk speeds with hdparm util
+```bash
+#list disks in your system or proxmox GUI->Disks
+ls /dev/disk/by-id
+
+#change disks to yours
+hdparm -Tt /dev/sda /dev/sdd /dev/sde
+
+```
+
+You should get output like this (different speeds obviously)
+
+```
+
+/dev/sda:
+ Timing cached reads:   11398 MB in  2.00 seconds = 5706.44 MB/sec
+ Timing buffered disk reads: 792 MB in  3.00 seconds = 263.60 MB/sec
+
+/dev/sdd:
+ Timing cached reads:   11728 MB in  2.00 seconds = 5872.24 MB/sec
+ Timing buffered disk reads: 1434 MB in  3.00 seconds = 477.43 MB/sec
+
+/dev/sde:
+ Timing cached reads:   11684 MB in  2.00 seconds = 5850.70 MB/sec
+ Timing buffered disk reads: 734 MB in  3.00 seconds = 244.52 MB/sec
+```
 
 
 
