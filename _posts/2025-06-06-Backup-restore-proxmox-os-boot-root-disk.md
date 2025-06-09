@@ -11,7 +11,7 @@ mermaid: false
 
 
 # Introduction
-Recently I've recieved an email notification about one of my drives failing in my proxmox cluster. It turned out to be my proxmox boot drive, which is the only one not in the ZFS pool (but it just ext4). I've started to look through the official documentation, guides to look for what's the best way to replace this drive and I've decided to share my 2-cents on in and how I did it in the end.
+Recently I've received an email notification about one of my drives failing in my proxmox cluster. It turned out to be my proxmox boot drive, which is the only one not in the ZFS pool (but it just ext4). I've started to look through the official documentation, guides to look for what's the best way to replace this drive and I've decided to share my 2-cents on in and how I did it in the end.
 
 ## Disk replacement options
 It turns out there isn't really a native/easy way about this.  
@@ -19,7 +19,7 @@ It turns out there isn't really a native/easy way about this.
 You could
 * backup all VMs/LXc to PBS (aka proxmox backup storage), fresh install the proxmox one new disk and restore the VMs/LXc through PBS
 * backup these folders somewhere external ( /etc/corosync/* /etc/pve /etc/passwd /etc/network/interfaces /etc/resolv.conf /etc/hostname /etc/hosts /var/lib/pve-cluster/config.db) -> do a fresh proxmox install -> replace these folders -> reboot
-* use one of the milion tools on the internet to do the step above somewhat more automatically - [example](https://gist.github.com/mrpeardotnet/6bdc4b504f43ce57fa7eaee96d376edf) 
+* use one of the million tools on the internet to do the step above somewhat more automatically - [example](https://gist.github.com/mrpeardotnet/6bdc4b504f43ce57fa7eaee96d376edf) 
 * clone the disk with (with sfdisk and dd) - [guide](https://dickingwithdocker.com/posts/replacing-proxmox-boot-drive/) 
 * or if you are well prepared and running root on ZFS, just put the new drive in and resilver the pool - [guide](https://docs.tritondatacenter.com/private-cloud/troubleshooting/disk-replacement)  
 
@@ -32,7 +32,7 @@ Then I've found out about existance of [proxmox-backup-client tool](https://pbs.
 * easy to use
 * allow us to create automatic backups of root OS disk to PBS
 
-#### Disadvanteges
+#### Disadvantages
 * need to be used with PBS (maybe a deal breaker for someone not taking backups or taking backups differently)
 
 ## How to backup / restore OS root disk
@@ -73,7 +73,7 @@ proxmox-backup-client backup root.img:/dev/sdx --backup-id "gandalf"
 * __root.img__ - name of the image showing in PBS (can be anything really)
 * __:/__ - path of what to take backup of. In our case everything root related under /
 * __dev/sdx__ - name of the disk where the proxmox OS is stored. You can find this information in proxmox GUI -> node -> disks -> look for partitions (BIOS boot, EFI, LVM). Check out the image bellow for more guidance
-* __-backup-id__ - will be used as hostaname showing in PBS (can be anything really)
+* __-backup-id__ - will be used as hostname showing in PBS (can be anything really)
 
 ![proxmox_disk_name](/assets/img/posts/2025-06-06-Backup-restore-proxmox-os-boot-root-disk.md/proxmox_disk_name.png)  
 
@@ -125,7 +125,7 @@ Connect the new disk to your server, and checkout it's name either by CLI
 ```bash
 lsblk
 ```
-In the the proxmox GUI, again under disks as last time (dont forget to click reload button)
+In the the proxmox GUI, again under disks as last time (don't forget to click reload button)
 
 ### [B] Create fresh install on the current disk
 As an alternative you could also create new fresh proxmox install if you are just reinstalling OS. But this guide will focus on the A option
@@ -135,12 +135,12 @@ As an alternative you could also create new fresh proxmox install if you are jus
 proxmox-backup-client restore host/gandalf/2025-06-07T10:53:31Z root.img - | sudo dd of=/dev/sdx status=progress bs=1M
 ```
 
-* __host/gandalf/2025-06-07T10:53:31Z__ - name of the backup which we have listed in previos step
+* __host/gandalf/2025-06-07T10:53:31Z__ - name of the backup which we have listed in previous step
 * __root.img__ - name of the image showing in PBS (can be anything really)
-* __/dev/sdx__ - name of the disk WHERFE WE WANT TO RESTORE/CLONE the image (new disk)
+* __/dev/sdx__ - name of the disk WHERE WE WANT TO RESTORE/CLONE the image (new disk)
 
 Warning
-Be carefull not to rewrite any other disk.
+Be careful not to rewrite any other disk.
 
 
 ### Disconnect the old failing disk 
@@ -149,9 +149,11 @@ Be carefull not to rewrite any other disk.
 
 ### Bonus
 #### Automate root disk backups backups 
+Let's automate this process, so we have relatively up to date root OS if we would want to restore it.
+
 In the proxmox shell type
 ```bash
-vim /etc/systemd/system/autobackup.service
+vim /etc/systemd/system/rootbackup.service
 ```
 ```bash
 [Unit]
@@ -159,18 +161,22 @@ Description=Backup root to PBS
 After=network-online.target
 
 [Service]
-#same ENVs we used in previos step
-Environment=PBS_FINGERPRINT=fingerptint
+#same ENVs we used in previous step
+Environment=PBS_FINGERPRINT=fingerprint
 Environment=PBS_PASSWORD=api_key/password
 Environment=PBS_REPOSITORY=user@realm@<IP>:datastore
 Type=oneshot
-ExecStart=proxmox-backup-client backup root.pxar:/
+#change the disk name (/dev/sdx) and backup-id (gandalf) to your values
+ExecStart=proxmox-backup-client backup root.img:/dev/sdx --backup-id "gandalf"
 
 [Install]
 WantedBy=default.target
 ```
+   
+   
+
 ```bash
-vim /etc/systemd/system/autobackup.timer
+vim /etc/systemd/system/rootbackup.timer
 ```
 ```bash
 [Unit]
@@ -179,11 +185,24 @@ RefuseManualStart=no
 RefuseManualStop=no
 
 [Timer]
-#run once a month
-OnCalendar=*-*-* 00:00:00
-Unit=autobackup.service
+# run once a month at 3 AM on the 1st
+OnCalendar=*-*-1 03:00:00
+Unit=rootbackup.service
 
 [Install]
 WantedBy=timers.target
-
 ```
+
+
+
+Enable the service
+```bash
+systemctl daemon-reload
+systemctl enable --now rootbackup.timer
+```
+
+You can test the first backup with
+```bash
+systemctl start rootbackup
+```
+
