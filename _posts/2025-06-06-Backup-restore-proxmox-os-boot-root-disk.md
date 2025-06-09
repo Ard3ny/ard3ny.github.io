@@ -149,8 +149,18 @@ Be careful not to rewrite any other disk.
 
 ### Bonus
 #### Automate root disk backups backups 
-Let's automate this process, so we have relatively up to date root OS if we would want to restore it.
+Let's automate this process, so we have relatively up to date root OS if we would want to restore it. And while we are at it, let's create cleanup policies, so it won't get cluttered in the PBS
 
+##### In the PBS create new namespace under datastore
+![pbs_create_ns](/assets/img/posts/2025-06-06-Backup-restore-proxmox-os-boot-root-disk.md/pbs_new_ns.png)
+
+
+##### Create prune job for new namespace
+![pbs_prune_job](/assets/img/posts/2025-06-06-Backup-restore-proxmox-os-boot-root-disk.md/prune_job.png)
+
+Change the values to your preferences. I've setup mine to only keep last backup, and run this job weekly at sunday.  
+
+##### Create backup service on the proxmox node
 In the proxmox shell type
 ```bash
 vim /etc/systemd/system/rootbackup.service
@@ -166,8 +176,9 @@ Environment=PBS_FINGERPRINT=fingerprint
 Environment=PBS_PASSWORD=api_key/password
 Environment=PBS_REPOSITORY=user@realm@<IP>:datastore
 Type=oneshot
-#change the disk name (/dev/sdx) and backup-id (gandalf) to your values
-ExecStart=proxmox-backup-client backup root.img:/dev/sdx --backup-id "gandalf"
+#change the disk name (/dev/sdx) and backup-id (gandalf) and ns (rootbackup) to your values
+# ns = namespace
+ExecStart=proxmox-backup-client backup root.img:/dev/sdx --backup-id "gandalf" --ns "rootbackup"
 
 [Install]
 WantedBy=default.target
