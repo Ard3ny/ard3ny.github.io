@@ -467,6 +467,106 @@ And set the "Send email to" = "On failure only"
 I would also recommend pulling out the SATA cable from one off your disks to see if you receive an email. This is kind of dangerous, so, do it only if you know what you are doing. 
 But personally, I wouldn't trust this if I didn't try.
 
+### [Optional] Add web browser GUI for easy storage access with the FileBrowser Quantum
+This one is highly optional, but I've found this to be handy at times, when you need to quickly download/upload some file on your storage from any device.  
+
+The FileBrowser Quantum is fork from FileBrowser. It's a little heavier to run (min memory from 128MB vs 256MB) but comes with very active development and bunch of new features like
+* advanced search
+* indexed search
+* SSO support
+* office previews
+* ...
+
+
+You can install FileBrowser Quantum on PVE itself or in LXC with mountpoints to the storage you want to access.
+
+Checkout FileBrowser Quantum [GIT](https://github.com/gtsteffaniak/filebrowser) and [WIKI](https://github.com/gtsteffaniak/filebrowser/wiki/Getting-Started)
+
+The easiest way to install in on Proxmox is with the [Proxmox scripts](https://community-scripts.github.io/ProxmoxVE/scripts?id=filebrowser-quantum) which will install the app on the PVE node itself so keep that in mind if you don't like that.
+```bash
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/community-scripts/ProxmoxVE/main/tools/addon/filebrowser-quantum.sh)"
+```
+
+I like to keep everything nice and containerized without doing anything to PVE itself. So I'll first create unprivileged debian LXC with
+```bash
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/community-scripts/ProxmoxVE/main/ct/debian.sh)"
+```
+
+Stop the container, add mountpoints for storage I want to access, by running following command in PVE shell
+```bash
+vim /etc/pve/lxc/139.conf 
+```
+
+Change these to yours values
+```bash
+#FileBrowser Quantum
+arch: amd64
+cores: 4
+features: keyctl=1,nesting=1
+hostname: filebrowser-quantum
+memory: 2048
+mp0: /pool-01,mp=/pool-01 #!!!! THIS IS THE MOUNTPOINT mounting storage pool-01 from PVE to pool-01 LXC
+net0: name=eth0,bridge=vmbr0,gw=10.1.1.1,hwaddr=BC:24:11:E7:A3:A4,ip=10.1.1.48/24,type=veth
+onboot: 1
+ostype: debian
+rootfs: pool-fast:subvol-139-disk-0,size=2G
+swap: 512
+tags: community-script;os
+unprivileged: 1
+```
+
+Start the container again and install File browser Quantum by running the following command in LXC shell (NOT THE PVE SHELL)
+```bash
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/community-scripts/ProxmoxVE/main/tools/addon/filebrowser-quantum.sh)"
+```
+
+Fill out the install wizard like so
+```bash
+    _______ __     ____                                       ____                    __
+   / ____(_) /__  / __ )_________ _      __________  _____   / __ \__  ______ _____  / /___  ______ ___
+  / /_  / / / _ \/ __  / ___/ __ \ | /| / / ___/ _ \/ ___/  / / / / / / / __ `/ __ \/ __/ / / / __ `__ \
+ / __/ / / /  __/ /_/ / /  / /_/ / |/ |/ (__  )  __/ /     / /_/ / /_/ / /_/ / / / / /_/ /_/ / / / / / /
+/_/   /_/_/\___/_____/_/   \____/|__/|__/____/\___/_/      \___\_\__,_/\__,_/_/ /_/\__/\__,_/_/ /_/ /_/
+
+⚠️ FileBrowser Quantum is not installed.
+Enter port number (Default: 8080): 80
+Install FileBrowser Quantum? (y/n): y
+ℹ️ Installing FileBrowser Quantum on Debian...
+✔️ Installed FileBrowser Quantum
+ℹ️ Preparing configuration directory...
+✔️ Directory prepared
+Use No Authentication? (y/N): N
+✔️ Configured with default admin (admin / helper-scripts.com)
+ℹ️ Creating service...
+✔️ Service created successfully
+✔️ FileBrowser Quantum is reachable at: http://10.1.1.48:80
+```
+
+
+And as a last step we adjust the Filebrowser quantum config file
+```bash
+vim /usr/local/community-scripts/fq-config.yaml
+```
+
+
+```bash
+server:
+  port: 80
+  sources:
+    - path: "/pool-01/"    #path to the mountpoint we've added in the last step
+      config:
+        disableIndexing: false
+        indexingIntervalMinutes: 240
+auth:
+  adminUsername: admin
+  adminPassword: helper-scripts.com #default credentials, don't forget to change them
+```
+
+Reboot the VM and login to Filebrowser quantum web browser (For me it's http://10.1.1.48:80) GUI with the credentials you've used in the config file above.
+
+
+![filebrowser](/assets/img/posts/2025-02-05-Install-and-Configure-proxmox-homelab2-0.md/filebrowser.png)
+
 
 # Conclusion
 With the hardware mods and software configurations now in place, your Homelab 2.0 setup is ready to go. In the following posts, I'll show you what LXCs I'm running and how to install/configure them!
