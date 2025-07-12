@@ -568,6 +568,45 @@ Reboot the VM and login to Filebrowser quantum web browser (For me it's http://1
 ![filebrowser](/assets/img/posts/2025-02-05-Install-and-Configure-proxmox-homelab2-0.md/filebrowser.png)
 
 
+### [Optional] Prolong SSD boot drive life 
+By default a boot drive is getting a lot of wear generatated mainly by logs and 2 proxmox services. You can check all of these forum posts about the problem [1](https://forum.proxmox.com/threads/high-data-unites-written-ssd-wearout-in-proxmox.139119/) [2](https://forum.proxmox.com/threads/ssd-wear.145762/) [3](https://www.reddit.com/r/Proxmox/comments/1bqowzx/ssd_wearout_93/) [4](https://forum.proxmox.com/threads/nvm-ssd-extreme-high-wearout.143823/)...
+
+
+There is a simple solution, if you are not using cluster features and only running single node you can stop them by running following commands in PVE shell
+```bash
+systemctl disable --now pve-ha-lrm.service
+systemctl disable -now pve-ha-crm.service
+```
+
+You can also save logs to RAM instead of SSD. But this has downside, when your PVE reboots you lose all logs, so you cannot really trouble random future shutdown.
+```bash
+vim /etc/systemd/journald.conf
+
+#uncomment
+Storage=volatile
+```
+
+Or the third best option is to install log2RAM, which periodicly saves these logs from RAM to SSD.
+```bash
+echo "deb [signed-by=/usr/share/keyrings/azlux-archive-keyring.gpg] http://packages.azlux.fr/debian/ bookworm main" | tee /etc/apt/sources.list.d/azlux.list
+```
+```bash
+wget -O /usr/share/keyrings/azlux-archive-keyring.gpg https://azlux.fr/repo.gpg
+```
+```bash
+apt update && apt install log2ram -y
+```
+
+You can change the defaults in following config. After the install you need to reboot the PVE for log2RAM to work.
+```bash
+/etc/log2ram.conf 
+```
+
+Another great alternative would be using more expensive SSDs, or even better would be using enteprise SSDs.
+
+All credit goes to this [great article](https://www.xda-developers.com/disable-these-services-to-prevent-wearing-out-your-proxmox-boot-drive/) in which you can read more in depth about this.
+
+
 # Conclusion
 With the hardware mods and software configurations now in place, your Homelab 2.0 setup is ready to go. In the following posts, I'll show you what LXCs I'm running and how to install/configure them!
 
