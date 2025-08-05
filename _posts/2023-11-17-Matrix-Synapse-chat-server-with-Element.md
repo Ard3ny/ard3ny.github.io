@@ -426,30 +426,60 @@ sudo apt install jq
 sudo mkdir -p /var/www/element
 ```
 
-#### Crete a script for regular Element updates
+#### Create a script for regular Element updates
 ```bash
 vim /var/www/element/update.sh
 ```
 
 ```
-#!/bin/sh
-set -e
+#!/usr/bin/env bash
+set -euo pipefail
 
+# Configuration
 install_location="/var/www/element"
-latest="$(curl -s https://api.github.com/repositories/39487546/releases/latest | jq -r .tag_name)"
+api_repo="element-hq/element-web"
+api_url="https://api.github.com/repos/${api_repo}/releases/latest"
 
-cd "$install_location"
+# Fetch latest release tag name (fail on non-2xx, no output on HTTP >=400)
+latest="$(curl -sSfL "${api_url}" | jq -r .tag_name)"
+if [[ -z "${latest}" || "${latest}" == "null" ]]; then
+  echo "Error: Unable to fetch latest release tag from ${api_url}" >&2
+  exit 1
+fi
 
-[ ! -d "archive" ] && mkdir -p "archive"
-[ -d "archive/element-${latest}" ] && rm -r "archive/element-${latest}"
-[ -f "archive/element-${latest}.tar.gz" ] && rm "archive/element-${latest}.tar.gz"
+cd "${install_location}"
 
-wget "https://github.com/vector-im/element-web/releases/download/${latest}/element-${latest}.tar.gz" -P "archive"
-tar xf "archive/element-${latest}.tar.gz" -C "archive"
+# Prepare archive directory
+mkdir -p archive
 
-[ -L "${install_location}/current" ] && rm "${install_location}/current"
-ln -sf "${install_location}/archive/element-${latest}" "${install_location}/current"
-ln -sf "${install_location}/config.json" "${install_location}/current/config.json"
+# Remove any existing archives for this version
+rm -rf "archive/element-${latest}" \
+       "archive/element-${latest}.tar.gz"
+
+# Download release tarball (curl preferred, fall back to wget)
+download_url="https://github.com/${api_repo}/releases/download/${latest}/element-${latest}.tar.gz"
+if command -v curl >/dev/null 2>&1; then
+  curl -fSL -o "archive/element-${latest}.tar.gz" "${download_url}"
+else
+  wget -O "archive/element-${latest}.tar.gz" "${download_url}" \
+    || { echo "Error: Download failed for ${download_url}" >&2; exit 1; }
+fi
+
+# Verify download
+if [[ ! -f "archive/element-${latest}.tar.gz" ]]; then
+  echo "Error: Tarball missing after download" >&2
+  exit 1
+fi
+
+# Extract the archive
+tar -xzf "archive/element-${latest}.tar.gz" -C archive
+
+# Atomically update 'current' symlink
+ln -sfn "${install_location}/archive/element-${latest}" "${install_location}/current"
+
+# Ensure the config persists
+ln -sfn "${install_location}/config.json" "${install_location}/current/config.json"
+
 ```
 
 
