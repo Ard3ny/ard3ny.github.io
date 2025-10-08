@@ -5,6 +5,7 @@ categories: [Homelab]
 tags: [homelab-2.0, qBittorrent, ProtonVPN]
 math: false
 mermaid: false
+series: homelab-2.0
 ---
 
 
