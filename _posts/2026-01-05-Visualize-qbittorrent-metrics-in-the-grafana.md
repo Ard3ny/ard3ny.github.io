@@ -63,7 +63,55 @@ Again change according to your info.
 [http://10.1.1.23:8090/metrics](http://10.1.1.23:8090/metrics)
 
 
+## Import the exported mertics into prometheus database
+### A - If you already have some prometheus instance
+If you are already running some prometheus instance, you only need to adjust the config to scrape qbitorrent-exporter container
 
+```bash
+global:
+  scrape_interval: 10s
+
+scrape_configs:
+  - job_name: "qbittorrent"
+    static_configs:
+      - targets: ["10.1.1.23:8090"]
+```
+
+### B - If you don't have prometheus instance
+If you don't have any prometheus instances, you can run one as a container as well.
+
+To do so run write a simple docker compose with prometheus.conf mounted as volume like so
+
+```bash
+services:
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    volumes:
+      - /opt/prometheus/prometheus.conf:/etc/prometheus/prometheus.yml:ro
+    ports:
+      - "9090:9090"
+    restart: unless-stopped
+```
+
+Then simply create the config file on the host in the path we've specified 
+```bash
+vim /opt/prometheus/prometheus.conf
+```
+```bash
+global:
+  scrape_interval: 10s
+
+scrape_configs:
+  - job_name: "qbittorrent"
+    static_configs:
+      - targets: ["10.1.1.23:8090"]
+```
+
+Change the IP to yours!
+
+
+AFter that you will be left with the prometheus instance running on the port __9090__ 
 
 ## Setup new data source in the Grafana
 To create new data source go to your Grafana instance -> Connections -> Data sources    
@@ -89,7 +137,7 @@ https://raw.githubusercontent.com/martabal/qbittorrent-exporter/main/grafana/das
 ![grafana_2](/assets/img/posts/2026-01-05-Visualize-qbittorrent-metrics-in-the-grafana.md/grafana2.png)
 
 
-After that choose the Name, folder and most importantly the data source of qbitorrent-exporter, which we have created in previous step. In our case the datasource is called "prometheus"
+After that choose the Name, folder and most importantly the data source of prometheus instance (running on port 9090), which we have created in previous step. In our case the datasource is called "prometheus"
 
 
 ![grafana_3](/assets/img/posts/2026-01-05-Visualize-qbittorrent-metrics-in-the-grafana.md/grafana3.png)
@@ -104,7 +152,7 @@ Name: DS_PROMETHEUS
 Label: Prometheus
 
 
-Change data source options -> Type: Prometheus (This is the datasouce name of qbitorrent-exporter so change according to your needs)
+Change data source options -> Type: Prometheus (This is the datasouce name of prometheus instance so change according to your needs)
 
 
 ![grafana_4](/assets/img/posts/2026-01-05-Visualize-qbittorrent-metrics-in-the-grafana.md/grafana4.png)
