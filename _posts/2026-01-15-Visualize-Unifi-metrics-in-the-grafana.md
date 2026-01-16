@@ -183,7 +183,7 @@ Some dashboard may not work or stop working in the future, because of plugins de
 
 For example some dashboard won't work because they are not written in Flux.
 
-For that reason I've created my own dashboard, which you can download [here](assets/img/posts/2026-01-15-Visualize-Unifi-metrics-in-the-grafana.md/unifi-grafana-dashboard.json)
+For that reason I've created my own dashboard, which you can download [here](/assets/text/2026-01-15-Visualize-Unifi-metrics-in-the-grafana.md/unifi-grafana-dashboard.json)
 ![unifi_metrics](/assets/img/posts/2026-01-15-Visualize-Unifi-metrics-in-the-grafana.md/grafana_final.png)
 
 
