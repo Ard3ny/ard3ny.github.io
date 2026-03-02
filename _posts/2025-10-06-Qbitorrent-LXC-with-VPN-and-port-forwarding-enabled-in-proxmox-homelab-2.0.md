@@ -220,6 +220,12 @@ Go to Tools -> Options -> Connection -> Uncheck "Use UPnP / NAT-PMP port forward
 ![qb2](/assets/img/posts/2025-10-06-Qbitorrent-LXC-with-VPN-and-port-forwarding-enabled-in-proxmox-homelab-2.0.md/qb2.png)  
 
 
+### Bonus tip for better upload speed
+Recently I've added another setting based on this [reddit post](https://www.reddit.com/r/qBittorrent/comments/1rgeouz/why_is_this_setting_not_talked_about_more_it/?share_id=hAVC4m7quNp9rz-bKdj3S&utm_medium=android_app&utm_name=androidcss&utm_source=share&utm_term=1)
+
+This setting will result in prioritization peers with faster connections, which will cause your upload ratios to skyrocket. This of course will result in people with slower connection to be more ignored, so keep that in mind.
+
+To turn it on go to Advanced > Toward the bottom: Upload slots behavior > Set to "Upload rate based" 
 
 
 ### Test if qBittorrent using VPN
