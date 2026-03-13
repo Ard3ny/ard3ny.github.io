@@ -81,7 +81,7 @@ proxmox-backup-client backup root.img:/dev/sdx --backup-id "gandalf"
 NOTE:
 This will take from few minutes to few hours depending on size of your boot disk (hopefully small), disk speeds, proxmox CPUs etc...
 
-It it's going correctly it should look like this
+If it's going correctly it should look like this
 ```bash
 root@gandalf:~# proxmox-backup-client backup root.img:/dev/sdd --backup-id "gandalf"
 Starting backup: host/gandalf/2025-06-07T10:53:31Z    
@@ -139,10 +139,11 @@ proxmox-backup-client restore host/gandalf/2025-06-07T10:53:31Z root.img - | dd 
 Warning
 Be careful not to rewrite any other disk.
 
-
-### Disconnect the old failing disk 
-
-### In the BIOS swap new ssd as boot one
+* When you, are done restoring image onto new drive, shutdown the proxmox server.
+* Disconnect the old failing disk.
+* Start the server again and go into BIOS.
+* In the BIOS set the new SSD as new boot one, save.
+* Profit
 
 ### Bonus
 #### Automate root disk backups backups 
