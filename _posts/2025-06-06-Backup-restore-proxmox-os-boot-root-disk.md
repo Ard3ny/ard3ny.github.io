@@ -120,19 +120,16 @@ Or in the PBS GUI under the Datastore content
 
 
 
-### [A] Connect new disk to proxmox 
+### Connect new disk to proxmox 
 Connect the new disk to your server, and checkout it's name either by CLI
 ```bash
 lsblk
 ```
 In the the proxmox GUI, again under disks as last time (don't forget to click reload button)
 
-### [B] Create fresh install on the current disk
-As an alternative you could also create new fresh proxmox install if you are just reinstalling OS. But this guide will focus on the A option
-
 ### Restore / clone root to a new disk
 ```bash
-proxmox-backup-client restore host/gandalf/2025-06-07T10:53:31Z root.img - | sudo dd of=/dev/sdx status=progress bs=1M
+proxmox-backup-client restore host/gandalf/2025-06-07T10:53:31Z root.img - | dd of=/dev/sdx status=progress bs=1M
 ```
 
 * __host/gandalf/2025-06-07T10:53:31Z__ - name of the backup which we have listed in previous step
@@ -206,7 +203,7 @@ WantedBy=timers.target
 
 
 
-Enable the service
+### Enable the service
 ```bash
 systemctl daemon-reload
 systemctl enable --now rootbackup.timer
@@ -217,3 +214,18 @@ You can test the first backup with
 systemctl start rootbackup
 ```
 
+
+If you try to list backups now, when snapshots are nested under namespace you need to include namespace name like so
+```bash
+root@gandalf:~# proxmox-backup-client snapshot list --ns "rootbackup"   
++===================================+=============+=====================+
+| snapshot                          |        size | files               |
++===================================+=============+=====================+
+| host/gandalf/2026-03-01T02:00:00Z | 238.475 GiB | index.json root.img |
++===================================+=============+=====================+
+```
+
+And then restore
+```bash
+proxmox-backup-client restore host/gandalf/2026-03-01T02:00:00Z root.img - --ns "rootbackup" | dd of=/dev/sdh status=progress bs=1M
+```
