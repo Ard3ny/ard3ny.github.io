@@ -294,7 +294,7 @@ Well now it's gonna get a little complicated so bear with me
 
 And that's all! You can check if it worked with 
 ```bash
-sudo partprobe /dev/sdg
+sudo partprobe /dev/sdX
 lsblk
 ```
 
