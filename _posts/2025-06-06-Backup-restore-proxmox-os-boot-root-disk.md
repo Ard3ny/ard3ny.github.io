@@ -139,14 +139,17 @@ proxmox-backup-client restore host/gandalf/2025-06-07T10:53:31Z root.img - | dd 
 Warning
 Be careful not to rewrite any other disk.
 
+Also your disk should be same or larger size, than the old one. If it's off even slighly less, you will need to fiddle with a partion table a bit, but I'll show you what at the end of article!
+
+Let's continue
+
 * When you, are done restoring image onto new drive, shutdown the proxmox server.
 * Disconnect the old failing disk.
 * Start the server again and go into BIOS.
 * In the BIOS set the new SSD as new boot one, save.
 * Profit
 
-### Bonus
-#### Automate root disk backups backups 
+#### Automate root disk backups backups (Optional)
 Let's automate this process, so we have relatively up to date root OS if we would want to restore it. And while we are at it, let's create cleanup policies, so it won't get cluttered in the PBS
 
 ##### In the PBS create new namespace under datastore
@@ -230,3 +233,69 @@ And then restore
 ```bash
 proxmox-backup-client restore host/gandalf/2026-03-01T02:00:00Z root.img - --ns "rootbackup" | dd of=/dev/sdh status=progress bs=1M
 ```
+
+
+### What to do if the new disk is smaller?
+Same thing happend to me on my last recovery session.
+
+Previosly I had 238,4 Gib disk (256GB), but I've switched to enterprise SSD which was smaller 223,5Gib (240GB)
+
+Restoring image went without errors, but when I tried to actually boot with the new drive I got error
+
+```ALERT! /dev/mapper/pve-root does not exist. Dropping to a shell!
+
+When I tried checking LVM partition the drive was showing none.
+
+You can check it yours by 
+```bash
+lsblk
+
+#or scan for LVM with
+lvm pvscan
+```
+
+Because proxmox LVM partition also lives at the end of the drive it would't show.
+
+## FIX
+* To fix this we need to change partition table to a new size from live bootable linux drive.   
+You can use distro of your choice I went with [debian](https://www.debian.org/CD/live/)
+* use [rufus](https://rufus.ie/en/) to flash ISO onto USB, plug the USB into PC a restart
+* Go to bios, change boot to our USB
+* When you are in a live distro open up a terminal and type following command to find out correct disk name
+
+```bash
+lsblk
+```
+
+Let's call mine SDX, so you won't just blindly copy my commands and destroy your server.
+
+* Install gdisk (if it's not already included in the live OS)
+```bash
+sudo apt update
+sudo apt install gdisk -y
+```
+* Run gdisk
+```bash
+sudo gdisk /dev/sdX
+```
+
+Well now it's gonna get a little complicated so bear with me
+
+* Type d [Enter], then 3 [Enter] # This will delete old broken LVM partition
+* Type n [Enter], then 3 [Enter] # To crate new LVM partition
+* First sector: Press Enter to accept the default # Mine is (2099200), but your will probably differ so just go with default 
+* Last sector: DO NOT press Enter. # We cannot go with default with this one, because we need to fix this boundry remember? Now you need to do a little math, for my case I need to type exactly "468860000" and press [Enter] This safely fits my 468,862,128 SSD. But if you have different size, which you probably have you need to adjust the value. If you have no idea what I'm talking about just ask the AI, It will give you your exact value.
+* Hex code: Type 8e00 and press [Enter]
+* Now we need to Fix the GPT Headers with The Expert Menu,  Type x and press [Enter]
+* Type e and press [Enter] # This relocates the backup data structures to the physical end of the disk
+* Type m and press [Enter] # Returns to the main menu
+* Type w and press [Enter] # Writes the changes to the disk
+& Type Y and press [Enter] to confirm
+
+And that's all! You can check if it worked with 
+```bash
+sudo partprobe /dev/sdg
+lsblk
+```
+
+* Now Reboot the server and try again, it should be working just fine now.
