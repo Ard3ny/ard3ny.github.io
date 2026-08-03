@@ -18,7 +18,7 @@ In this post, I'll show you two modern secure tunneling solutions to bridge the 
 
 [Cloudflare Tunnel](https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/) - pretty well known and established for DNS, zero trust, tunnels etc..
 
-[Pangolin](https://docs.fossorial.io/overview) - "self hosted Cloudflare tunnels" 
+[Pangolin](https://docs.pangolin.net/) - "self hosted Cloudflare tunnels" 
 
 
 ## Cloudflare introduction
@@ -143,7 +143,7 @@ You can check this post from [Ryan Harrison blog](https://ryanharrison.co.uk/202
 * Once you complete the registration, in the menu, select "instances" -> Create instance
 * Choose "Placement" where you want your VPS to be hosted (Frankfurt AD 2 for me)
 * "Security," select default
-* "Image ande Shape" select Ubuntu (or whatever you prefer)
+* "Image and Shape" select Ubuntu (or whatever you prefer)
 * For "shape" select "VM.Standard.E2.1.Micro" (we dont want ARM it's more complicated)
 * Paste your SSH key and you are all ready to go
 
@@ -154,10 +154,10 @@ As I've mentioned down bellow after few weeks of testing I've found out that com
 
 ###### Good/cheap alternatives
 * [Hetzner](https://www.hetzner.com/cloud)
-Probably community most favorite VPS provider. Good price/performance tiers. Great support. Very low CPU steal. But they do a little higher prices than some cheaper, scatchier VPS providers like racknerd, contabo... (but still very very good prices)
+Probably community most favorite VPS provider. Good price/performance tiers. Great support. Very low CPU steal. But they do a little higher prices than some cheaper, sketchier VPS providers like racknerd, contabo... (but still very very good prices)
 
 * [RackNerd](https://www.racknerd.com/)
-This one is a little scatchy, you can check them out yourself, but they tend to have high CPU steal, not great history etc... BUT they do have good deals which you can check on this [community tracker](https://racknerdtracker.com/)
+This one is a little sketchy, you can check them out yourself, but they tend to have high CPU steal, not great history etc... BUT they do have good deals which you can check on this [community tracker](https://racknerdtracker.com/)
 
 So If money is an issue go with them, you should still be OK, just don't put anything important there.
 
@@ -216,17 +216,42 @@ In this exact case, the Ubuntu VPS from Oracle comes with an additional virtual 
 
 * Log in to your VPS
 
-* To open specific ports, type
+* First look at what the current ruleset actually is, because the Oracle image ships with a `REJECT` rule near the bottom of the `INPUT` chain. Your `ACCEPT` rules have to be inserted **above** it, otherwise they do nothing.
+
+```bash
+sudo iptables -L INPUT --line-numbers -n
+```
+
+* You will see something like this — note the line number of the `REJECT all` rule (it is `6` on a stock Oracle Ubuntu image, but verify it, do not assume)
+
+```
+Chain INPUT (policy ACCEPT)
+num  target     prot opt source     destination
+1    ACCEPT     all  --  0.0.0.0/0  0.0.0.0/0    state RELATED,ESTABLISHED
+2    ACCEPT     icmp --  0.0.0.0/0  0.0.0.0/0
+3    ACCEPT     all  --  0.0.0.0/0  0.0.0.0/0
+4    ACCEPT     udp  --  0.0.0.0/0  0.0.0.0/0    udp spt:123
+5    ACCEPT     tcp  --  0.0.0.0/0  0.0.0.0/0    state NEW tcp dpt:22
+6    REJECT     all  --  0.0.0.0/0  0.0.0.0/0    reject-with icmp-host-prohibited
+```
+
+* To open specific ports, type (replace `6` with the line number you found above)
 
 ```bash
 sudo iptables -I INPUT 6 -m state --state NEW -p tcp --dport 80 -j ACCEPT
-sudo netfilter-persistent save
 sudo iptables -I INPUT 6 -m state --state NEW -p tcp --dport 443 -j ACCEPT
-sudo netfilter-persistent save
 sudo iptables -I INPUT 6 -m state --state NEW -p tcp --dport 25565 -j ACCEPT
+sudo iptables -I INPUT 6 -m state --state NEW -p udp --dport 51820 -j ACCEPT
 sudo netfilter-persistent save
-sudo iptables -I INPUT 6 -m state --state NEW -p UDP --dport 51820  -j ACCEPT
-sudo netfilter-persistent save
+```
+
+> Protocol names are lowercase (`-p udp`, not `-p UDP`). Saving once at the end is enough, you do not need `netfilter-persistent save` after every single rule.
+{: .prompt-tip }
+
+* Verify the rules landed above the `REJECT`
+
+```bash
+sudo iptables -L INPUT --line-numbers -n
 ```
 
 
@@ -248,7 +273,7 @@ Because my VPS randomly stopped working or froze I investigated and find out tha
 To get around this, we can create a dummy load to simulate our VPS never being idle
 
 ```bash
- echo "*/5 * * * * root timeout 46 nice md5sum /dev/zero" | sudo tee /etc/cron.d/dummy-load 
+ echo "*/5 * * * * root timeout 46 nice md5sum /dev/zero" | sudo tee /etc/cron.d/dummy-load 
 ```
 
 
@@ -280,8 +305,6 @@ stress-ng --cpu 2 --cpu-load 20
 
 #RAM dummyload
 stress-ng --vm 1 --vm-bytes 20% --vm-hang 0
-
-/etc/supervisor/conf.d/stress.conf
 ```
 
 ```bash
@@ -346,8 +369,11 @@ To make it safer, we can create a budget and alert that will email us if we are 
 
 ### Install && Configure Pangolin (1.2.0)
 
-> Everything here applies to version 1.2.0. To get up to date information, follow [pangolin docs](https://docs.fossorial.io/overview)
+> Everything here applies to version 1.2.0. To get up to date information, follow [pangolin docs](https://docs.pangolin.net/). The documentation moved from `docs.fossorial.io` to `docs.pangolin.net`, old links may not resolve.
 {: .prompt-info }
+
+> **Do not deploy 1.2.0 today and leave it there.** Pangolin `v1.6.2` and earlier are affected by [CVE-2025-56332](https://nvd.nist.gov/vuln/detail/CVE-2025-56332), an authentication bypass caused by an insecure default configuration. The steps below still describe the install flow accurately, but install a current release and follow the [update guide](https://docs.pangolin.net/self-host/how-to-update) afterwards.
+{: .prompt-danger }
 
 
 
@@ -363,7 +389,7 @@ First, we need to establish what's going to be our
 
 #### Base domain name
 
-An example of base domain could be    
+An example of base domain could be    
 
 ```
 appletest.com
@@ -426,6 +452,13 @@ Don't forget to change NAMES and IP to YOURS!
 
 If you are using CF don't forget to turn off proxying (orange) cloud icon. (can cause problems)
 
+> Make sure the wildcard record actually resolves before you go hunting for problems in Pangolin. A resource that returns a bare `404 page not found` from Traefik usually means either DNS is missing or no router matched — not that the app behind it is broken.
+> ```bash
+> dig +short pangolin.public.appletest.com
+> dig +short anything.public.appletest.com
+> ```
+{: .prompt-tip }
+
 
 ### Continue with the install 
 
@@ -469,6 +502,13 @@ Choose the email with which you want to connect as admin to the Pangolin dashboa
 eathe@apple.com
 ```
 
+> The password you set here is written to `config/config.yml` **in plaintext** and stays there. Change the admin password from the dashboard after first login, and never paste that file into a chat, issue, gist or forum post — it also contains `server.secret`, which signs session tokens. Anyone holding that secret can forge a valid session for any protected resource.
+> ```bash
+> # safe way to share the file
+> sed -e 's/^\(\s*password:\).*/\1 REDACTED/' -e 's/^\(\s*secret:\).*/\1 REDACTED/' config/config.yml
+> ```
+{: .prompt-danger }
+
 
 
 
@@ -476,7 +516,7 @@ eathe@apple.com
 I would suggest you to "Type yes", I'll show how to properly configure it. Crowdsec is a great security tool that gives you many security benefits like
 
 * Automated Real-Time Remediation (IP blocking or CAPTCHA challenges)
-* Reduced Attack Surface (By filtering out malicious traffic using CrowdSec’s curated blocklists)   
+* Reduced Attack Surface (By filtering out malicious traffic using CrowdSec's curated blocklists)   
 
 But if you don't want to use I'll show you both options with and without it.
 
@@ -485,11 +525,11 @@ But if you don't want to use I'll show you both options with and without it.
 After few weeks of testing I've found out that combination of very low CPU/RAM doesn't really work with using crowdsec. Crowdsec was just taking too much RAM from my 1GB VPS (over 30%). So If you are going with low end VPS I don't recommend this combination. Either update VPS or go without crowdsec.
 
 
-##### [Option A]   
+##### [Option A]   
 YES
 
 
-##### [Option B]   
+##### [Option B]   
 No
 
 
@@ -515,18 +555,18 @@ If the panel isn't working, the problem most likely lies in ports not beeing ope
 
 ```bash
 #example for me
-https://pangolin.public.apple.com
+https://pangolin.public.appletest.com
 ```
 
 
 
 
 #### Debug
-For more debug check [pangolin docs](https://docs.fossorial.io/overview), their discord which you can find in their docs as well. 
+For more debug check [pangolin docs](https://docs.pangolin.net/), their discord which you can find in their docs as well. 
 
 
 
-Tool to check open ports   
+Tool to check open ports   
 
 https://www.yougetsignal.com/tools/open-ports/
 
@@ -541,6 +581,18 @@ https://www.yougetsignal.com/tools/open-ports/
 docker compose up -d 
 ```
 
+> Before anything else, understand how config changes get picked up. This trips up almost everyone, myself included.
+>
+> * `config/traefik/dynamic_config.yml` is **dynamic** — Traefik watches the file and reloads it on its own.
+> * `config/traefik/traefik_config.yml` is **static** — it is read once at process start. Editing it does nothing until the container restarts.
+> * `docker compose up -d` will **not** restart a container just because you edited a bind-mounted file. Compose only recreates containers when the service definition, image or env changed. You will see `Container traefik  Running` instead of `Started`, and wonder why nothing happened.
+>
+> When in doubt, force it:
+> ```bash
+> docker restart traefik
+> docker logs traefik | tail -20   # check the timestamp is actually recent
+> ```
+{: .prompt-warning }
 
 
 
@@ -552,8 +604,12 @@ It looks like the bottom part was automated as well. To check if you have to do 
 ```bash
 docker exec crowdsec cscli bouncers list
 ```
-If you see traefik-boncer already beeing there, you don't have to create crowdsecLapiKey and manually ad it to config/traefik/dynamic_config.yml (as that is already done)
 
+> **The presence of the bouncer is not enough — check the `Last API pull` column.** This is the single most misleading thing about the whole setup. The installer registers a bouncer, so it shows up in the list and looks fine, but if Traefik has never authenticated against it the row stays empty and CrowdSec is doing absolutely nothing for you.
+{: .prompt-danger }
+
+
+This is what a **broken** setup looks like. Registered, valid, and completely inert:
 
 ```bash
 root@pangolin-public:~# docker exec crowdsec cscli bouncers list
@@ -563,6 +619,21 @@ root@pangolin-public:~# docker exec crowdsec cscli bouncers list
  traefik-bouncer              ✔️                                   api-key
 -----------------------------------------------------------------------------
 ```
+
+
+And this is what a **working** setup looks like — IP, timestamp, type and version all populated:
+
+```bash
+root@pangolin-public:~# docker exec crowdsec cscli bouncers list
+---------------------------------------------------------------------------------------------------------------
+ Name             IP Address  Valid  Last API pull         Type                             Version  Auth Type
+---------------------------------------------------------------------------------------------------------------
+ traefik-bouncer  172.18.0.4  ✔️     2026-08-03T18:18:19Z  Crowdsec-Bouncer-Traefik-Plugin  1.X.X    api-key
+---------------------------------------------------------------------------------------------------------------
+```
+
+
+If yours looks like the first one, work through the next three sections in order.
 
 
 ```bash
@@ -587,6 +658,9 @@ vim config/traefik/dynamic_config.yml #relative path depending on where you have
 crowdsecLapiKey: xKYHxtg54ukkgssdamk23n24k242l6fCD1nc
 ```
 
+> If you ever regenerate the key, `cscli bouncers delete traefik-bouncer` first — adding a bouncer that already exists will fail, and a stale key in `dynamic_config.yml` makes the plugin fail authentication silently.
+{: .prompt-tip }
+
 
 
 
@@ -596,43 +670,229 @@ docker compose down && docker compose up -d --force-recreate
 ```
 
 
-#### Test if CrowdSec is working  [Option A]
+#### Attach the CrowdSec middleware to the routers [Option A]
+
+This step is missing from most guides and it is the reason a lot of people end up with a bouncer that never pulls. The installer **defines** the `crowdsec` middleware but does not necessarily **use** it. A middleware that is not referenced by any router is never instantiated, so the plugin never connects to the LAPI.
+
+Open `config/traefik/dynamic_config.yml` and look at the routers section:
 
 ```bash
-#check for bouncer 
+grep -n -A3 'middlewares:' config/traefik/dynamic_config.yml
+```
+
+If you only see `- security-headers`, the middleware is not wired up. Add `- crowdsec` **above** it on `api-router`, `next-router` and `ws-router`:
+
+```yaml
+  routers:
+    api-router:
+      entryPoints:
+        - websecure
+      middlewares:
+        - crowdsec
+        - security-headers
+      rule: Host(`pangolin.public.appletest.com`) && PathPrefix(`/api/v1`)
+      service: api-service
+      tls:
+        certResolver: letsencrypt
+    next-router:
+      entryPoints:
+        - websecure
+      middlewares:
+        - crowdsec
+        - security-headers
+      rule: Host(`pangolin.public.appletest.com`) && !PathPrefix(`/api/v1`)
+      service: next-service
+      tls:
+        certResolver: letsencrypt
+    ws-router:
+      entryPoints:
+        - websecure
+      middlewares:
+        - crowdsec
+        - security-headers
+      rule: Host(`pangolin.public.appletest.com`)
+      service: api-service
+      tls:
+        certResolver: letsencrypt
+```
+
+CrowdSec goes before `security-headers` so blocked requests are dropped before Traefik bothers decorating the response. Leave `main-app-router-redirect` alone — that one only does the HTTP to HTTPS redirect.
+
+The dashboard login page is exactly what gets brute-forced, so leaving these routers unprotected defeats most of the point of running CrowdSec at all.
+
+```bash
+docker restart traefik
+docker logs traefik 2>&1 | grep -i crowdsec | tail -20
+docker exec crowdsec cscli bouncers list
+```
+
+If the log only ever says `Loading plugins...` and `Plugins loaded.` with nothing after it, the middleware still is not attached. Once it is wired correctly you get log lines from the bouncer itself and a populated `Last API pull`.
+
+
+#### Register with the Central API [Option A]
+
+The installer does not always complete CAPI registration, and when it fails it never retries. Without it you get **none of the community blocklist** — which is most of what you installed CrowdSec for. You are left detecting only what you catch in your own logs.
+
+The symptom is a container that runs fine but is permanently unhealthy, because the healthcheck is `cscli capi status`:
+
+```bash
+docker ps --filter name=crowdsec --format '{{.Names}}\t{{.Status}}'
+# crowdsec	Up 2 months (unhealthy)
+```
+
+and every log line carries:
+
+```
+level=warning msg="can't load CAPI credentials from '/etc/crowdsec/online_api_credentials.yaml' (missing login field)"
+```
+
+Fix it:
+
+```bash
+docker exec crowdsec cscli capi register
+docker restart crowdsec
+sleep 20
+docker exec crowdsec cscli capi status
+```
+
+You want to see:
+
+```
+You can successfully interact with Central API (CAPI)
+Sharing signals is enabled
+Pulling community blocklist is enabled
+```
+
+Then confirm the blocklist actually landed — this should go from empty to thousands of entries within a few minutes:
+
+```bash
+docker exec crowdsec cscli decisions list -o human | head
+```
+
+> **Do not `rm -rf config/crowdsec` to "start clean".** That directory holds `online_api_credentials.yaml`. Deleting it silently unregisters you from CAPI, the container comes back up looking healthy enough to ignore, and you quietly run without the community blocklist for months. If you do wipe it, re-run `cscli capi register` immediately afterwards.
+{: .prompt-danger }
+
+Optionally enroll into the free CrowdSec console for extra curated blocklists and a view of what is hitting you. Get the key from [app.crowdsec.net](https://app.crowdsec.net):
+
+```bash
+docker exec crowdsec cscli console enroll <your-enroll-key>
+```
+
+
+#### Fix the X-Forwarded-For trust setting [Option A]
+
+Check what the installer left you with:
+
+```bash
+grep -n -A2 'forwardedHeadersTrustedIPs' config/traefik/dynamic_config.yml
+```
+
+If it says `0.0.0.0/0`, fix it now. This tells the bouncer to trust the `X-Forwarded-For` header from **any** source, which means an attacker sets `X-Forwarded-For: 8.8.8.8` and CrowdSec bans Google instead of them. It also lets them walk straight past every ban you already have. Your blocklist is decorative until this is corrected.
+
+If Traefik is directly internet-facing (no Cloudflare proxy in front):
+
+```yaml
+          forwardedHeadersTrustedIPs:
+            - 127.0.0.1/32
+```
+
+If you run behind Cloudflare's orange cloud, put the [Cloudflare IP ranges](https://www.cloudflare.com/ips/) there instead — and nothing else.
+
+Leave `clientTrustedIPs` as it is. That one lists your private ranges plus the Gerbil WireGuard subnet, and it is intentional.
+
+Verify from **another machine**, not from the VPS — a request from the VPS comes over loopback, which you just told the bouncer to trust, so it would give you a false pass:
+
+```bash
+# from your laptop
+curl -I -H "X-Forwarded-For: 1.2.3.4" https://jellyfin.public.appletest.com
+```
+
+```bash
+# on the VPS, at the same time
+tail -5 config/logs/access.log
+```
+
+`ClientHost` must show your laptop's real IP, not `1.2.3.4`.
+
+
+#### Close the Traefik dashboard [Option A]
+
+The installer ships `api.insecure: true`, which serves the Traefik dashboard on port 8080 with no authentication whatsoever. If that port is published, anyone can read your full routing table, backend addresses and service names.
+
+```bash
+grep -n 'insecure' config/traefik/traefik_config.yml
+```
+
+Set the one under `api:` to `false` (leave `serversTransport.insecureSkipVerify` alone, that is a different setting for reaching your backends):
+
+```yaml
+api:
+  dashboard: true
+  insecure: false
+```
+
+This is static config, so it needs a real restart:
+
+```bash
+docker restart traefik
+curl -s -o /dev/null -w '%{http_code}\n' http://127.0.0.1:8080/dashboard/   # expect 000
+```
+
+
+#### Test if CrowdSec is working  [Option A]
+
+```bash
+#check for bouncer - and check the Last API pull column, not just the name
 docker exec crowdsec cscli bouncers list
 
 #add your public IP to see if you are blocked in pangolin dashboard panel
 #check connection to pangolin panel
-#your dashboard IP #example of mine https://pangolin.public.apple.com
+#your dashboard IP #example of mine https://pangolin.public.appletest.com
 
 
 docker exec -it crowdsec /bin/bash
-cscli decision list
-cscli decision add --ip <your-public-ip> #example cscli decision add --ip 109.212.10.173
+cscli decisions list
+cscli decisions add --ip <your-public-ip> #example cscli decisions add --ip 109.212.10.173
 #connection to pangolin panel should stop working
 
 
 #re-enable
-cscli decision remoove --ip <your-public-ip> #example cscli decision add --ip 109.212.10.173
+cscli decisions delete --ip <your-public-ip> #example cscli decisions delete --ip 109.212.10.173
 
 #check metrics
 docker exec -it crowdsec cscli metrics
 ```
 
+> The subcommand is `decisions`, plural. `cscli decision list` will just error out.
+{: .prompt-info }
+
+In `cscli metrics`, look at the acquisition section. If the parser row for the Traefik access log shows zeros, CrowdSec is not reading your logs at all and no amount of scenarios will help — check `config/crowdsec/acquis.yaml` and that the log path is mounted into the container.
+
+Also worth turning on so CrowdSec can see failed Pangolin logins rather than only HTTP anomalies — in `config/config.yml`:
+
+```yaml
+app:
+  save_logs: true
+```
 
 
 
 
-
-#### Enable automatic CrowdSec updates  [Option A]
+#### Enable automatic CrowdSec updates  [Option A]
 CrowdSec regularly updates list of malicious IPs etc...
 
 ```bash
 #type crontab -e
 #add
-docker exec crowdsec cscli hub update && docker exec crowdsec cscli hub upgrade
+30 4 * * * docker exec crowdsec cscli hub update && docker exec crowdsec cscli hub upgrade && docker restart crowdsec
 ```
+
+Two things worth knowing here:
+
+* **The cron schedule matters** — a crontab line without the five time fields is not a valid entry and will be rejected. `30 4 * * *` runs it daily at 04:30, which is plenty. The hub does not change hourly.
+* **`hub upgrade` alone is not enough.** It downloads new parsers, scenarios and AppSec rules to disk, but the running process does not load them. Without the `docker restart crowdsec` at the end you can run for months on whatever ruleset was loaded at your last restart, while the cron happily reports success every night.
+
+This only updates the hub content. The CrowdSec **container image** is pinned in `docker-compose.yml` and will not move on its own — see the update section below.
 
 
 
@@ -641,7 +901,7 @@ And that's it. You should now have access to pangolin panel, you have chose earl
 
 ```bash
 #example for me
-https://pangolin.public.apple.com
+https://pangolin.public.appletest.com
 ```
 
 
@@ -654,19 +914,98 @@ If the panel isn't working, the problem most likely lies in ports not being open
 Try to fall back to option B above.
 
 
+> If you enabled AppSec with `crowdsecAppsecUnreachableBlock: true`, be aware that once the middleware is genuinely attached, an unreachable AppSec service will start blocking everything — including your own dashboard login. Keep SSH access open and a backup of `dynamic_config.yml` so you can roll back.
+> ```bash
+> cp -a config/traefik/dynamic_config.yml config/traefik/dynamic_config.yml.bak
+> ```
+{: .prompt-warning }
+
+
 
 
 #### Debug
-For more debug check [pangolin docs](https://docs.fossorial.io/overview), their discord which you can find in their docs as well. 
+For more debug check [pangolin docs](https://docs.pangolin.net/), their discord which you can find in their docs as well. 
 
 
 
 
-Tool to check open ports   
+Tool to check open ports   
 
 https://www.yougetsignal.com/tools/open-ports/
 
 
+
+### Keeping Pangolin and CrowdSec updated
+
+The installer pins exact image tags, so `docker compose pull` on its own upgrades nothing. You have to bump the tags yourself.
+
+```bash
+grep -E 'image:' docker-compose.yml
+```
+
+```
+    image: crowdsecurity/crowdsec:v1.7.7
+    image: fosrl/gerbil:1.4.0
+    image: fosrl/pangolin:1.18.4
+    image: traefik:v3.5.2
+```
+
+**Always back up before an upgrade.** Downgrading is not supported once a database migration has run, so the backup is your only way out:
+
+```bash
+cp -r ./config ./config.bak.$(date +%Y%m%d-%H%M)
+tar czf ./config-pre-upgrade.tar.gz ./config
+```
+
+Then bump and pull:
+
+```bash
+sed -i 's|fosrl/pangolin:1\.18\.4|fosrl/pangolin:<new-version>|' docker-compose.yml
+docker compose pull && docker compose up -d
+docker logs -f pangolin        # migrations run on first boot, watch them succeed
+```
+
+Things to check in the release notes before jumping versions:
+
+* **1.13** introduced a new networking model (private resources, user devices) with a database migration. Do not skip blindly across it.
+* **1.19** requires **Newt 1.13.0 or newer** for the browser-based SSH/RDP/VNC features, and host resources with SSH configured have to be converted to the new SSH resource type.
+* **1.21** adds same-network detection, which expects updated clients and sites.
+* Check whether the Pangolin release expects a newer **Gerbil** tag and bump it in the same pass.
+
+For CrowdSec, upgrade the image the same way. Patch releases here are frequently security fixes — for example `v1.7.8` fixes a high-severity AppSec/WAF bypass — so do not let this one drift:
+
+```bash
+sed -i 's|crowdsecurity/crowdsec:v1\.7\.7|crowdsecurity/crowdsec:v1.7.8|' docker-compose.yml
+docker compose pull crowdsec && docker compose up -d crowdsec
+docker exec crowdsec cscli version | head -2
+```
+
+Do not pin newt to a floating `image: fosrl/newt` either — use an explicit tag so your tunnel does not silently change under you.
+
+
+### Authentication and mobile apps — a gotcha worth knowing
+
+Pangolin's built-in auth (SSO login, PIN, password) puts a login page in front of the resource. That works fine in a browser. It does **not** work with most native mobile apps — Home Assistant Companion, Nextcloud, Jellyfin clients and similar — because those apps make REST and WebSocket calls outside the login webview, so they never carry the Pangolin session cookie and just fail to connect.
+
+Path-based "bypass auth" rules are not a reliable workaround; there are open issues where they either do not apply on protected resources or effectively disable auth for the whole resource. Your realistic options:
+
+* **Private resource + client** — expose the app only inside the WireGuard overlay and reach it from the Pangolin mobile client. The app is not on the public internet at all. Cleanest, at the cost of needing the client running.
+* **Leave the resource unprotected in Pangolin and harden the app itself** — strong password plus TOTP in the app, correct reverse-proxy trust configuration so the app's own rate limiting sees the real client IP, plus a geo/IP deny rule in Pangolin and CrowdSec in front.
+
+For Home Assistant specifically, the second option needs this, or its built-in ban system will lock out the proxy instead of the attacker:
+
+```yaml
+http:
+  use_x_forwarded_for: true
+  trusted_proxies:
+    - <your gerbil subnet, e.g. 100.89.0.0/20>
+  ip_ban_enabled: true
+  login_attempts_threshold: 3
+```
+
+Check the actual source IP in the Home Assistant log and put *that* range in `trusted_proxies` — guessing here is how you lock yourself out.
+
+Whatever you do, do not leave resources set to "Not Protected" by accident. Check the Authentication column on the resources list every once in a while.
 
 
 
@@ -677,7 +1016,7 @@ https://www.yougetsignal.com/tools/open-ports/
 
 ```bash
 #example for me
-https://pangolin.public.apple.com
+https://pangolin.public.appletest.com
 ```
 
 #### Create organization.
@@ -717,15 +1056,18 @@ bash -c "$(curl -fsSL https://raw.githubusercontent.com/community-scripts/Proxmo
 vim docker-compose.yaml
 
 services:
-  newt:
-    image: fosrl/newt
-    container_name: newt
-    restart: unless-stopped
-    environment:
-      - PANGOLIN_ENDPOINT=https://pangolin.public.apple.com
-      - NEWT_ID=tg2zau2faqzdd2ty
-      - NEWT_SECRET=ahhhgaob5jxxxwdnx2qimnm32t5ec4fv1f4h9gi8g7h46bjy
+  newt:
+    image: fosrl/newt:1.13.0
+    container_name: newt
+    restart: unless-stopped
+    environment:
+      - PANGOLIN_ENDPOINT=https://pangolin.public.appletest.com
+      - NEWT_ID=tg2zau2faqzdd2ty
+      - NEWT_SECRET=ahhhgaob5jxxxwdnx2qimnm32t5ec4fv1f4h9gi8g7h46bjy
 ```
+
+> `NEWT_SECRET` is a credential. Treat that compose file the same way you treat `config.yml` — do not paste it anywhere. If it leaks, delete the site in the dashboard and create a new one.
+{: .prompt-warning }
 
 And start the container
 
@@ -776,77 +1118,76 @@ You will be prompted with
 ```bash
 #Traefik: Add Entrypoints
 entryPoints:
-  tcp-25565:
-    address: ":25565/tcp"
+  tcp-25565:
+    address: ":25565/tcp"
 
 
 #Gerbil: Expose Ports in Docker Compose
 ports:
-  - 25565:25565
+  - 25565:25565
 ```
 
 
 We need to manually add these into configs in our VPS.
 
-```bash
-vim /root/pangolin/config/traefik/traefik_config.yml   #or whatever path you have to pangolin
-#add
-entryPoints:
-  tcp-25565:
-    address: ":25565/tcp"
+> **Merge these into the existing keys, do not paste them as new blocks.** `traefik_config.yml` already has an `entryPoints:` section and the gerbil service already has a `ports:` list. A second `entryPoints:` key at the same level is a duplicate YAML key and Traefik will refuse to start. The examples below show the merged result.
+{: .prompt-warning }
 
-#under certificatesResolvers like shown bellow
+```bash
+vim /root/pangolin/config/traefik/traefik_config.yml   #or whatever path you have to pangolin
+
+#add tcp-25565 INTO the existing entryPoints block, like shown bellow
 
 ....
 certificatesResolvers:
-  letsencrypt:
-    acme:
-      caServer: https://acme-v02.api.letsencrypt.org/directory
-      email: blabla@gmail.com
-      httpChallenge:
-        entryPoint: web
-      storage: /letsencrypt/acme.json
+  letsencrypt:
+    acme:
+      caServer: https://acme-v02.api.letsencrypt.org/directory
+      email: blabla@gmail.com
+      httpChallenge:
+        entryPoint: web
+      storage: /letsencrypt/acme.json
 entryPoints:
-  tcp-25565:
-    address: ":25565/tcp"
-  web:
-    address: :80
-  websecure:
+  tcp-25565:
+    address: ":25565/tcp"
+  web:
+    address: :80
+  websecure:
 ....
 ```
 And for the gerbil ports
 
 
 ```bash
-vim /root/pangolin/docker-compose.yaml  #or whatever path you have to pangolin
+vim /root/pangolin/docker-compose.yaml  #or whatever path you have to pangolin
 
 #add
-Ports:
-  - 25565:25565
-#under all other ports like shown bellow
+ports:
+  - 25565:25565
+#into the existing ports list like shown bellow (lowercase "ports", it is a YAML key)
 
-  gerbil:
-    cap_add:
-      - NET_ADMIN
-      - SYS_MODULE
-    command:
-      - --reachableAt=http://gerbil:3003
-      - --generateAndSaveKeyTo=/var/config/key
-      - --remoteConfig=http://pangolin:3001/api/v1/gerbil/get-config
-      - --reportBandwidthTo=http://pangolin:3001/api/v1/gerbil/receive-bandwidth
-    container_name: gerbil
-    depends_on:
-      pangolin:
-        condition: service_healthy
-    image: fosrl/gerbil:1.0.0
-    ports:
-      - 51820:51820/udp
-      - 443:443
-      - 80:80
-      - 25565:25565
-    restart: unless-stopped
-    volumes:
-      - ./config/:/var/config
+  gerbil:
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
+    command:
+      - --reachableAt=http://gerbil:3003
+      - --generateAndSaveKeyTo=/var/config/key
+      - --remoteConfig=http://pangolin:3001/api/v1/gerbil/get-config
+      - --reportBandwidthTo=http://pangolin:3001/api/v1/gerbil/receive-bandwidth
+    container_name: gerbil
+    depends_on:
+      pangolin:
+        condition: service_healthy
+    image: fosrl/gerbil:1.0.0
+    ports:
+      - 51820:51820/udp
+      - 443:443
+      - 80:80
+      - 25565:25565
+    restart: unless-stopped
+    volumes:
+      - ./config/:/var/config
 ```
 
 Restart containers, and you are good to go.
@@ -854,6 +1195,9 @@ Restart containers, and you are good to go.
 ```bash
 docker compose down && docker compose up -d --force-recreate 
 ```
+
+> `config/key` is generated by Gerbil (`--generateAndSaveKeyTo=/var/config/key`) and is a WireGuard key. Do not delete or regenerate it casually — leave it out of anything you share, and back it up along with the rest of `config/`.
+{: .prompt-info }
 
 
 
@@ -863,6 +1207,8 @@ docker compose down && docker compose up -d --force-recreate
 In summary, both Cloudflare Tunnel and Pangolin offer robust solutions for accessing your homelab from behind CGNAT.
 
 Both have their own pros/cons. Peronally I'm using both for different use cases in my holelab, but I really like where the pangolin is going, so I may switch entirely.
+
+One closing thought after running this for a while: the install is genuinely easy, but "installed" and "actually protecting you" are two different states. A bouncer with an empty `Last API pull`, an unregistered CAPI, a middleware nobody references, and `forwardedHeadersTrustedIPs: 0.0.0.0/0` all look completely fine from the dashboard. Go through the verification steps above once, and then re-check them after every upgrade.
 
 
 
