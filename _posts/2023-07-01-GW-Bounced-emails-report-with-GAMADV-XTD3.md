@@ -11,7 +11,7 @@ mermaid: false
 {: .prompt-info }
 
 ## How does it work?
-If you are not familiar with GAMADV-XTD3, you can check my [previous post](https://thetechcorner.sk/posts/Upgrade-GAMADV-XTD3-from-GAM/).
+If you are not familiar with GAMADV-XTD3, you can check my [previous post]({% post_url 2023-06-28-Upgrade-GAMADV-XTD3-from-GAM %}).
 
 Basically after installing and authorizing GAMADV-XTD3 in your GW, you can access some of the Google Workspace Admin features using [Google API](https://developers.google.com/workspace)
 
